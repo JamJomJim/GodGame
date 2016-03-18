@@ -5,7 +5,7 @@
 	<body>
 		Total Atoms: <span id="totalAtoms">0</span>
 		<br />
-		Percent Complete: <span id="percentOfUniverse">0</span>%
+		Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
 		<br />
 		<br />		
 		Electrons: <span id="electrons">0</span>
@@ -21,7 +21,7 @@
 		<br />
 		Hydrogen Atoms: <span id="hydrogenAtoms">0</span>
 		<br />
-		Hydrogen Cost: 1
+		Hydrogen Cost: 1 Proton, 1 Neutron, 1 Electron
 		<br />
 		<br />
 		Create Oxygen
@@ -32,7 +32,18 @@
 		<br />
 		Oxygen Atoms: <span id="oxygenAtoms">0</span>
 		<br />
-		Oxygen Cost: 8
+		Oxygen Cost: 8 Protons, 8 Neutrons, 8 Electrons
+		<br />
+		<br />
+		Create Iron
+		<br />
+		<button onclick="buyIron(1)">x1</button>
+		<button onclick="buyIron(10)">x10</button>
+		<button onclick="buyIron(100)">x100</button>
+		<br />
+		Iron Atoms: <span id="ironAtoms">0</span>
+		<br />
+		Iron Cost: 26 Protons, 33 Neutrons, 26 Electrons
 		<br />
 		<br />
 		Create Water
@@ -43,7 +54,41 @@
 		<br />
 		Water Molecules: <span id="water">0</span>
 		<br />
-		Water Cost: 8
+		Water Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
+		<br />
+		<br />
+		Create Planet
+		<br />
+		<button onclick="buyPlanet(1)">x1</button>
+		<button onclick="buyPlanet(10)">x10</button>
+		<button onclick="buyPlanet(100)">x100</button>
+		<br />
+		Planets: <span id="planets">0</span>
+		<br />
+		Planet Cost: 10000 Iron Atoms
+		<br />
+		<br />
+		Create Nebula
+		<br />
+		<button onclick="buyNebula(1)">x1</button>
+		<button onclick="buyNebula(10)">x10</button>
+		<button onclick="buyNebula(100)">x100</button>
+		<br />
+		Nebulae: <span id="nebulas">0</span>
+		<br />
+		Nebula Cost: 1000000 Hydrogen Atoms
+		<br />
+		<br />
+		Create Star
+		<br />
+		<button onclick="buyStar(1)">x1</button>
+		<button onclick="buyStar(10)">x10</button>
+		<button onclick="buyStar(100)">x100</button>
+		<br />
+		Stars: <span id="stars">0</span>
+		<br />
+		Star Cost: .001 Nebulae
+		<br />
 		<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>
