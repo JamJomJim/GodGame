@@ -114,7 +114,7 @@ function buyMax(unitType){
 			break;			
 		case "nebula":
 			var	max = hydrogenAtoms;
-			divisor = nebulaCostCost[0];
+			divisor = nebulaCost[0];
 			buyNebula(Math.floor(max/divisor));
 			break;			
 		case "star":
