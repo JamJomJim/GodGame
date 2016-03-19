@@ -130,7 +130,7 @@ function nebulaGain(number){
 		stars = stars + nebulaCost[1] * number;
 }
 function buyStar(number){
-	if(nebula >= number * starCost[0]){
+	if(nebulas >= number * starCost[0]){
 		stars = stars + number;
 		nebulas = nebulas - number * starCost[0];
 		updateAllValues();
