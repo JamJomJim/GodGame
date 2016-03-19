@@ -108,7 +108,7 @@ function buyMax(unitType){
 			buyWater(Math.floor(max/divisor));
 			break;			
 		case "planet":
-			var	max = iron;
+			var	max = ironAtoms;
 			divisor = planetCost[0];
 			buyPlanet(Math.floor(max/divisor));
 			break;			
@@ -118,7 +118,7 @@ function buyMax(unitType){
 			buyNebula(Math.floor(max/divisor));
 			break;			
 		case "star":
-			var	max = nebula;
+			var	max = nebulas;
 			divisor = starCost[0];
 			buyStar(Math.floor(max/divisor));
 			break;			
