@@ -61,7 +61,7 @@ function buyMax(unitType){
 			if(electrons <= neutrons && electrons <= protons){
 				max = electrons;
 			}
-			if(neutrons <= electrons && neutrons <= protons){
+			else if(neutrons <= electrons && neutrons <= protons){
 				max = neutrons;
 			}
 			else{
@@ -74,7 +74,7 @@ function buyMax(unitType){
 			if(electrons <= neutrons && electrons <= protons){
 				max = electrons;
 			}
-			if(neutrons <= electrons && neutrons <= protons){
+			else if(neutrons <= electrons && neutrons <= protons){
 				max = neutrons;
 			}
 			else{
@@ -87,7 +87,7 @@ function buyMax(unitType){
 			if(electrons / ironCost[0] <= neutrons / ironCost[2] && electrons / ironCost[0] <= protons / ironCost[1]){
 				max = electrons;
 			}
-			if(neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons/ ironCost[1]){
+			else if(neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons/ ironCost[1]){
 				max = neutrons;
 			}
 			else{
