@@ -54,6 +54,78 @@ function updateBaseValues(){
     document.getElementById("protons").innerHTML = protonsDisplay;
     document.getElementById("neutrons").innerHTML = neutronsDisplay;
 }
+function buyMax(unitType){
+	switch(unitType){
+		case "hydrogen":
+			var max = 0;
+			if(electrons <= neutrons && electrons <= protons){
+				max = electrons;
+			}
+			if(neutrons <= electrons && neutrons <= protons){
+				max = neutrons;
+			}
+			else{
+				max = protons;
+			}
+			buyHydrogen(max);
+			break;
+		case "oxygen":
+			var max = 0;
+			if(electrons <= neutrons && electrons <= protons){
+				max = electrons;
+			}
+			if(neutrons <= electrons && neutrons <= protons){
+				max = neutrons;
+			}
+			else{
+				max = protons;
+			}
+			buyOxygen(Math.floor(max/8));
+			break;
+		case "iron":
+			var max = 0;
+			if(electrons / ironCost[0] <= neutrons / ironCost[2] && electrons / ironCost[0] <= protons / ironCost[1]){
+				max = electrons;
+			}
+			if(neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons/ ironCost[1]){
+				max = neutrons;
+			}
+			else{
+				max = protons;
+			}
+			buyIron(Math.floor(max/ironCost[2]));
+			break;		
+		case "water":
+			var max = 0;
+			if(hydrogenAtoms / 2 <= oxygenAtoms){
+				max = hydrogenAtoms;
+				divisor = waterCost[0]
+			}
+			else{
+				max = oxygenAtoms;
+				divisor = waterCost[1];
+			}
+			buyWater(Math.floor(max/divisor));
+			break;			
+		case "planet":
+			var	max = iron;
+			divisor = planetCost[0];
+			buyPlanet(Math.floor(max/divisor));
+			break;			
+		case "nebula":
+			var	max = hydrogenAtoms;
+			divisor = nebulaCostCost[0];
+			buyNebula(Math.floor(max/divisor));
+			break;			
+		case "star":
+			var	max = nebula;
+			divisor = starCost[0];
+			buyStar(Math.floor(max/divisor));
+			break;			
+		default:
+			break;
+	}
+}
 function buyHydrogen(number){   
     if(electrons >= number * hydrogenCost[0] && protons >= number * hydrogenCost[1] && neutrons >= number * hydrogenCost[2]){                                  
         hydrogenAtoms = hydrogenAtoms + number;                                  
