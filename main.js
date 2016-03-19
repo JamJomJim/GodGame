@@ -32,7 +32,7 @@ function updateAllValues(){
 	neutronsDisplay = Math.floor(neutrons);
 	totalAtoms = hydrogenAtoms + oxygenAtoms;
 	a = totalAtoms/atomsInUniverse; 
-	document.getElementById("totalAtoms").innerHTML = parseInt(hydrogenAtoms.toFixed(0)) + parseInt(oxygenAtoms.toFixed(0)) + parseInt(ironAtoms.toFixed(0));
+	document.getElementById("totalAtoms").innerHTML = Math.floor(hydrogenAtoms) + Math.floor(oxygenAtoms) + Math.floor(ironAtoms);
 	document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
 	document.getElementById("electrons").innerHTML = electronsDisplay;
     document.getElementById("protons").innerHTML = protonsDisplay;
