@@ -35,8 +35,8 @@ function updateAllValues(){
 	document.getElementById("totalAtoms").innerHTML = Math.floor(hydrogenAtoms) + Math.floor(oxygenAtoms) + Math.floor(ironAtoms);
 	document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
 	document.getElementById("electrons").innerHTML = electronsDisplay;
-    document.getElementById("protons").innerHTML = protonsDisplay;
-    document.getElementById("neutrons").innerHTML = neutronsDisplay;
+	document.getElementById("protons").innerHTML = protonsDisplay;
+	document.getElementById("neutrons").innerHTML = neutronsDisplay;
 	document.getElementById("hydrogenAtoms").innerHTML = hydrogenAtoms.toFixed(0);
 	document.getElementById("oxygenAtoms").innerHTML = oxygenAtoms.toFixed(0);
 	document.getElementById("ironAtoms").innerHTML = ironAtoms.toFixed(0);
