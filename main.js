@@ -181,7 +181,7 @@ function waterGain(number){
 	oxygenAtoms = oxygenAtoms + waterCost[1] * waterCost[2] * water;
 }
 function buyPlanet(number){
-	if(ironAtoms >= planetCost[0]){
+	if(ironAtoms >= number * planetCost[0]){
 		planets = planets + number;
 		ironAtoms = ironAtoms - number * planetCost[0];
 		updateAllValues();
