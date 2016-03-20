@@ -32,7 +32,7 @@ function updateAllValues(){
 	neutronsDisplay = Math.floor(neutrons);
 	totalAtoms = hydrogenAtoms + oxygenAtoms;
 	a = totalAtoms/atomsInUniverse; 
-	document.getElementById("totalAtoms").innerHTML = parseInt(hydrogenAtoms.toFixed(0)) + parseInt(oxygenAtoms.toFixed(0)) + parseInt(ironAtoms.toFixed(0));
+	document.getElementById("totalAtoms").innerHTML = Math.floor(hydrogenAtoms) + Math.floor(oxygenAtoms) + Math.floor(ironAtoms);
 	document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
 	document.getElementById("electrons").innerHTML = electronsDisplay;
     document.getElementById("protons").innerHTML = protonsDisplay;
@@ -108,7 +108,7 @@ function buyMax(unitType){
 			buyWater(Math.floor(max/divisor));
 			break;			
 		case "planet":
-			var	max = iron;
+			var	max = ironAtoms;
 			divisor = planetCost[0];
 			buyPlanet(Math.floor(max/divisor));
 			break;			
@@ -118,7 +118,7 @@ function buyMax(unitType){
 			buyNebula(Math.floor(max/divisor));
 			break;			
 		case "star":
-			var	max = nebula;
+			var	max = nebulas;
 			divisor = starCost[0];
 			buyStar(Math.floor(max/divisor));
 			break;			
@@ -181,7 +181,7 @@ function waterGain(number){
 	oxygenAtoms = oxygenAtoms + waterCost[1] * waterCost[2] * water;
 }
 function buyPlanet(number){
-	if(ironAtoms >= planetCost[0]){
+	if(ironAtoms >= number * planetCost[0]){
 		planets = planets + number;
 		ironAtoms = ironAtoms - number * planetCost[0];
 		updateAllValues();
