@@ -13,13 +13,13 @@ var planets = 0
 var nebulas = 0;
 var stars = 0;
 var starSystems = 0;
-var hydrogenCost = [1, 1, 1, .1] // [electrons, protons, neutrons, production rate]
-var oxygenCost = [8, 8, 8, .1] // [electrons, protons, neutrons, production rate]
-var ironCost = [26, 26, 33, .1]// [electrons, protons, neutrons, production rate]
-var waterCost = [2, 1, .1] // [hydrogen, oxygen, production rate]
-var planetCost = [10000, .1]// [iron, production rate]
-var nebulaCost = [1000000, .1, 1000] // [hydrogen, star production, hydrogen production]
-var starCost = [.001, .1] // [nebulas, production rate]
+var hydrogenCost = [1, 1, 1, .1, 1] // [electrons, protons, neutrons, production rate, atom cost]
+var oxygenCost = [8, 8, 8, .1, 1] // [electrons, protons, neutrons, production rate, atom cost]
+var ironCost = [26, 26, 33, .1, 1]// [electrons, protons, neutrons, production rate, atom cost]
+var waterCost = [2, 1, .1, 3] // [hydrogen, oxygen, production rate, atom cost]
+var planetCost = [10000, .1, 10000]// [iron, production rate, atom cost]
+var nebulaCost = [1000000, .1, 1000, 1000000] // [hydrogen, star production, hydrogen production, atom cost]
+var starCost = [.001, .1, 1000] // [nebulas, production rate, atom cost]
 function baseGain(number){
     electrons = electrons + number;
 	protons = protons + number;
@@ -27,32 +27,25 @@ function baseGain(number){
 	updateAllValues();
 }
 function updateAllValues(){
-	electronsDisplay = Math.floor(electrons);
-	protonsDisplay = Math.floor(protons);
-	neutronsDisplay = Math.floor(neutrons);
-	totalAtoms = hydrogenAtoms + oxygenAtoms;
+	totalAtoms = Math.floor(hydrogenAtoms) * hydrogenCost[4] + Math.floor(oxygenAtoms) * oxygenCost[4] + Math.floor(ironAtoms) * ironCost[4] + Math.floor(water) * waterCost[3] + Math.floor(planets) * planetCost[2] + Math.floor(nebulas) * nebulaCost[3] + Math.floor(stars) * starCost[2];
 	a = totalAtoms/atomsInUniverse; 
-	document.getElementById("totalAtoms").innerHTML = Math.floor(hydrogenAtoms) + Math.floor(oxygenAtoms) + Math.floor(ironAtoms);
+	document.getElementById("totalAtoms").innerHTML = Math.floor(totalAtoms)
 	document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
-	document.getElementById("electrons").innerHTML = electronsDisplay;
-	document.getElementById("protons").innerHTML = protonsDisplay;
-	document.getElementById("neutrons").innerHTML = neutronsDisplay;
-	document.getElementById("hydrogenAtoms").innerHTML = hydrogenAtoms.toFixed(0);
-	document.getElementById("oxygenAtoms").innerHTML = oxygenAtoms.toFixed(0);
-	document.getElementById("ironAtoms").innerHTML = ironAtoms.toFixed(0);
-	document.getElementById("water").innerHTML = water.toFixed(0);
-	document.getElementById("planets").innerHTML = planets.toFixed(0);
-	document.getElementById("nebulas").innerHTML = nebulas.toFixed(0);
-	document.getElementById("stars").innerHTML = stars.toFixed(0);
-
+	document.getElementById("electrons").innerHTML = Math.floor(electrons);
+	document.getElementById("protons").innerHTML = Math.floor(protons);
+	document.getElementById("neutrons").innerHTML = Math.floor(neutrons);
+	document.getElementById("hydrogenAtoms").innerHTML = Math.floor(hydrogenAtoms).toFixed(0);
+	document.getElementById("oxygenAtoms").innerHTML = Math.floor(oxygenAtoms).toFixed(0);
+	document.getElementById("ironAtoms").innerHTML = Math.floor(ironAtoms).toFixed(0);
+	document.getElementById("water").innerHTML = Math.floor(water).toFixed(0);
+	document.getElementById("planets").innerHTML = Math.floor(planets).toFixed(0);
+	document.getElementById("nebulas").innerHTML = Math.floor(nebulas).toFixed(0);
+	document.getElementById("stars").innerHTML = Math.floor(stars).toFixed(0);
 }
 function updateBaseValues(){
-	electronsDisplay = Math.floor(electrons);
-	protonsDisplay = Math.floor(protons);
-	neutronsDisplay = Math.floor(neutrons);
-	document.getElementById("electrons").innerHTML = electronsDisplay;
-    document.getElementById("protons").innerHTML = protonsDisplay;
-    document.getElementById("neutrons").innerHTML = neutronsDisplay;
+	document.getElementById("electrons").innerHTML = Math.floor(electrons);
+    document.getElementById("protons").innerHTML = Math.floor(protons);
+    document.getElementById("neutrons").innerHTML = Math.floor(neutrons);
 }
 function buyMax(unitType){
 	switch(unitType){
