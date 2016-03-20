@@ -10,6 +10,8 @@ var oxygenAtoms = 0;
 var ironAtoms = 0;
 var siliconAtoms = 0;
 var water = 0;
+var rocks = 0;
+var sand = 0;
 var planets = 0
 var nebulas = 0;
 var stars = 0;
@@ -19,6 +21,8 @@ var oxygenCost = [8, 8, 8, .08, 1] // [electrons, protons, neutrons, EPN product
 var ironCost = [26, 26, 33, .26, .33, 1]// [electrons, protons, neutrons, EP production rate, N production rate, atom cost]
 var siliconValues = [14, 14, 14, .14, 1]// [electrons, protons, neutrons, EPN production rate, atomic value]
 var waterCost = [2, 1, .02, .01, 3] // [hydrogen, oxygen, hydrogen production rate, oxygen production rate, atomic value]
+var rockValues = [2, 1, 2, .005, .01, .001, 5]// [iron, silicon, oxygen, sand production, iron production, rock decay rate, atomic value]
+var sandValues = [1, 2, .01, .02, 3]// [silicon, oxygen, silicon production rate, oxygen production rate, atomic value]
 var planetCost = [10000, 100, 10000]// [iron, iron production rate, atom cost]
 var nebulaCost = [1000000, .01, 1000, 1000000] // [hydrogen, star production rate, hydrogen production rate, atom cost]
 var starCost = [.001, 10, 1000] // [nebulas, hydrogen production rate, atom cost]
@@ -36,14 +40,16 @@ function updateAllValues(){
 	document.getElementById("electrons").innerHTML = Math.floor(electrons);
 	document.getElementById("protons").innerHTML = Math.floor(protons);
 	document.getElementById("neutrons").innerHTML = Math.floor(neutrons);
-	document.getElementById("hydrogenAtoms").innerHTML = Math.floor(hydrogenAtoms).toFixed(0);
-	document.getElementById("oxygenAtoms").innerHTML = Math.floor(oxygenAtoms).toFixed(0);
-	document.getElementById("siliconAtoms").innerHTML = Math.floor(siliconAtoms).toFixed(0);	
-	document.getElementById("ironAtoms").innerHTML = Math.floor(ironAtoms).toFixed(0);
-	document.getElementById("water").innerHTML = Math.floor(water).toFixed(0);
-	document.getElementById("planets").innerHTML = Math.floor(planets).toFixed(0);
-	document.getElementById("nebulas").innerHTML = Math.floor(nebulas).toFixed(0);
-	document.getElementById("stars").innerHTML = Math.floor(stars).toFixed(0);
+	document.getElementById("hydrogenAtoms").innerHTML = hydrogenAtoms.toFixed(3);
+	document.getElementById("oxygenAtoms").innerHTML = oxygenAtoms.toFixed(3);
+	document.getElementById("siliconAtoms").innerHTML = siliconAtoms.toFixed(3);	
+	document.getElementById("ironAtoms").innerHTML = ironAtoms.toFixed(3);
+	document.getElementById("water").innerHTML = water.toFixed(3);
+	document.getElementById("rocks").innerHTML = rocks.toFixed(3);
+	document.getElementById("sand").innerHTML = sand.toFixed(3);	
+	document.getElementById("planets").innerHTML = planets.toFixed(3);
+	document.getElementById("nebulas").innerHTML = nebulas.toFixed(3);
+	document.getElementById("stars").innerHTML = stars.toFixed(3);
 }
 function updateBaseValues(){
 	document.getElementById("electrons").innerHTML = Math.floor(electrons);
@@ -54,6 +60,7 @@ function buyMax(unitType){
 	switch(unitType){
 		case "hydrogen":
 			var max = 0;
+			var divisor = 0;
 			if(electrons <= neutrons && electrons <= protons){
 				max = electrons;
 			}
@@ -95,27 +102,58 @@ function buyMax(unitType){
 			var max = 0;
 			if(electrons / ironCost[0] <= neutrons / ironCost[2] && electrons / ironCost[0] <= protons / ironCost[1]){
 				max = electrons;
+				divisor = 26;
 			}
 			else if(neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons/ ironCost[1]){
 				max = neutrons;
+				divisor = 33;
 			}
 			else{
 				max = protons;
+				divisor = 26;
 			}
-			buyIron(Math.floor(max/ironCost[2]));
+			buyIron(Math.floor(max/divisor));
 			break;		
 		case "water":
 			var max = 0;
 			if(hydrogenAtoms / 2 <= oxygenAtoms){
 				max = hydrogenAtoms;
-				divisor = waterCost[0]
+				divisor = 2;
 			}
 			else{
 				max = oxygenAtoms;
-				divisor = waterCost[1];
+				divisor = 1;
 			}
 			buyWater(Math.floor(max/divisor));
-			break;			
+			break;	
+		case "rock":
+			var max = 0;
+			if(ironAtoms / 2 <= siliconAtoms && ironAtoms <= oxygenAtoms){
+				max = ironAtoms;
+				divisor = 2;
+			}
+			else if(siliconAtoms <= ironAtoms / 2 && siliconAtoms <= oxygenAtoms / 2){
+				max = siliconAtoms;
+				divisor = 1;
+			}
+			else{
+				max = oxygenAtoms;
+				divisor = 2;
+			}
+			buyRock(Math.floor(max/divisor));
+			break;	
+		case "sand":
+			var max = 0;
+			if(siliconAtoms <= oxygenAtoms / 2){
+				max = siliconAtoms;
+				divisor = 1;
+			}
+			else{
+				max = oxygenAtoms;
+				divisor = 2;
+			}
+			buySand(Math.floor(max/divisor));
+			break;				
 		case "planet":
 			var	max = ironAtoms;
 			divisor = planetCost[0];
@@ -191,11 +229,8 @@ function ironGain(number){
 	protons = protons + ironCost[3] * number;
 	neutrons = neutrons + ironCost[3] * number;	
 }
-function buyRock(number){
-	
-}
 function buyWater(number){
-	if(hydrogenAtoms >= waterCost[0] * number && oxygenAtoms >= waterCost[1] * number ){                                  
+	if(hydrogenAtoms >= waterCost[0] * number && oxygenAtoms >= waterCost[1] * number){                                  
         water = water + number;                                  
     	hydrogenAtoms = hydrogenAtoms - waterCost[0] * number;     
     	oxygenAtoms = oxygenAtoms - waterCost[1] * number;  
@@ -203,13 +238,45 @@ function buyWater(number){
 	}
 }
 function waterGain(number){
-	hydrogenAtoms = hydrogenAtoms + waterCost[2] * water;
-	oxygenAtoms = oxygenAtoms + waterCost[3] * water;
+	hydrogenAtoms = hydrogenAtoms + waterCost[2] * number;
+	oxygenAtoms = oxygenAtoms + waterCost[3] * number;
+}
+function buyRock(number){
+	if(ironAtoms >= rockValues[0] * number && siliconAtoms >= rockValues[1] * number && oxygenAtoms >= rockValues[2] * number){
+		rocks = rocks + number;
+		ironAtoms = ironAtoms - rockValues[0] * number;
+		siliconAtoms = siliconAtoms - rockValues[1] * number;
+		oxygenAtoms = oxygenAtoms - rockValues[2] * number;
+		updateAllValues();
+	}
+}
+function rockGain(number){
+	sand = sand + rockValues[3] * number;
+	ironAtoms = ironAtoms + rockValues[4] * number;
+	rocks = rocks - rockValues[5] * number;
+}
+function buySand(number){
+	if(siliconAtoms >= sandValues[0] * number && oxygenAtoms >= sandValues[1] * number){                                  
+        sand = sand + number;                                  
+    	siliconAtoms = siliconAtoms - sandValues[0] * number;     
+    	oxygenAtoms = oxygenAtoms - sandValues[1] * number;  
+		updateAllValues();
+	}	
+}
+function sandGain(number){
+	siliconAtoms = siliconAtoms + sandValues[2] * number;
+	oxygenAtoms = oxygenAtoms + sandValues[3] * number;	
 }
 function buyAsteroid(number){
 	
 }
+function asteroidGain(number){
+	
+}
 function buyAsteroidBelt(number){
+	
+}
+function asteroidBeltGain(number){
 	
 }
 function buyPlanet(number){
@@ -260,10 +327,12 @@ window.setInterval(function(){
 	siliconGain(siliconAtoms);
 	ironGain(ironAtoms);
 	waterGain(water);
+	rockGain(rocks);
+	sandGain(sand);
 	planetGain(planets);
 	starGain(stars);
 	nebulaGain(nebulas);
 	starSystemGain(starSystems);
 	baseGain(1);
 	time = time + 1;
-}, 100);
+}, 1000);
