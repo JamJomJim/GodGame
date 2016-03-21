@@ -1,9 +1,0 @@
-#totalAtoms {
-    text-align: center;
-    color: aqua;
-    font-family: sans-serif;
-    font: Times;
-    font-size: 22;
-    
-    
-}
