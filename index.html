@@ -3,14 +3,16 @@
 		<link rel="stylesheet" type="text/css" href="interface.css" />
 	</head>
 	<body>
+		<button onclick="save()">Save Game</button> <button onclick="localStorage.removeItem('save')">Delete Save</button>
+		<br />
 		Total Atoms: <span id="totalAtoms">0</span>
 		<br />
 		Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
 		<br />
 		<br />		
-		Electrons: <span id="electrons">0</span>
 		Protons: <span id="protons">0</span>
 		Neutrons: <span id="neutrons">0</span>
+		Electrons: <span id="electrons">0</span>
 		<br />
 		<br />
 		Create Hydrogen

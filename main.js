@@ -26,6 +26,42 @@ var sandValues = [1, 2, .01, .02, 3]// [silicon, oxygen, silicon production rate
 var planetCost = [10000, 100, 10000]// [iron, iron production rate, atom cost]
 var nebulaCost = [1000000, .01, 1000, 1000000] // [hydrogen, star production rate, hydrogen production rate, atom cost]
 var starCost = [.001, 10, 1000] // [nebulas, hydrogen production rate, atom cost]
+function save(){
+	var save = {
+		electrons: electrons,
+		protons: protons,
+		neutrons: neutrons,
+		hydrogenAtoms: hydrogenAtoms,
+		oxygenAtoms: oxygenAtoms,
+		ironAtoms: ironAtoms,
+		siliconAtoms: siliconAtoms,
+		water: water,
+		rocks: rocks,
+		sand: sand,
+		planets: planets,
+		nebulas: nebulas,
+		stars: stars,
+		starSystems: starSystems
+	}
+	localStorage.setItem("save", JSON.stringify(save));
+}
+function load(){
+	var savegame = JSON.parse(localStorage.getItem("save"));
+	if (typeof savegame.electrons !== "undefined") electrons = savegame.electrons;
+	if (typeof savegame.protons !== "undefined") protons = savegame.protons;
+	if (typeof savegame.neutrons !== "undefined") neutrons = savegame.neutrons;
+	if (typeof savegame.hydrogenAtoms !== "undefined") hydrogenAtoms = savegame.hydrogenAtoms;
+	if (typeof savegame.oxygenAtoms !== "undefined") oxygenAtoms = savegame.oxygenAtoms;
+	if (typeof savegame.ironAtoms !== "undefined") ironAtoms = savegame.ironAtoms;
+	if (typeof savegame.siliconAtoms !== "undefined") siliconAtoms = savegame.siliconAtoms;
+	if (typeof savegame.water !== "undefined") water = savegame.water;
+	if (typeof savegame.rocks !== "undefined") rocks = savegame.rocks;
+	if (typeof savegame.sand !== "undefined") sand = savegame.sand;
+	if (typeof savegame.planets !== "undefined") planets = savegame.planets;
+	if (typeof savegame.nebulas !== "undefined") nebulas = savegame.nebulas;
+	if (typeof savegame.stars !== "undefined") stars = savegame.stars;
+	if (typeof savegame.starSystems !== "undefined") starSystems = savegame.starSystems;
+}
 function baseGain(number){
     electrons = electrons + number;
 	protons = protons + number;
@@ -70,7 +106,7 @@ function buyMax(unitType){
 			else{
 				max = protons;
 			}
-			buyHydrogen(max);
+			buyHydrogen(Math.floor(max));
 			break;
 		case "oxygen":
 			var max = 0;
@@ -322,7 +358,6 @@ function starSystemGain(number){
 	
 }
 window.setInterval(function(){	
-	hydrogenGain(hydrogenAtoms);
 	oxygenGain(oxygenAtoms);
 	siliconGain(siliconAtoms);
 	ironGain(ironAtoms);
@@ -336,3 +371,6 @@ window.setInterval(function(){
 	baseGain(1);
 	time = time + 1;
 }, 1000);
+window.onload = function() {
+  load();
+};
