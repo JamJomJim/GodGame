@@ -512,7 +512,7 @@ window.setInterval(function() {
     time = time + 1;
     waterDiv = document.getElementById("waterSection");
     waterDiv.style.display = 'visible';
-}, 100);
+}, 1000);
 window.setInterval(function() {
     if (hydrogenAtoms >= 20 && oxygenAtoms >= 10 && waterUnlocked === false) {
         waterDiv = document.getElementById("waterSection");
