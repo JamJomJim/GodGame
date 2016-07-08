@@ -1,4 +1,5 @@
 var time = 0;
+var days, hours, minutes, seconds;
 var totalAtoms = 0;
 var percentOfUniverse = 0;
 var atomsInUniverse = Math.pow(10, 80);
@@ -37,11 +38,20 @@ var sandValues = [1, 2, .01, .02, 3]; // [silicon, oxygen, silicon production ra
 var planetCost = [10000, 100, 10000]; // [iron, iron production rate, atom cost]
 var nebulaCost = [1000000, .01, 1000, 1000000]; // [hydrogen, star production rate, hydrogen production rate, atom cost]
 var starCost = [.001, 10, 1000]; // [nebulas, hydrogen production rate, atom cost]
+function openTab(tabName) {
+    var i, tabcontent;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+}
 function save() {
     var save = {
         electrons: electrons,
         protons: protons,
         neutrons: neutrons,
+		energy: energy,
         hydrogenAtoms: hydrogenAtoms,
         oxygenAtoms: oxygenAtoms,
         ironAtoms: ironAtoms,
@@ -52,6 +62,7 @@ function save() {
         planets: planets,
         nebulas: nebulas,
         stars: stars,
+		blackHoles: blackHoles,
         starSystems: starSystems
     };
     localStorage.setItem("save", JSON.stringify(save));
@@ -62,6 +73,7 @@ function load() {
     if (typeof savegame.electrons !== "undefined") electrons = savegame.electrons;
     if (typeof savegame.protons !== "undefined") protons = savegame.protons;
     if (typeof savegame.neutrons !== "undefined") neutrons = savegame.neutrons;
+    if (typeof savegame.energy !== "undefined") energy = savegame.energy;
     if (typeof savegame.hydrogenAtoms !== "undefined") hydrogenAtoms = savegame.hydrogenAtoms;
     if (typeof savegame.oxygenAtoms !== "undefined") oxygenAtoms = savegame.oxygenAtoms;
     if (typeof savegame.ironAtoms !== "undefined") ironAtoms = savegame.ironAtoms;
@@ -72,9 +84,19 @@ function load() {
     if (typeof savegame.planets !== "undefined") planets = savegame.planets;
     if (typeof savegame.nebulas !== "undefined") nebulas = savegame.nebulas;
     if (typeof savegame.stars !== "undefined") stars = savegame.stars;
+	if (typeof savegame.blackHoles !== "undefined") blackHoles = savegame.blackHoles;
     if (typeof savegame.starSystems !== "undefined") starSystems = savegame.starSystems;
 }
-
+function determineTimePlayed() {
+	seconds = ((time % 86400) % 3600) % 60;
+	minutes = (((time - seconds) % 86400) % 3600) / 60;
+	hours = (((time - seconds) - minutes * 60) % 86400) / 3600;
+	days = (((time - seconds) - minutes * 60) - hours * 3600) / 86400;
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;	
+    document.getElementById("seconds").innerHTML = seconds;
+}
 function baseGain(number) {
     electrons = electrons + number;
     protons = protons + number;
@@ -83,6 +105,7 @@ function baseGain(number) {
 }
 
 function updateAllValues() {
+	determineTimePlayed();
     totalAtoms = Math.floor(hydrogenAtoms) * hydrogenCost[4] + Math.floor(oxygenAtoms) * oxygenCost[4] + Math.floor(ironAtoms) * ironCost[5] + Math.floor(water) * waterCost[4] + Math.floor(planets) * planetCost[2] + Math.floor(nebulas) * nebulaCost[3] + Math.floor(stars) * starCost[2];
     a = totalAtoms / atomsInUniverse;
     energyCost = Math.floor(blackHoles);
@@ -489,7 +512,7 @@ window.setInterval(function() {
     time = time + 1;
     waterDiv = document.getElementById("waterSection");
     waterDiv.style.display = 'visible';
-}, 1000);
+}, 100);
 window.setInterval(function() {
     if (hydrogenAtoms >= 20 && oxygenAtoms >= 10 && waterUnlocked === false) {
         waterDiv = document.getElementById("waterSection");
