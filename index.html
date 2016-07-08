@@ -1,151 +1,140 @@
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="interface.css" />
-	</head>
-	<body>
-		<button onclick="save()">Save Game</button> <button onclick="localStorage.removeItem('save')">Delete Save</button>
-		<br />
+    
+<head>
+    <link rel="stylesheet" type="text/css" href="interface.css" />
+</head>
+<ul class="tab">
+    <li><a href="#" class="tablinks" onclick="openTab('Game')">Game</a>
+    </li>
+    <li><a href="#" class="tablinks" onclick="openTab('Achievements')">Achievements</a>
+    </li>
+    <li><a href="#" class="tablinks" onclick="openTab('Options')">Options</a>
+    </li>
+</ul>
+
+<div id="Game" class="tabcontent">
+
+    <body>
 		Total Atoms: <span id="totalAtoms">0</span>
-		<br />
-		Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
-		<br />
-		<br />		
-		Protons: <span id="protons">0</span>
-		Neutrons: <span id="neutrons">0</span>
-		Electrons: <span id="electrons">0</span>
-		<div id="currentEnergyAndBlackHoles" style="display: none;">				
-		Energy: <span id="energy">0</span>
-		Black Holes: <span id="blackHoles">0</span>
-		</div>
-		<br />
-		<br />
-		Create Hydrogen
-		<br />
-		<button onclick="buyHydrogen(1)">x1</button>
-		<button onclick="buyHydrogen(10)">x10</button>
-		<button onclick="buyHydrogen(100)">x100</button>
-		<button onclick="buyMax('hydrogen')">Max</button>
-		<br />
-		Hydrogen Atoms: <span id="hydrogenAtoms">0</span>
-		<br />
-		Hydrogen Cost: 1 Proton, 1 Neutron, 1 Electron<span id="commaHydrogen" style="display: none;">,</span> <span id="energyCostHydrogen" style="display: none;">0</span> <span id="energyHydrogen" style="display: none;">Energy</span>
-		<br />
-		<br />
-		Create Oxygen
-		<br />
-		<button onclick="buyOxygen(1)">x1</button>
-		<button onclick="buyOxygen(10)">x10</button>
-		<button onclick="buyOxygen(100)">x100</button>
-		<button onclick="buyMax('oxygen')">Max</button>
-		<br />
-		Oxygen Atoms: <span id="oxygenAtoms">0</span>
-		<br />
-		Oxygen Cost: 8 Protons, 8 Neutrons, 8 Electrons<span id="commaOxygen" style="display: none;">,</span> <span id="energyCostOxygen" style="display: none;">0</span> <span id="energyOxygen" style="display: none;">Energy</span>
-		<br />
-		<br />
-		Create Silicon
-		<br />
-		<button onclick="buySilicon(1)">x1</button>
-		<button onclick="buySilicon(10)">x10</button>
-		<button onclick="buySilicon(100)">x100</button>
-		<button onclick="buyMax('silicon')">Max</button>
-		<br />
-		Silicon Atoms: <span id="siliconAtoms">0</span>
-		<br />
-		Silicon Cost: 14 Protons, 14 Neutrons, 14 Electrons<span id="commaSilicon" style="display: none;">,</span> <span id="energyCostSilicon" style="display: none;">0</span> <span id="energySilicon" style="display: none;">Energy</span>
-		<br />
-		<br />
-		Create Iron
-		<br />
-		<button onclick="buyIron(1)">x1</button>
-		<button onclick="buyIron(10)">x10</button>
-		<button onclick="buyIron(100)">x100</button>
-		<button onclick="buyMax('iron')">Max</button>
-		<br />
-		Iron Atoms: <span id="ironAtoms">0</span>
-		<br />
-		Iron Cost: 26 Protons, 33 Neutrons, 26 Electrons<span id="commaIron" style="display: none;">,</span> <span id="energyCostIron" style="display: none;">0</span> <span id="energyIron" style="display: none;">Energy</span>
-		<br />
-		<div id="waterSection" style="display: none;">		
-		<br />
-		Create Water
-		<br />
-		<button onclick="buyWater(1)">x1</button>
-		<button onclick="buyWater(10)">x10</button>
-		<button onclick="buyWater(100)">x100</button>
-		<button onclick="buyMax('water')">Max</button>		
-		<br />
-		Water Molecules: <span id="water">0</span>
-		<br />
-		Water Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
-		<br />
-		</div>
-		<div id="rockSection" style="display: none;">
-		<br />
-		Create Rock
-		<br />
-		<button onclick="buyRock(1)">x1</button>
-		<button onclick="buyRock(10)">x10</button>
-		<button onclick="buyRock(100)">x100</button>
-		<button onclick="buyMax('rock')">Max</button>
-		<br />
-		Rocks: <span id="rocks">0</span>
-		<br />
-		Rock Cost: 2 Iron Atoms, 1 Silicon Atom, 2 Oxygen Atoms
-		<br />
-		<br />
-		Create Sand
-		<br />
-		<button onclick="buySand(1)">x1</button>
-		<button onclick="buySand(10)">x10</button>
-		<button onclick="buySand(100)">x100</button>
-		<button onclick="buyMax('sand')">Max</button>
-		<br />
-		Sand: <span id="sand">0</span>
-		<br />
-		Sand Cost: 1 Silicon Atom, 2 Oxygen Atoms
-		<br />
-		</div>
-		<div id="planetSection" style="display: none;">		
-		<br />
-		Create Planet
-		<br />
-		<button onclick="buyPlanet(1)">x1</button>
-		<button onclick="buyPlanet(10)">x10</button>
-		<button onclick="buyPlanet(100)">x100</button>
-		<button onclick="buyMax('planet')">Max</button>
-		<br />
-		Planets: <span id="planets">0</span>
-		<br />
-		Planet Cost: 10000 Iron Atoms
-		<br />
-		</div>
-		<div id="starSection" style="display: none;">
-		<br />
-		Create Nebula
-		<br />
-		<button onclick="buyNebula(1)">x1</button>
-		<button onclick="buyNebula(10)">x10</button>
-		<button onclick="buyNebula(100)">x100</button>
-		<button onclick="buyMax('nebula')">Max</button>
-		<br />
-		Nebulae: <span id="nebulas">0</span>
-		<br />
-		Nebula Cost: 1000000 Hydrogen Atoms
-		<br />
-		<br />
-		Create Star
-		<br />
-		<button onclick="buyStar(1)">x1</button>
-		<button onclick="buyStar(10)">x10</button>
-		<button onclick="buyStar(100)">x100</button>
-		<button onclick="buyMax('star')">Max</button>
-		<br />
-		Stars: <span id="stars">0</span>
-		<br />
-		Star Cost: .001 Nebulae
-		<br />
-		</div>
-		<script type="text/javascript" src="main.js"></script>
+        <br /> Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
+        <br />
+        <br /> Protons: <span id="protons">0</span> Neutrons: <span id="neutrons">0</span> Electrons: <span id="electrons">0</span>
+        <div id="currentEnergyAndBlackHoles" style="display: none;">
+            Energy: <span id="energy">0</span> Black Holes: <span id="blackHoles">0</span>
+        </div>
+        <br />
+        <p class="unit"> Create Hydrogen
+        <br />
+        <button onclick="buyHydrogen(1)">x1</button>
+        <button onclick="buyHydrogen(10)">x10</button>
+        <button onclick="buyHydrogen(100)">x100</button>
+        <button onclick="buyMax('hydrogen')">Max</button>
+        <br /> Hydrogen Atoms: <span id="hydrogenAtoms">0</span>
+        <br /> Hydrogen Cost: 1 Proton, 1 Neutron, 1 Electron<span id="commaHydrogen" style="display: none;">,</span> <span id="energyCostHydrogen" style="display: none;">0</span> <span id="energyHydrogen" style="display: none;">Energy</span>
+        </p>
+        <p class="unit"> Create Oxygen
+        <br />
+        <button onclick="buyOxygen(1)">x1</button>
+        <button onclick="buyOxygen(10)">x10</button>
+        <button onclick="buyOxygen(100)">x100</button>
+        <button onclick="buyMax('oxygen')">Max</button>
+        <br /> Oxygen Atoms: <span id="oxygenAtoms">0</span>
+        <br /> Oxygen Cost: 8 Protons, 8 Neutrons, 8 Electrons<span id="commaOxygen" style="display: none;">,</span> <span id="energyCostOxygen" style="display: none;">0</span> <span id="energyOxygen" style="display: none;">Energy</span>
+        </p>
+        <p class="unit"> Create Silicon
+        <br />
+        <button onclick="buySilicon(1)">x1</button>
+        <button onclick="buySilicon(10)">x10</button>
+        <button onclick="buySilicon(100)">x100</button>
+        <button onclick="buyMax('silicon')">Max</button>
+        <br /> Silicon Atoms: <span id="siliconAtoms">0</span>
+        <br /> Silicon Cost: 14 Protons, 14 Neutrons, 14 Electrons<span id="commaSilicon" style="display: none;">,</span> <span id="energyCostSilicon" style="display: none;">0</span> <span id="energySilicon" style="display: none;">Energy</span>
+        </p>
+        <p class="unit"> Create Iron
+        <br />
+        <button onclick="buyIron(1)">x1</button>
+        <button onclick="buyIron(10)">x10</button>
+        <button onclick="buyIron(100)">x100</button>
+        <button onclick="buyMax('iron')">Max</button>
+        <br /> Iron Atoms: <span id="ironAtoms">0</span>
+        <br /> Iron Cost: 26 Protons, 33 Neutrons, 26 Electrons<span id="commaIron" style="display: none;">,</span> <span id="energyCostIron" style="display: none;">0</span> <span id="energyIron" style="display: none;">Energy</span>
+        </p>
+        <div id="waterSection" style="display: none;">
+            <p class="unit"> Create Water
+            <br />
+            <button onclick="buyWater(1)">x1</button>
+            <button onclick="buyWater(10)">x10</button>
+            <button onclick="buyWater(100)">x100</button>
+            <button onclick="buyMax('water')">Max</button>
+            <br /> Water Molecules: <span id="water">0</span>
+            <br /> Water Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
+            </p>
+        </div>
+        <div id="rockSection" style="display: none;">
+            <p class="unit"> Create Rock
+            <br />
+            <button onclick="buyRock(1)">x1</button>
+            <button onclick="buyRock(10)">x10</button>
+            <button onclick="buyRock(100)">x100</button>
+            <button onclick="buyMax('rock')">Max</button>
+            <br /> Rocks: <span id="rocks">0</span>
+            <br /> Rock Cost: 2 Iron Atoms, 1 Silicon Atom, 2 Oxygen Atoms
+            </p>
+            <p class="unit"> Create Sand
+            <br />
+            <button onclick="buySand(1)">x1</button>
+            <button onclick="buySand(10)">x10</button>
+            <button onclick="buySand(100)">x100</button>
+            <button onclick="buyMax('sand')">Max</button>
+            <br /> Sand: <span id="sand">0</span>
+            <br /> Sand Cost: 1 Silicon Atom, 2 Oxygen Atoms
+            </p>
+        </div>
+        <div id="planetSection" style="display: none;">
+            <p class="unit"> Create Planet
+            <br />
+            <button onclick="buyPlanet(1)">x1</button>
+            <button onclick="buyPlanet(10)">x10</button>
+            <button onclick="buyPlanet(100)">x100</button>
+            <button onclick="buyMax('planet')">Max</button>
+            <br /> Planets: <span id="planets">0</span>
+            <br /> Planet Cost: 10000 Iron Atoms
+            </p>
+        </div>
+        <div id="starSection" style="display: none;">
+            <p class="unit"> Create Nebula
+            <br />
+            <button onclick="buyNebula(1)">x1</button>
+            <button onclick="buyNebula(10)">x10</button>
+            <button onclick="buyNebula(100)">x100</button>
+            <button onclick="buyMax('nebula')">Max</button>
+            <br /> Nebulae: <span id="nebulas">0</span>
+            <br /> Nebula Cost: 1000000 Hydrogen Atoms
+            </p>
+            <p class="unit"> Create Star
+            <br />
+            <button onclick="buyStar(1)">x1</button>
+            <button onclick="buyStar(10)">x10</button>
+            <button onclick="buyStar(100)">x100</button>
+            <button onclick="buyMax('star')">Max</button>
+            <br /> Stars: <span id="stars">0</span>
+            <br /> Star Cost: .001 Nebulae
+            </p>
+        </div>
+        <script type="text/javascript" src="main.js"></script>
+    </body>
+</div>
+
+<div id="Achievements" class="tabcontent">
+
+</div>
+
+<div id="Options" class="tabcontent">
+	<body>
+		<p><button onclick="save()">Save Game</button></p>
+		<p><button onclick="localStorage.removeItem('save')">Delete Save</button></p>
+		<p>Time Played: <span id="days">0</span> Days <span id="hours">0</span> Hours <span id="minutes">0</span> Minutes <span id="seconds">0</span> Seconds</p>
 	</body>
+</div>
+
 </html>
