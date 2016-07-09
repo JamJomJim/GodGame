@@ -1,5 +1,11 @@
-var time = 0;
+var time = 1;
 var days, hours, minutes, seconds;
+var achievements = {
+	numberOfAchievements: 0,
+	aTime: {},
+	aTotalAtoms: {},
+	aAchievements: {}
+};
 var totalAtoms = 0;
 var percentOfUniverse = 0;
 var atomsInUniverse = Math.pow(10, 80);
@@ -46,8 +52,25 @@ function openTab(tabName) {
     }
     document.getElementById(tabName).style.display = "block";
 }
+function checkAchievements() {
+	if(achievements.numberOfAchievements >= 1 && achievements.aAchievements[0] != true){
+		document.getElementById("noAchievements").style.display = "none";
+		achievements.aAchievements[0] = true
+	}
+	if(achievements.aTime[0] != true && time >= 900){
+		document.getElementById("timeOne").style.display = "block";
+		achievements.aTime[0] = true;
+		achievements.numberOfAchievements += 1;
+	}
+}
+function updateAchievements(){
+	if(achievements.aTime[0] == true) document.getElementById("timeOne").style.display = "block";
+	if(achievements.aAchievements[0] == true) document.getElementById("noAchievements").style.display = "none";
+}
 function save() {
     var save = {
+		time: time,
+		achievements: achievements,
         electrons: electrons,
         protons: protons,
         neutrons: neutrons,
@@ -70,6 +93,8 @@ function save() {
 
 function load() {
     var savegame = JSON.parse(localStorage.getItem("save"));
+	if (typeof savegame.time !== "undefined") time = savegame.time;	
+    if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;	
     if (typeof savegame.electrons !== "undefined") electrons = savegame.electrons;
     if (typeof savegame.protons !== "undefined") protons = savegame.protons;
     if (typeof savegame.neutrons !== "undefined") neutrons = savegame.neutrons;
@@ -496,7 +521,7 @@ function buyStarSystem(number) {
 }
 
 function starSystemGain(number) {}
-window.setInterval(function() {
+setInterval(function() {
     hydrogenGain(hydrogenAtoms);
     oxygenGain(oxygenAtoms);
     siliconGain(siliconAtoms);
@@ -509,11 +534,10 @@ window.setInterval(function() {
     nebulaGain(nebulas);
     starSystemGain(starSystems);
     baseGain(1);
-    time = time + 1;
-    waterDiv = document.getElementById("waterSection");
-    waterDiv.style.display = 'visible';
+    time++;
+	checkAchievements();
 }, 1000);
-window.setInterval(function() {
+setInterval(function() {
     if (hydrogenAtoms >= 20 && oxygenAtoms >= 10 && waterUnlocked === false) {
         waterDiv = document.getElementById("waterSection");
         waterDiv.style.display = "block";
@@ -545,6 +569,10 @@ window.setInterval(function() {
         blackHolesUnlocked = true;
     }
 }, 5000);
+setInterval(function() {
+	save();
+}, 60000);
 window.onload = function() {
     load();
+	updateAchievements();
 };

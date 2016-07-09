@@ -1,7 +1,15 @@
 body{
 	font-size: 100%
 }
+h3{
+	margin-top: 0;
+}
 p.unit {
+	width: 25%;
+    border-style: solid;
+    border-width: thin;
+}
+div.achievement {
 	width: 25%;
     border-style: solid;
     border-width: thin;
