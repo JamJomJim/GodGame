@@ -4,8 +4,41 @@ body{
 h3{
 	margin-top: 0;
 }
+#left{
+	float:left;
+	width:50%;
+}
+#center, #right{
+	float:left;
+	width:25%;	
+}
+#events{
+	
+}
+#create {
+	display: inline-block;
+	padding: 15px 25px;
+	font-size: 24px;
+    margin: 0px -80px; 
+	cursor: pointer;
+	outline: none;
+	background-color: #e7e7e7;
+	color: black;
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 9px #999;
+    position:relative;
+    top:50%; 
+    left:50%;
+}
+#create:active {
+  background-color: #e7e7e7;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 p.unit {
-	width: 25%;
+	padding: 6px 3px;
+	width: 100%;
     border-style: solid;
     border-width: thin;
 }
@@ -22,7 +55,9 @@ ul.tab {
     border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
-
+ul.tab li a:focus, .active {
+    background-color: #ccc;
+}
 /* Float the list items side by side */
 ul.tab li {float: left;}
 
