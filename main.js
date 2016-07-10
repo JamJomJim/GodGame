@@ -6,6 +6,14 @@ var achievements = {
 	aTotalAtoms: {},
 	aAchievements: {}
 };
+var events = {
+	newGame : ["You're a god now. But what's a god without a universe?", false],
+	firstUnit : ["It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter.", false]
+}
+var currentEventOne = " ";
+var currentEventTwo = " ";
+var currentEventThree = " ";
+var currentEventFour = " ";
 var totalAtoms = 0;
 var percentOfUniverse = 0;
 var atomsInUniverse = Math.pow(10, 80);
@@ -34,23 +42,41 @@ var starSystems = 0;
 var starSystemsUnlocked = false;
 var blackHoles = 0;
 var blackHolesUnlocked = false;
-var hydrogenCost = [1, 1, 1, .01, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
-var oxygenCost = [8, 8, 8, .08, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
-var ironCost = [26, 26, 33, .26, .33, 1]; // [electrons, protons, neutrons, EP production rate, N production rate, atom cost]
-var siliconValues = [14, 14, 14, .14, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
-var waterCost = [2, 1, .02, .01, 3]; // [hydrogen, oxygen, hydrogen production rate, oxygen production rate, atomic value]
+var hydrogenCost = [1, 1, 1, .1, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
+var oxygenCost = [8, 8, 8, .5, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
+var ironCost = [26, 26, 33, 2, 1]; // [electrons, protons, neutrons, EPN production rate, atom cost]
+var siliconValues = [14, 14, 14, 1, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
+var waterCost = [2, 1, .2, .1, 3]; // [hydrogen, oxygen, hydrogen production rate, oxygen production rate, atomic value]
 var rockValues = [2, 1, 2, .005, .01, .001, 5]; // [iron, silicon, oxygen, sand production, iron production, rock decay rate, atomic value]
 var sandValues = [1, 2, .01, .02, 3]; // [silicon, oxygen, silicon production rate, oxygen production rate, atomic value]
 var planetCost = [10000, 100, 10000]; // [iron, iron production rate, atom cost]
 var nebulaCost = [1000000, .01, 1000, 1000000]; // [hydrogen, star production rate, hydrogen production rate, atom cost]
 var starCost = [.001, 10, 1000]; // [nebulas, hydrogen production rate, atom cost]
-function openTab(tabName) {
-    var i, tabcontent;
+function openTab(evt, name) {
+    var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
-    document.getElementById(tabName).style.display = "block";
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(name).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+function openLeftTab(evt, name) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontentLeft");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinksLeft");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(name).style.display = "block";
+    evt.currentTarget.className += " active";
 }
 function checkAchievements() {
 	if(achievements.numberOfAchievements >= 1 && achievements.aAchievements[0] != true){
@@ -66,6 +92,16 @@ function checkAchievements() {
 function updateAchievements(){
 	if(achievements.aTime[0] == true) document.getElementById("timeOne").style.display = "block";
 	if(achievements.aAchievements[0] == true) document.getElementById("noAchievements").style.display = "none";
+}
+function checkEvents(){
+	if(events.newGame[1] === false && time == 2){
+		newEvent(events.newGame[0]);
+		events.newGame[1] = true;
+	}
+	if(events.firstUnit[1] === false && totalAtoms == 1){
+		newEvent(events.firstUnit[0]);
+		events.firstUnit[1] = true;
+	}	
 }
 function save() {
     var save = {
@@ -90,7 +126,6 @@ function save() {
     };
     localStorage.setItem("save", JSON.stringify(save));
 }
-
 function load() {
     var savegame = JSON.parse(localStorage.getItem("save"));
 	if (typeof savegame.time !== "undefined") time = savegame.time;	
@@ -122,16 +157,41 @@ function determineTimePlayed() {
     document.getElementById("minutes").innerHTML = minutes;	
     document.getElementById("seconds").innerHTML = seconds;
 }
-function baseGain(number) {
-    electrons = electrons + number;
-    protons = protons + number;
-    neutrons = neutrons + number;
-    updateAllValues();
+function newEvent(message){
+	currentEventFour = currentEventThree;
+	currentEventThree = currentEventTwo;
+	currentEventTwo = currentEventOne;
+	currentEventOne = message;
+    document.getElementById("eventOne").innerHTML = currentEventOne;
+    document.getElementById("eventTwo").innerHTML = currentEventTwo;
+    document.getElementById("eventThree").innerHTML = currentEventThree;
+    document.getElementById("eventFour").innerHTML = currentEventFour;	
+}
+function createMatter(number) {
+	var random = Math.floor(Math.random() * 3) + 1;
+	var value = 1 + number * (hydrogenAtoms * hydrogenCost[3] + oxygenAtoms * oxygenCost[3] + siliconAtoms * siliconValues[3] + ironAtoms * ironCost[3]);
+	if(random == 1){
+		electrons += value;
+		document.getElementById("electrons").innerHTML = Math.floor(electrons);
+	}
+	else if(random == 2){
+		protons += value;
+		document.getElementById("protons").innerHTML = Math.floor(protons);
+	}
+	else {		
+	neutrons += value;
+    document.getElementById("neutrons").innerHTML = Math.floor(neutrons);	
+	}
+	random = Math.floor(Math.random() * 2) + 1;
+	if(random == 1){
+		hydrogenAtoms += number * water * waterCost[2];
+	}
+	else oxygenAtoms += number * water * waterCost[3];
 }
 
 function updateAllValues() {
 	determineTimePlayed();
-    totalAtoms = Math.floor(hydrogenAtoms) * hydrogenCost[4] + Math.floor(oxygenAtoms) * oxygenCost[4] + Math.floor(ironAtoms) * ironCost[5] + Math.floor(water) * waterCost[4] + Math.floor(planets) * planetCost[2] + Math.floor(nebulas) * nebulaCost[3] + Math.floor(stars) * starCost[2];
+    totalAtoms = Math.floor(hydrogenAtoms) * hydrogenCost[4] + Math.floor(oxygenAtoms) * oxygenCost[4] + Math.floor(ironAtoms) * ironCost[4] + Math.floor(water) * waterCost[4] + Math.floor(planets) * planetCost[2] + Math.floor(nebulas) * nebulaCost[3] + Math.floor(stars) * starCost[2];
     a = totalAtoms / atomsInUniverse;
     energyCost = Math.floor(blackHoles);
     document.getElementById("totalAtoms").innerHTML = Math.floor(totalAtoms);
@@ -139,28 +199,22 @@ function updateAllValues() {
     document.getElementById("electrons").innerHTML = Math.floor(electrons);
     document.getElementById("protons").innerHTML = Math.floor(protons);
     document.getElementById("neutrons").innerHTML = Math.floor(neutrons);
-    document.getElementById("hydrogenAtoms").innerHTML = hydrogenAtoms.toFixed(3);
-    document.getElementById("oxygenAtoms").innerHTML = oxygenAtoms.toFixed(3);
-    document.getElementById("siliconAtoms").innerHTML = siliconAtoms.toFixed(3);
-    document.getElementById("ironAtoms").innerHTML = ironAtoms.toFixed(3);
-    document.getElementById("water").innerHTML = water.toFixed(3);
-    document.getElementById("rocks").innerHTML = rocks.toFixed(3);
-    document.getElementById("sand").innerHTML = sand.toFixed(3);
-    document.getElementById("planets").innerHTML = planets.toFixed(3);
-    document.getElementById("nebulas").innerHTML = nebulas.toFixed(3);
-    document.getElementById("stars").innerHTML = stars.toFixed(3);
+    document.getElementById("hydrogenAtoms").innerHTML = Math.floor(hydrogenAtoms);
+    document.getElementById("oxygenAtoms").innerHTML = Math.floor(oxygenAtoms);
+    document.getElementById("siliconAtoms").innerHTML = Math.floor(siliconAtoms);
+    document.getElementById("ironAtoms").innerHTML = Math.floor(ironAtoms);
+    document.getElementById("water").innerHTML = Math.floor(water);
+    document.getElementById("rocks").innerHTML = Math.floor(rocks);
+    document.getElementById("sand").innerHTML = Math.floor(sand);
+    document.getElementById("planets").innerHTML = Math.floor(planets);
+    document.getElementById("nebulas").innerHTML = Math.floor(nebulas);
+    document.getElementById("stars").innerHTML = Math.floor(stars);
     document.getElementById("energy").innerHTML = Math.floor(energy);
     document.getElementById("blackHoles").innerHTML = Math.floor(blackHoles);
     document.getElementById("energyCostHydrogen").innerHTML = Math.floor(blackHoles);
     document.getElementById("energyCostOxygen").innerHTML = Math.floor(blackHoles);
     document.getElementById("energyCostIron").innerHTML = Math.floor(blackHoles);
     document.getElementById("energyCostSilicon").innerHTML = Math.floor(blackHoles);
-}
-
-function updateBaseValues() {
-    document.getElementById("electrons").innerHTML = Math.floor(electrons);
-    document.getElementById("protons").innerHTML = Math.floor(protons);
-    document.getElementById("neutrons").innerHTML = Math.floor(neutrons);
 }
 
 function buyMax(unitType) {
@@ -348,15 +402,8 @@ function buyHydrogen(number) {
         electrons = electrons - number;
         protons = protons - number;
         neutrons = neutrons - number;
-        energy = energy - Math.floor(blackHoles) * number;
         updateAllValues();
     }
-}
-
-function hydrogenGain(number) {
-    electrons = electrons + hydrogenCost[3] * number;
-    protons = protons + hydrogenCost[3] * number;
-    neutrons = neutrons + hydrogenCost[3] * number;
 }
 
 function buyOxygen(number) {
@@ -365,16 +412,8 @@ function buyOxygen(number) {
         electrons = electrons - oxygenCost[0] * number;
         protons = protons - oxygenCost[1] * number;
         neutrons = neutrons - oxygenCost[2] * number;
-        energy = energy - Math.floor(blackHoles) * number;
-
         updateAllValues();
     }
-}
-
-function oxygenGain(number) {
-    electrons = electrons + oxygenCost[3] * number;
-    protons = protons + oxygenCost[3] * number;
-    neutrons = neutrons + oxygenCost[3] * number;
 }
 
 function buySilicon(number) {
@@ -383,15 +422,8 @@ function buySilicon(number) {
         electrons = electrons - siliconValues[0] * number;
         protons = protons - siliconValues[1] * number;
         neutrons = neutrons - siliconValues[2] * number;
-        energy = energy - Math.floor(blackHoles) * number;
         updateAllValues();
     }
-}
-
-function siliconGain(number) {
-    electrons = electrons + siliconValues[3] * number;
-    protons = protons + siliconValues[3] * number;
-    neutrons = neutrons + siliconValues[3] * number;
 }
 
 function buyIron(number) {
@@ -400,16 +432,9 @@ function buyIron(number) {
         electrons = electrons - ironCost[0] * number;
         protons = protons - ironCost[1] * number;
         neutrons = neutrons - ironCost[2] * number;
-        energy = energy - Math.floor(blackHoles) * number;
         updateAllValues();
 
     }
-}
-
-function ironGain(number) {
-    electrons = electrons + ironCost[3] * number;
-    protons = protons + ironCost[3] * number;
-    neutrons = neutrons + ironCost[3] * number;
 }
 
 function buyWater(number) {
@@ -419,11 +444,6 @@ function buyWater(number) {
         oxygenAtoms = oxygenAtoms - waterCost[1] * number;
         updateAllValues();
     }
-}
-
-function waterGain(number) {
-    hydrogenAtoms = hydrogenAtoms + waterCost[2] * number;
-    oxygenAtoms = oxygenAtoms + waterCost[3] * number;
 }
 
 function buyRock(number) {
@@ -522,20 +542,16 @@ function buyStarSystem(number) {
 
 function starSystemGain(number) {}
 setInterval(function() {
-    hydrogenGain(hydrogenAtoms);
-    oxygenGain(oxygenAtoms);
-    siliconGain(siliconAtoms);
-    ironGain(ironAtoms);
-    waterGain(water);
     rockGain(rocks);
     sandGain(sand);
     planetGain(planets);
     starGain(stars);
     nebulaGain(nebulas);
     starSystemGain(starSystems);
-    baseGain(1);
+	updateAllValues();
     time++;
 	checkAchievements();
+	checkEvents();
 }, 1000);
 setInterval(function() {
     if (hydrogenAtoms >= 20 && oxygenAtoms >= 10 && waterUnlocked === false) {
