@@ -1,4 +1,4 @@
-var time = 900;
+var time = 0;
 var days, hours, minutes, seconds;
 var numAchievements = 0;
 var currentEventOne = " ";
@@ -30,7 +30,7 @@ var starSystems = 0;
 var blackHoles = 0;
 var life = {
     humans: {
-        number: 1
+        number: 0
     }
 };
 var achievements = [
@@ -64,6 +64,7 @@ var sandValues = [1, 2, .01, .02, 3]; // [silicon, oxygen, silicon production ra
 var planetCost = [10000, 100, 10000]; // [iron, iron production rate, atom cost]
 var nebulaCost = [1000000, .01, 1000, 1000000]; // [hydrogen, star production rate, hydrogen production rate, atom cost]
 var starCost = [.001, 10, 1000]; // [nebulas, hydrogen production rate, atom cost]
+
 function openTab(evt, name) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -371,15 +372,14 @@ function buyMax(unitType) {
                 buySilicon(Math.floor(max / 14));
                 break;
             case "iron":
+                divisor = 26;			
                 if (electrons / ironCost[0] <= neutrons / ironCost[2] && electrons / ironCost[0] <= protons / ironCost[1]) {
                     max = electrons;
-                    divisor = 26;
                 } else if (neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons / ironCost[1]) {
                     max = neutrons;
                     divisor = 33;
                 } else {
                     max = protons;
-                    divisor = 26;
                 }
                 buyIron(Math.floor(max / divisor));
                 break;
@@ -387,80 +387,58 @@ function buyMax(unitType) {
     }
     switch (unitType) {
         case "hydrogen":
-            if (electrons <= neutrons && electrons <= protons && electrons <= energy / energyCost) {
-                max = electrons;
-                divisor = 1;
-            } else if (neutrons <= electrons && neutrons <= protons && neutrons <= energy / energyCost) {
-                max = neutrons;
-                divisor = 1;
-            } else if (protons <= electrons && protons <= neutrons && protons <= energy / energyCost) {
-                max = protons;
-                divisor = 1;
-            } else {
+			divisor = 1;
+            if (electrons <= neutrons && electrons <= protons && electrons <= energy / energyCost) max = electrons;
+            else if (neutrons <= electrons && neutrons <= protons && neutrons <= energy / energyCost) max = neutrons;
+            else if (protons <= electrons && protons <= neutrons && protons <= energy / energyCost) max = protons; 
+			else {
                 max = energy;
                 divisor = energyCost;
             }
             buyHydrogen(Math.floor(max / divisor));
             break;
         case "carbon":
-            if (electrons / 6 <= neutrons / 6 && electrons / 6 <= protons / 6 && electrons / 6 <= energy / energyCost) {
-                max = electrons;
-                divisor = 6;
-            } else if (neutrons / 6 <= electrons / 6 && neutrons / 6 <= protons / 6 && neutrons / 6 <= energy / energyCost) {
-                max = neutrons;
-                divisor = 6;
-            } else if (protons / 6 <= electrons / 6 && protons / 6 <= neutrons / 6 && protons / 6 <= energy / energyCost) {
-                max = protons;
-                divisor = 6;
-            } else {
+            divisor = 6;		
+            if (electrons / 6 <= neutrons / 6 && electrons / 6 <= protons / 6 && electrons / 6 <= energy / energyCost) max = electrons;
+            else if (neutrons / 6 <= electrons / 6 && neutrons / 6 <= protons / 6 && neutrons / 6 <= energy / energyCost) max = neutrons;
+			else if (protons / 6 <= electrons / 6 && protons / 6 <= neutrons / 6 && protons / 6 <= energy / energyCost) max = protons;
+            else {
                 max = energy;
                 divisor = energyCost;
             }
             buyCarbon(Math.floor(max / divisor));
             break;
         case "oxygen":
-            if (electrons / 8 <= neutrons / 8 && electrons / 8 <= protons / 8 && electrons / 8 <= energy / energyCost) {
-                max = electrons;
-                divisor = 8;
-            } else if (neutrons / 8 <= electrons / 8 && neutrons / 8 <= protons / 8 && neutrons / 8 <= energy / energyCost) {
-                max = neutrons;
-                divisor = 8;
-            } else if (protons / 8 <= electrons / 8 && protons / 8 <= neutrons / 8 && protons / 8 <= energy / energyCost) {
-                max = protons;
-                divisor = 8;
-            } else {
+		    divisor = 8;
+            if (electrons / 8 <= neutrons / 8 && electrons / 8 <= protons / 8 && electrons / 8 <= energy / energyCost) max = electrons;
+            else if (neutrons / 8 <= electrons / 8 && neutrons / 8 <= protons / 8 && neutrons / 8 <= energy / energyCost) max = neutrons;
+            else if (protons / 8 <= electrons / 8 && protons / 8 <= neutrons / 8 && protons / 8 <= energy / energyCost) max = protons;
+            else {
                 max = energy;
                 divisor = energyCost;
             }
             buyOxygen(Math.floor(max / divisor));
             break;
         case "silicon":
-            if (electrons / 14 <= neutrons / 14 && electrons / 14 <= protons / 14 && electrons / 14 <= energy / energyCost) {
-                max = electrons;
-                divisor = 14;
-            } else if (neutrons / 14 <= electrons / 14 && neutrons / 14 <= protons / 14 && neutrons / 14 <= energy / energyCost) {
-                max = neutrons;
-                divisor = 14;
-            } else if (protons / 14 <= electrons / 14 && protons / 14 <= neutrons / 14 && protons / 14 <= energy / energyCost) {
-                max = neutrons;
-                divisor = 14;
-            } else {
+            divisor = 14;		
+            if (electrons / 14 <= neutrons / 14 && electrons / 14 <= protons / 14 && electrons / 14 <= energy / energyCost) max = electrons;
+            else if (neutrons / 14 <= electrons / 14 && neutrons / 14 <= protons / 14 && neutrons / 14 <= energy / energyCost) max = neutrons;
+            else if (protons / 14 <= electrons / 14 && protons / 14 <= neutrons / 14 && protons / 14 <= energy / energyCost) max = neutrons;
+            else {
                 max = energy;
                 divisor = energyCost;
             }
             buySilicon(Math.floor(max / divisor));
             break;
         case "iron":
-            if (electrons / ironCost[0] <= neutrons / ironCost[2] && electrons / ironCost[0] <= protons / ironCost[1] && electrons / ironCost[0] <= energy / energyCost) {
-                max = electrons;
-                divisor = 26;
-            } else if (neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons / ironCost[1] && neutrons / ironCost[2] <= energy / energyCost) {
+			divisor = 26;
+            if (electrons / ironCost[0] <= neutrons / ironCost[2] && electrons / ironCost[0] <= protons / ironCost[1] && electrons / ironCost[0] <= energy / energyCost) max = electrons;
+            else if (neutrons / ironCost[2] <= electrons / ironCost[0] && neutrons / ironCost[2] <= protons / ironCost[1] && neutrons / ironCost[2] <= energy / energyCost) {
                 max = neutrons;
                 divisor = 33;
-            } else if (protons / ironCost[1] <= electrons / ironCost[0] && protons / ironCost[1] <= neutrons / ironCost[2] && protons / ironCost[1] <= energy / energyCost) {
-                max = protons;
-                divisor = 26;
-            } else {
+            } 
+			else if (protons / ironCost[1] <= electrons / ironCost[0] && protons / ironCost[1] <= neutrons / ironCost[2] && protons / ironCost[1] <= energy / energyCost) max = protons;
+            else {
                 max = energy;
                 divisor = energyCost;
             }
