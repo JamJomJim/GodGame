@@ -1,20 +1,26 @@
-var time = 1;
+var time = 900;
 var days, hours, minutes, seconds;
 var achievements = {
-	numberOfAchievements: 0,
-	aTime: {},
-	aTotalAtoms: {},
-	aAchievements: {}
+	number: 0,
+	time: [false],
+	totalAtoms: [false],
+	totalAchievements: [false],
+	recordBreaker: [false]
 };
 var events = {
 	newGame : ["You're a god now. But what's a god without a universe?", false],
-	firstUnit : ["It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter.", false]
+	firstClick : ["Everything is made out of energy, so to grow your universe you must put your own energy into it.", false],
+	tenClicks : ["You find that when you put energy into your universe, particles pop into existence out of complete nothingness", false],
+	firstUnit : ["It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter.", false],
+	createdWater : ["As you create water, you find that you can now produce atoms out of nothing too.", false]
 }
 var currentEventOne = " ";
 var currentEventTwo = " ";
 var currentEventThree = " ";
 var currentEventFour = " ";
 var totalAtoms = 0;
+var totalUnits = 0;
+var totalClicks = 0;
 var percentOfUniverse = 0;
 var atomsInUniverse = Math.pow(10, 80);
 var energy = 0;
@@ -42,6 +48,9 @@ var starSystems = 0;
 var starSystemsUnlocked = false;
 var blackHoles = 0;
 var blackHolesUnlocked = false;
+var life = {
+	humans : {number : 0}
+};
 var hydrogenCost = [1, 1, 1, .1, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
 var oxygenCost = [8, 8, 8, .5, 1]; // [electrons, protons, neutrons, EPN production rate, atomic value]
 var ironCost = [26, 26, 33, 2, 1]; // [electrons, protons, neutrons, EPN production rate, atom cost]
@@ -79,28 +88,46 @@ function openLeftTab(evt, name) {
     evt.currentTarget.className += " active";
 }
 function checkAchievements() {
-	if(achievements.numberOfAchievements >= 1 && achievements.aAchievements[0] != true){
+	if(achievements.totalAchievements[0] !=true && achievements.number >= 1){
 		document.getElementById("noAchievements").style.display = "none";
-		achievements.aAchievements[0] = true
+		achievements.totalAchievements[0] = true
 	}
-	if(achievements.aTime[0] != true && time >= 900){
+	if(achievements.time[0] != true && time >= 900){
 		document.getElementById("timeOne").style.display = "block";
-		achievements.aTime[0] = true;
-		achievements.numberOfAchievements += 1;
+		achievements.time[0] = true;
+		achievements.number += 1;
+	}
+	if(achievements.recordBreaker[0] != true && time <= 604800 && life.humans.number >= 1){
+		document.getElementById("recordBreaker").stlye.display = "block";
+		achievements.recordBreaker[0] = true;
+		achievements.number += 1;
 	}
 }
 function updateAchievements(){
-	if(achievements.aTime[0] == true) document.getElementById("timeOne").style.display = "block";
-	if(achievements.aAchievements[0] == true) document.getElementById("noAchievements").style.display = "none";
+	if(achievements.totalAchievements[0] == true) document.getElementById("noAchievements").style.display = "none";
+	if(achievements.time[0] == true) document.getElementById("timeOne").style.display = "block";
+	if(achievements.recordBreaker[0] == true) document.getElementById("recordBreaker").style.display = "block";	
 }
 function checkEvents(){
 	if(events.newGame[1] === false && time == 2){
 		newEvent(events.newGame[0]);
 		events.newGame[1] = true;
 	}
-	if(events.firstUnit[1] === false && totalAtoms == 1){
+	if(events.firstClick[1] === false && totalClicks == 1){
+		newEvent(events.firstClick[0]);
+		events.firstClick[1] = true;
+	}
+	if(events.tenClicks[1] === false && totalClicks == 10){
+		newEvent(events.tenClicks[0]);
+		events.tenClicks[1] = true;
+	}	
+	if(events.firstUnit[1] === false && totalUnits >= 1){
 		newEvent(events.firstUnit[0]);
 		events.firstUnit[1] = true;
+	}	
+	if(events.createdWater[1] === false && water >= 1){
+		newEvent(events.createdWater[0]);
+		events.createdWater[1] = true;
 	}	
 }
 function save() {
@@ -170,6 +197,7 @@ function newEvent(message){
 function createMatter(number) {
 	var random = Math.floor(Math.random() * 3) + 1;
 	var value = 1 + number * (hydrogenAtoms * hydrogenCost[3] + oxygenAtoms * oxygenCost[3] + siliconAtoms * siliconValues[3] + ironAtoms * ironCost[3]);
+	totalClicks++;
 	if(random == 1){
 		electrons += value;
 		document.getElementById("electrons").innerHTML = Math.floor(electrons);
@@ -200,7 +228,9 @@ function updateAllValues() {
     document.getElementById("protons").innerHTML = Math.floor(protons);
     document.getElementById("neutrons").innerHTML = Math.floor(neutrons);
     document.getElementById("hydrogenAtoms").innerHTML = Math.floor(hydrogenAtoms);
+    document.getElementById("hydrogenRate").innerHTML = Math.floor(Math.floor(hydrogenAtoms) * hydrogenCost[3]);
     document.getElementById("oxygenAtoms").innerHTML = Math.floor(oxygenAtoms);
+    document.getElementById("oxygenRate").innerHTML = Math.floor(Math.floor(oxygenAtoms) * oxygenCost[3]);
     document.getElementById("siliconAtoms").innerHTML = Math.floor(siliconAtoms);
     document.getElementById("ironAtoms").innerHTML = Math.floor(ironAtoms);
     document.getElementById("water").innerHTML = Math.floor(water);
@@ -402,6 +432,7 @@ function buyHydrogen(number) {
         electrons = electrons - number;
         protons = protons - number;
         neutrons = neutrons - number;
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -412,6 +443,7 @@ function buyOxygen(number) {
         electrons = electrons - oxygenCost[0] * number;
         protons = protons - oxygenCost[1] * number;
         neutrons = neutrons - oxygenCost[2] * number;
+		totalUnits += number;		
         updateAllValues();
     }
 }
@@ -422,6 +454,7 @@ function buySilicon(number) {
         electrons = electrons - siliconValues[0] * number;
         protons = protons - siliconValues[1] * number;
         neutrons = neutrons - siliconValues[2] * number;
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -432,6 +465,7 @@ function buyIron(number) {
         electrons = electrons - ironCost[0] * number;
         protons = protons - ironCost[1] * number;
         neutrons = neutrons - ironCost[2] * number;
+		totalUnits += number;
         updateAllValues();
 
     }
@@ -442,6 +476,7 @@ function buyWater(number) {
         water = water + number;
         hydrogenAtoms = hydrogenAtoms - waterCost[0] * number;
         oxygenAtoms = oxygenAtoms - waterCost[1] * number;
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -452,6 +487,7 @@ function buyRock(number) {
         ironAtoms = ironAtoms - rockValues[0] * number;
         siliconAtoms = siliconAtoms - rockValues[1] * number;
         oxygenAtoms = oxygenAtoms - rockValues[2] * number;
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -467,6 +503,7 @@ function buySand(number) {
         sand = sand + number;
         siliconAtoms = siliconAtoms - sandValues[0] * number;
         oxygenAtoms = oxygenAtoms - sandValues[1] * number;
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -496,6 +533,7 @@ function buyPlanet(number) {
     if (ironAtoms >= number * planetCost[0]) {
         planets = planets + number;
         ironAtoms = ironAtoms - number * planetCost[0];
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -508,6 +546,7 @@ function buyNebula(number) {
     if (hydrogenAtoms >= number * nebulaCost[0]) {
         nebulas = nebulas + number;
         hydrogenAtoms = hydrogenAtoms - number * nebulaCost[0];
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -521,6 +560,7 @@ function buyStar(number) {
     if (nebulas >= number * starCost[0]) {
         stars = stars + number;
         nebulas = nebulas - number * starCost[0];
+		totalUnits += number;
         updateAllValues();
     }
 }
@@ -536,6 +576,7 @@ function buyStarSystem(number) {
         starSystems = starSystems + number;
         stars = stars - number;
         planets = planets - number * 8;
+		totalUnits += number;
         updateAllValues();
     }
 }

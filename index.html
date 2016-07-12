@@ -38,15 +38,16 @@
                     <br /> Cost: 1 Proton, 1 Neutron, 1 Electron<span id="commaHydrogen" style="display: none;">,</span> <span id="energyCostHydrogen" style="display: none;">0</span> <span id="energyHydrogen" style="display: none;">Energy</span>
 					<br /> Effect: +<span id="hydrogenRate">0</span> Matter per Click
                 </p>
-                <p class="unit"> Create Oxygen
+                <p class="unit"> Oxygen: <span id="oxygenAtoms">0</span>
                     <br />
                     <button onclick="buyOxygen(1)">x1</button>
                     <button onclick="buyOxygen(10)">x10</button>
                     <button onclick="buyOxygen(100)">x100</button>
                     <button onclick="buyMax('oxygen')">Max</button>
-                    <br /> Oxygen Atoms: <span id="oxygenAtoms">0</span>
-                    <br /> Oxygen Cost: 8 Protons, 8 Neutrons, 8 Electrons<span id="commaOxygen" style="display: none;">,</span> <span id="energyCostOxygen" style="display: none;">0</span> <span id="energyOxygen" style="display: none;">Energy</span>
-                </p>
+                    <br /> Cost: 8 Protons, 8 Neutrons, 8 Electrons<span id="commaOxygen" style="display: none;">,</span> <span id="energyCostOxygen" style="display: none;">0</span> <span id="energyOxygen" style="display: none;">Energy</span>
+					<br /> Effect: +<span id="oxygenRate">0</span> Matter per Click
+
+				</p>
                 <p class="unit"> Create Silicon
                     <br />
                     <button onclick="buySilicon(1)">x1</button>
@@ -152,6 +153,10 @@
     <div id="timeOne" class="achievement" style="display: none;">
         <h3>Noob</h3>
         <p class="achievement">You've played for 15 minutes. Well done?</p>
+    </div>
+    <div id="recordBreaker" class="achievement" style="display: none;">
+        <h3>Record Breaker</h3>
+        <p class="achievement">You created humanity in less than 7 days!</p>
     </div>
 </div>
 
