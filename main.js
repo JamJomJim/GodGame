@@ -199,6 +199,7 @@ function save() {
         neutrons: neutrons,
         energy: energy,
         hydrogenAtoms: hydrogenAtoms,
+		carbonAtoms: carbonAtoms,
         oxygenAtoms: oxygenAtoms,
         ironAtoms: ironAtoms,
         siliconAtoms: siliconAtoms,
@@ -228,6 +229,7 @@ function load() {
     if (typeof savegame.neutrons !== "undefined") neutrons = savegame.neutrons;
     if (typeof savegame.energy !== "undefined") energy = savegame.energy;
     if (typeof savegame.hydrogenAtoms !== "undefined") hydrogenAtoms = savegame.hydrogenAtoms;
+    if (typeof savegame.carbonAtoms !== "undefined") carbonAtoms = savegame.carbonAtoms;
     if (typeof savegame.oxygenAtoms !== "undefined") oxygenAtoms = savegame.oxygenAtoms;
     if (typeof savegame.ironAtoms !== "undefined") ironAtoms = savegame.ironAtoms;
     if (typeof savegame.siliconAtoms !== "undefined") siliconAtoms = savegame.siliconAtoms;
@@ -315,7 +317,7 @@ function updateAllValues() {
     document.getElementById("rocks").innerHTML = rocks.toFixed(1);
     document.getElementById("sand").innerHTML = sand.toFixed(1);
     document.getElementById("planets").innerHTML = Math.floor(planets);
-    document.getElementById("nebulas").innerHTML = Math.floor(nebulas);
+    document.getElementById("nebulas").innerHTML = nebulas.toFixed(3);
     document.getElementById("stars").innerHTML = Math.floor(stars);
     document.getElementById("energy").innerHTML = Math.floor(energy);
     document.getElementById("blackHoles").innerHTML = Math.floor(blackHoles);
@@ -512,9 +514,9 @@ function buyHydrogen(number) {
 function buyCarbon(number) {
     if (electrons >= number * carbonValues[0] && protons >= number * carbonValues[1] && neutrons >= number * carbonValues[2] && energy >= Math.floor(blackHoles) * number) {
         carbonAtoms = carbonAtoms + number;
-        electrons = electrons - number;
-        protons = protons - number;
-        neutrons = neutrons - number;
+        electrons = electrons - 6 * number;
+        protons = protons - 6 * number;
+        neutrons = neutrons - 6 * number;
         energy -= Math.floor(blackHoles) * number;
         totalUnits += number;
         updateAllValues();
