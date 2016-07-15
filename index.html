@@ -18,7 +18,7 @@
             Total Atoms: <span id="totalAtoms">0</span>
             <br /> Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
             <br />
-            <br /> Protons: <span id="protons">0</span> Neutrons: <span id="neutrons">0</span> Electrons: <span id="electrons">0</span>
+            <br /> Protons: <span id="proton">0</span> Neutrons: <span id="neutron">0</span> Electrons: <span id="electron">0</span>
             <div id="currentEnergyAndBlackHoles" style="display: none;">
                 Energy: <span id="energy">0</span> Black Holes: <span id="blackHoles">0</span>
             </div>
@@ -29,58 +29,58 @@
                 </li>
             </ul>
             <div id="units" class="tabcontentLeft" style="display: block;">
-                <p class="unit"> Hydrogen: <span id="hydrogenAtoms">0</span> 
+                <p class="unit"> Hydrogen: <span id="hydrogen">0</span> 
                     <br />
-                    <button onclick="buyAtom('hydrogen', 1)">+1</button>
-                    <button onclick="buyAtom('hydrogen', 10)">+10</button>
-                    <button onclick="buyAtom('hydrogen', 100)">+100</button>
+                    <button onclick="buyUnit('hydrogen', 1)">+1</button>
+                    <button onclick="buyUnit('hydrogen', 10)">+10</button>
+                    <button onclick="buyUnit('hydrogen', 100)">+100</button>
                     <button onclick="buyMax('hydrogen')">Max</button>
-                    <br /> Cost: 1 Proton, 1 Neutron, 1 Electron<span id="commaHydrogen" style="display: none;">,</span> <span id="energyCostHydrogen" style="display: none;">0</span> <span id="energyHydrogen" style="display: none;">Energy</span>
+                    <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
 					<br /> Effect: +<span id="hydrogenRate">0</span> Protons, Neutrons, or Electrons per Click
                 </p>                
-				<p class="unit"> Carbon: <span id="carbonAtoms">0</span> 
+				<p class="unit"> Carbon: <span id="carbon">0</span> 
                     <br />
-                    <button onclick="buyAtom('carbon', 1)">+1</button>
-                    <button onclick="buyAtom('carbon', 10)">+10</button>
-                    <button onclick="buyAtom('carbon', 100)">+100</button>
+                    <button onclick="buyUnit('carbon', 1)">+1</button>
+                    <button onclick="buyUnit('carbon', 10)">+10</button>
+                    <button onclick="buyUnit('carbon', 100)">+100</button>
                     <button onclick="buyMax('carbon')">Max</button>
-                    <br /> Cost: 6 Proton, 6 Neutron, 6 Electron<span id="commaCarbon" style="display: none;">,</span> <span id="energyCostCarbon" style="display: none;">0</span> <span id="energyCarbon" style="display: none;">Energy</span>
+                    <br /> Cost: 6 Proton, 6 Neutron, 6 Electron
 					<br /> Effect: +<span id="carbonRate">0</span> Protons, Neutrons, or Electrons per Click
                 </p>
-                <p class="unit"> Oxygen: <span id="oxygenAtoms">0</span>
+                <p class="unit"> Oxygen: <span id="oxygen">0</span>
                     <br />
-                    <button onclick="buyAtom('oxygen', 1)">+1</button>
-                    <button onclick="buyAtom('oxygen', 10)">+10</button>
-                    <button onclick="buyAtom('oxygen', 100)">+100</button>
+                    <button onclick="buyUnit('oxygen', 1)">+1</button>
+                    <button onclick="buyUnit('oxygen', 10)">+10</button>
+                    <button onclick="buyUnit('oxygen', 100)">+100</button>
                     <button onclick="buyMax('oxygen')">Max</button>
-                    <br /> Cost: 8 Protons, 8 Neutrons, 8 Electrons<span id="commaOxygen" style="display: none;">,</span> <span id="energyCostOxygen" style="display: none;">0</span> <span id="energyOxygen" style="display: none;">Energy</span>
+                    <br /> Cost: 8 Protons, 8 Neutrons, 8 Electrons
 					<br /> Effect: +<span id="oxygenRate">0</span> Protons, Neutrons, or Electrons per Click
 				</p>
-                <p class="unit"> Silicon: <span id="siliconAtoms">0</span>
+                <p class="unit"> Silicon: <span id="silicon">0</span>
                     <br />
-                    <button onclick="buyAtom('silicon', 1)">+1</button>
-                    <button onclick="buyAtom('silicon', 10)">+10</button>
-                    <button onclick="buyAtom('silicon', 100)">+100</button>
+                    <button onclick="buyUnit('silicon', 1)">+1</button>
+                    <button onclick="buyUnit('silicon', 10)">+10</button>
+                    <button onclick="buyUnit('silicon', 100)">+100</button>
                     <button onclick="buyMax('silicon')">Max</button>
-                    <br /> Cost: 14 Protons, 14 Neutrons, 14 Electrons<span id="commaSilicon" style="display: none;">,</span> <span id="energyCostSilicon" style="display: none;">0</span> <span id="energySilicon" style="display: none;">Energy</span>
+                    <br /> Cost: 14 Protons, 14 Neutrons, 14 Electrons
                		<br /> Effect: +<span id="siliconRate">0</span> Protons, Neutrons, or Electrons per Click
 			   </p>
-                <p class="unit"> Iron: <span id="ironAtoms">0</span>
+                <p class="unit"> Iron: <span id="iron">0</span>
                     <br />
-                    <button onclick="buyAtom('iron', 1)">+1</button>
-                    <button onclick="buyAtom('iron', 10)">+10</button>
-                    <button onclick="buyAtom('iron', 100)">+100</button>
+                    <button onclick="buyUnit('iron', 1)">+1</button>
+                    <button onclick="buyUnit('iron', 10)">+10</button>
+                    <button onclick="buyUnit('iron', 100)">+100</button>
                     <button onclick="buyMax('iron')">Max</button>
-                    <br /> Cost: 26 Protons, 33 Neutrons, 26 Electrons<span id="commaIron" style="display: none;">,</span> <span id="energyCostIron" style="display: none;">0</span> <span id="energyIron" style="display: none;">Energy</span>
+                    <br /> Cost: 26 Protons, 33 Neutrons, 26 Electrons
 					<br /> Effect: +<span id="ironRate">0</span> Protons, Neutrons, or Electrons per Click                
 				</p>
                 <div id="waterSection" style="display: none;">
                     <p class="unit"> Create Water
                         <br />
-                        <button onclick="buyWater(1)">+1</button>
-                        <button onclick="buyWater(10)">+10</button>
-                        <button onclick="buyWater(100)">+100</button>
-                        <button onclick="buyMax('water')">Max</button>
+						<button onclick="buyUnit('water', 1)">+1</button>
+						<button onclick="buyUnit('water', 10)">+10</button>
+						<button onclick="buyUnit('water', 100)">+100</button>
+						<button onclick="buyMax('water')">Max</button>
                         <br /> Water Molecules: <span id="water">0</span>
                         <br /> Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
                     </p>
@@ -88,10 +88,10 @@
                 <div id="rockSection" style="display: none;">
                     <p class="unit"> Create Rock
                         <br />
-                        <button onclick="buyRock(1)">+1</button>
-                        <button onclick="buyRock(10)">+10</button>
-                        <button onclick="buyRock(100)">+100</button>
-                        <button onclick="buyMax('rock')">Max</button>
+						<button onclick="buyUnit('rock', 1)">+1</button>
+						<button onclick="buyUnit('rock', 10)">+10</button>
+						<button onclick="buyUnit('rock', 100)">+100</button>
+						<button onclick="buyMax('rock')">Max</button>
                         <br /> Rocks: <span id="rocks">0</span>
                         <br /> Cost: 2 Iron Atoms, 1 Silicon Atom, 2 Oxygen Atoms
                     </p>
@@ -142,7 +142,7 @@
     </div>
  	<div id="center" ;>
 	<br /><br /><br /><br />
-		<button id="create" onclick="createMatter(1)">Create Matter</button>
+		<button id="create" onclick="createMatter(1); stats.totalClicks++;">Create Matter</button>
 	</div> 		
 	<div id="right" ;>
 		<table id="events";>
