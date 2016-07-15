@@ -18,22 +18,23 @@ var units = {
 	electron:  new unit("electron", 0, 0, null, null),
 	neutron:  new unit("neutron", 0, 0, null, null),
 	proton:  new unit("proton", 0, 0, null, null),
-	hydrogen: new unit("hydrogen", 11, 1, ["electron", 1, "neutron", 1, "proton", 1], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),
+	hydrogen: new unit("hydrogen", 0, 1, ["electron", 1, "neutron", 1, "proton", 1], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),
 	carbon: new unit("carbon", 0, 1, ["electron", 6, "neutron", 6, "proton", 6], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),
+	nitrogen: new unit("nitrogen", 0, 1, ["electron", 7, "neutron", 7, "proton", 7], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),	
 	oxygen: new unit("oxygen", 0, 1, ["electron", 8, "neutron", 8, "proton", 8], ["electron", 0.8, "proton", 0.8, "neutron", 0.8]),
 	silicon: new unit("silicon", 0, 1, ["electron", 14, "neutron", 14, "proton", 14], ["electron", 1.4, "proton", 1.4, "neutron", 1.4]),
-	iron: new unit("iron", 0, 1, ["electron", 26, "neutron", 33, "proton", 26], ["electron", 2.6, "proton", 2.6, "neutron", 3.3]),
+	iron: new unit("iron", 0, 1, ["electron", 26, "neutron", 33, "proton", 26], ["electron", 3, "proton", 3, "neutron", 3]),
 	water: new unit("water", 0, 3, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	nucleotide: new unit("nucleotide", 0, 1, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], ["hydrogen", 0.2, "oxygen", 0.1]),
 	DNA: new unit("DNA", 0, 1, ["nucleotide", 6000000000], ["hydrogen", 0.2, "oxygen", 0.1]),
 	cell: new unit("cell", 0, 1, ["DNA", 1, "water", 5000000000], ["hydrogen", 0.2, "oxygen", 0.1]),	
-	silica: new unit("silica", 0, 3, ["silicon", 1, "oxygen", 2], ["hydrogen", 0.2, "oxygen", 0.1]),
-	rock: new unit("rock", 0, 3, ["silicon", 1, "oxygen", 2], ["hydrogen", 0.2, "oxygen", 0.1]),
-	asteroid: new unit("asteroid", 0, 3, ["rock", 1000000], ["hydrogen", 0.2, "oxygen", 0.1]),
+	silica: new unit("silica", 0, 3, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
+	rock: new unit("rock", 0, 3, ["silica", 1, "iron", 2], ["silica", 0.1]),
+	asteroid: new unit("asteroid", 0, 3, ["rock", 1000000], ["rock", 10]),
 	asteroidBelt: new unit("asteroidBelt", 0, 3, ["asteroid", 1000, "water", 1000000], ["hydrogen", 0.2, "oxygen", 0.1]),	
 	planet: new unit("planet", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),	
-	nebulas: new unit("nebula", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),			
-	stars: new unit("star", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
+	nebula: new unit("nebula", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),			
+	star: new unit("star", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	solarSystem: new unit("solarSystem", 0, 3, ["star", 1, "planet", 8, "asteroidBelt", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	blackhole: new unit("blackhole", 0, 3, ["star", 1], null),
 	galaxy: new unit("galaxy", 0, 3, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], ["hydrogen", 0.2, "oxygen", 0.1]),
@@ -54,23 +55,27 @@ var events = {
     createdWater: new evt("createdWater", ["units", "water", 1], false, "As you create water, you find that you can now produce atoms out of nothing too.")
 };
 var unlocks = {
+	carbon: new unlock("carbonSection", ["unit", "nitrogen", 10], false),
+	nitrogen: new unlock("nitrogenSection", ["unit", "iron", 10], false),
+	silicon: new unlock("siliconSection", ["unit", "oxygen", 10], false),
+	iron: new unlock("ironSection", ["unit", "silicon", 10], false),
     water: new unlock("waterSection", ["unit", "hydrogen", 10], false),
-    silica: new unlock("silicaSection", ["unit", "hydrogen", 10], false),	
-    nucleotide: new unlock("nucleotideSection", ["unit", "hydrogen", 10], false),
-    DNA: new unlock("DNASection", ["unit", "hydrogen", 10], false),
-    cell: new unlock("cellSection", ["unit", "hydrogen", 10], false),	
-    rock: new unlock("rockSection", ["unit", "hydrogen", 10], false),
-	asteroid: new unlock("asteroidSection", ["unit", "hydrogen", 10], false),
-	asteroidBelt: new unlock("asteroidBeltSection", ["unit", "hydrogen", 10], false),
-    planets: new unlock("planetSection", ["unit", "hydrogen", 10], false),
-    stars: new unlock("starSection", ["unit", "hydrogen", 10], false),
-	solarSystem: new unlock("solarSystemSection", ["unit", "hydrogen", 10], false),
-	blackhole: new unlock("blackholeSection", ["unit", "hydrogen", 10], false),
-	supermassiveBlackhole: new unlock("supermassiveBlackholeSection", ["unit", "hydrogen", 10], false),
-	galaxy: new unlock("galaxySection", ["unit", "hydrogen", 10], false),
-	galaxyCluster: new unlock("galaxyClusterSection", ["unit", "hydrogen", 10], false),
-	galaxySuperCluster: new unlock("galaxySuperClusterSection", ["unit", "hydrogen", 10], false),
-	life: new unlock("leftTab", ["unit", "nucleotide", 1000], false),
+    silica: new unlock("silicaSection", ["unit", "silicon", 10], false),	
+    nucleotide: new unlock("nucleotideSection", ["unit", "carbon", 10000], false),
+    DNA: new unlock("DNASection", ["unit", "nucleotide", 10000], false),
+    cell: new unlock("cellSection", ["unit", "DNA", 1], false),	
+    rock: new unlock("rockSection", ["unit", "silica", 1000], false),
+	asteroid: new unlock("asteroidSection", ["unit", "rock", 100000], false),
+	asteroidBelt: new unlock("asteroidBeltSection", ["unit", "asteroid", 100], false),
+    planets: new unlock("planetSection", ["unit", "rock", 10000000000], false),
+    stars: new unlock("starSection", ["unit", "nebula", 10], false),
+	solarSystem: new unlock("solarSystemSection", ["unit", "star", 1], false),
+	blackhole: new unlock("blackholeSection", ["unit", "star", 10], false),
+	supermassiveBlackhole: new unlock("supermassiveBlackholeSection", ["unit", "blackhole", 1000], false),
+	galaxy: new unlock("galaxySection", ["unit", "blackhole", 10], false),
+	galaxyCluster: new unlock("galaxyClusterSection", ["unit", "galaxy", 10], false),
+	galaxySuperCluster: new unlock("galaxySuperClusterSection", ["unit", "galaxyCluster", 10], false),
+	life: new unlock("leftTab", ["unit", "carbon", 10000], false),
 };
 
 Array.min = function( array ){
@@ -193,14 +198,15 @@ function checkUnlocks() {
 }
 
 function createMatter(number) {	
-	var randomEven = Math.floor(Math.random() * units[unit].production.length / 2) * 2;
-	var randomOdd = randomEven + 1;
+	randomEven = 0;
 	for(unit in units) {
 		if(units[unit].production != null){
-			units[units[unit].production[randomEven]].amount += number * units[unit].amount * units[unit].production[randomOdd];
+			randomEven = Math.floor(Math.random() * (units[unit].production.length  / 2)) * 2;
+			units[units[unit].production[randomEven]].amount += number * units[unit].amount * units[unit].production[randomEven + 1];
+			
 		}
 	}
-	var rand = Math.floor(Math.random() * 3) + 1;
+	var rand = Math.floor(Math.random() * 3);
 	if(rand == 1) units.electron.amount++;
 	else if(rand == 2) units.neutron.amount++;
 	else units.proton.amount++;
@@ -232,7 +238,7 @@ function buyMax(unit) {
 	for(i = 0; i < units[unit].cost.length; i += 2) {
 		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
 	}
-	buyUnit(unit, Array.min(ratios));
+	buyUnit(unit, Math.floor(Array.min(ratios)));
 }
 
 function openTab(evt, name) {

@@ -36,17 +36,31 @@
                     <button onclick="buyUnit('hydrogen', 100)">+100</button>
                     <button onclick="buyMax('hydrogen')">Max</button>
                     <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					<br /> Effect: +<span id="hydrogenRate">0</span> Protons, Neutrons, or Electrons per Click
-                </p>                
+					<br /> Effect per Unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click
+                </p>  
+				<div id="carbonSection" style="display: none;">				
 				<p class="unit"> Carbon: <span id="carbon">0</span> 
                     <br />
                     <button onclick="buyUnit('carbon', 1)">+1</button>
                     <button onclick="buyUnit('carbon', 10)">+10</button>
                     <button onclick="buyUnit('carbon', 100)">+100</button>
                     <button onclick="buyMax('carbon')">Max</button>
-                    <br /> Cost: 6 Proton, 6 Neutron, 6 Electron
-					<br /> Effect: +<span id="carbonRate">0</span> Protons, Neutrons, or Electrons per Click
+                    <br /> Cost: 6 Protons, 6 Neutrons, 6 Electrons
+					<br /> Effect per Unit: + 0.6 Protons, 0.6 Neutrons, or 0.6 Electrons per Click
                 </p>
+				</div>
+				<div id="nitrogenSection" style="display: none;">				
+				<p class="unit"> Nitrogen: <span id="nitrogen">0</span> 
+                    <br />
+                    <button onclick="buyUnit('carbon', 1)">+1</button>
+                    <button onclick="buyUnit('carbon', 10)">+10</button>
+                    <button onclick="buyUnit('carbon', 100)">+100</button>
+                    <button onclick="buyMax('nitrogen')">Max</button>
+                    <br /> Cost: 7 Protons, 7 Neutrons, 7 Electrons
+					<br /> Effect per Unit: + 0.7 Protons, 0.7 Neutrons, or 0.7 Electrons per Click
+                </p>
+				</div>				
+
                 <p class="unit"> Oxygen: <span id="oxygen">0</span>
                     <br />
                     <button onclick="buyUnit('oxygen', 1)">+1</button>
@@ -54,8 +68,9 @@
                     <button onclick="buyUnit('oxygen', 100)">+100</button>
                     <button onclick="buyMax('oxygen')">Max</button>
                     <br /> Cost: 8 Protons, 8 Neutrons, 8 Electrons
-					<br /> Effect: +<span id="oxygenRate">0</span> Protons, Neutrons, or Electrons per Click
+					<br /> Effect: + 0.8 Protons, 0.8 Neutrons, or 0.8 Electrons per Click
 				</p>
+				<div id="siliconSection" style="display: none;">								
                 <p class="unit"> Silicon: <span id="silicon">0</span>
                     <br />
                     <button onclick="buyUnit('silicon', 1)">+1</button>
@@ -63,8 +78,10 @@
                     <button onclick="buyUnit('silicon', 100)">+100</button>
                     <button onclick="buyMax('silicon')">Max</button>
                     <br /> Cost: 14 Protons, 14 Neutrons, 14 Electrons
-               		<br /> Effect: +<span id="siliconRate">0</span> Protons, Neutrons, or Electrons per Click
+               		<br /> Effect: + 1.4 Protons, 1.4 Neutrons, or 1.4 Electrons per Click
 			   </p>
+			   </div>
+				<div id="ironSection" style="display: none;">				 
                 <p class="unit"> Iron: <span id="iron">0</span>
                     <br />
                     <button onclick="buyUnit('iron', 1)">+1</button>
@@ -72,17 +89,18 @@
                     <button onclick="buyUnit('iron', 100)">+100</button>
                     <button onclick="buyMax('iron')">Max</button>
                     <br /> Cost: 26 Protons, 33 Neutrons, 26 Electrons
-					<br /> Effect: +<span id="ironRate">0</span> Protons, Neutrons, or Electrons per Click                
+					<br /> Effect: + 3 Protons, 3 Neutrons, or 3 Electrons per Click                
 				</p>
+				</div>
                 <div id="waterSection" style="display: none;">
-                    <p class="unit"> Create Water
+                    <p class="unit"> Water: <span id="water">0</span>
                         <br />
 						<button onclick="buyUnit('water', 1)">+1</button>
 						<button onclick="buyUnit('water', 10)">+10</button>
 						<button onclick="buyUnit('water', 100)">+100</button>
 						<button onclick="buyMax('water')">Max</button>
-                        <br /> Water Molecules: <span id="water">0</span>
                         <br /> Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
+						<br /> Effect per unit: + 0.2 Hydrogen, or 0.1 Oxygen per Click									
                     </p>
                 </div>
                 <div id="silicaSection" style="display: none;">
@@ -92,21 +110,10 @@
 						<button onclick="buyUnit('silica', 10)">+10</button>
 						<button onclick="buyUnit('silica', 100)">+100</button>
 						<button onclick="buyMax('silica')">Max</button>
-						<br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-						<br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
+						<br /> Cost: 1 Silicon, 2 Oxygen
+						<br /> Effect per unit: + 0.1 Silicon, or 0.1 Oxygen per Click			
                     </p>
-                </div>                
-				<div id="nucleotideSection" style="display: none;">
-                    <p class="unit"> nucleotide: <span id="nucleotide">0</span>
-                        <br />
-						<button onclick="buyUnit('nucleotide', 1)">+1</button>
-						<button onclick="buyUnit('nucleotide', 10)">+10</button>
-						<button onclick="buyUnit('nucleotide', 100)">+100</button>
-						<button onclick="buyMax('nucleotide')">Max</button>
-						<br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-						<br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-                    </p>
-                </div>  
+                </div>                 
 				<div id="DNASection" style="display: none;">
                     <p class="unit"> DNA: <span id="DNA">0</span>
                         <br />
@@ -119,7 +126,7 @@
                     </p>
                 </div>  
 				<div id="cellSection" style="display: none;">
-                    <p class="unit"> cell: <span id="cell">0</span>
+                    <p class="unit"> Cells: <span id="cell">0</span>
                         <br />
 						<button onclick="buyUnit('cell', 1)">+1</button>
 						<button onclick="buyUnit('cell', 10)">+10</button>
@@ -130,14 +137,14 @@
                     </p>
                 </div>  				
 				<div id="rockSection" style="display: none;">
-                    <p class="unit"> Create Rock
+                    <p class="unit"> Rocks: <span id="rock">0</span>
                         <br />
 						<button onclick="buyUnit('rock', 1)">+1</button>
 						<button onclick="buyUnit('rock', 10)">+10</button>
 						<button onclick="buyUnit('rock', 100)">+100</button>
 						<button onclick="buyMax('rock')">Max</button>
-                        <br /> Rocks: <span id="rock">0</span>
-                        <br /> Cost: 2 Iron Atoms, 1 Silicon Atom, 2 Oxygen Atoms
+                        <br /> Cost: 2 Iron Atoms, 1 Silica
+						<br /> Effect per unit: + 0.1 Silica per Click									
                     </p>
                 </div>
 
@@ -262,8 +269,19 @@
                 </div>	
             </div>
             <div id="life" class="tabcontentLeft">
+				<div id="nucleotideSection" style="display: none;">
+                    <p class="unit"> Nucleotides: <span id="nucleotide">0</span>
+                        <br />
+						<button onclick="buyUnit('nucleotide', 1)">+1</button>
+						<button onclick="buyUnit('nucleotide', 10)">+10</button>
+						<button onclick="buyUnit('nucleotide', 100)">+100</button>
+						<button onclick="buyMax('nucleotide')">Max</button>
+						<br /> Cost: 1 Proton, 1 Neutron, 1 Electron
+						<br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
+                    </p>
+                </div> 
 			    <div id="humanSection" style="display: none;">
-                    <p class="unit"> galaxySuperCluster: <span id="human">0</span>
+                    <p class="unit"> Human: <span id="human">0</span>
                         <br />
 						<button onclick="buyUnit('human', 1)">+1</button>
 						<button onclick="buyUnit('human', 10)">+10</button>
