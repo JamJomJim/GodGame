@@ -49,7 +49,7 @@ var achievements = {
 };
 var events = {
     newGame: new evt("newGame", ["stats", "time", 2], false, "You're a god now. But what's a god without a universe?"),
-    firstClick: new evt("firstClick", ["stats", "totalClicks", 1], false, "Click the button to put energy into the universe and create matter."),
+    firstClick: new evt("firstClick", ["stats", "totalClicks", 1], false, "Click the button to extract atoms from the ball."),
     tenClicks: new evt("tenClicks", ["stats", "totalClicks", 25], false, "You find that when you put energy into your universe, particles pop into existence out of complete nothingness"),
     tenUnits: new evt("tenUnits", ["stats", "totalUnits", 10], false, "It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter."),
     createdWater: new evt("createdWater", ["units", "water", 1], false, "As you create water, you find that you can now produce atoms out of nothing too.")
