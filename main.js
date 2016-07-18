@@ -15,22 +15,19 @@ var info = {
 	currentEventFour: " "	
 }
 var units = {
-	electron:  new unit("electron", 0, 0, null, null),
-	neutron:  new unit("neutron", 0, 0, null, null),
-	proton:  new unit("proton", 0, 0, null, null),
-	hydrogen: new unit("hydrogen", 0, 1, ["electron", 1, "neutron", 1, "proton", 1], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),
-	carbon: new unit("carbon", 0, 1, ["electron", 6, "neutron", 6, "proton", 6], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),
-	nitrogen: new unit("nitrogen", 0, 1, ["electron", 7, "neutron", 7, "proton", 7], ["electron", 0.1, "proton", 0.1, "neutron", 0.1]),	
-	oxygen: new unit("oxygen", 0, 1, ["electron", 8, "neutron", 8, "proton", 8], ["electron", 0.8, "proton", 0.8, "neutron", 0.8]),
-	silicon: new unit("silicon", 0, 1, ["electron", 14, "neutron", 14, "proton", 14], ["electron", 1.4, "proton", 1.4, "neutron", 1.4]),
-	iron: new unit("iron", 0, 1, ["electron", 26, "neutron", 33, "proton", 26], ["electron", 3, "proton", 3, "neutron", 3]),
-	water: new unit("water", 0, 3, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
-	nucleotide: new unit("nucleotide", 0, 1, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], ["hydrogen", 0.2, "oxygen", 0.1]),
-	DNA: new unit("DNA", 0, 1, ["nucleotide", 6000000000], ["hydrogen", 0.2, "oxygen", 0.1]),
-	cell: new unit("cell", 0, 1, ["DNA", 1, "water", 5000000000], ["hydrogen", 0.2, "oxygen", 0.1]),	
-	silica: new unit("silica", 0, 3, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
-	rock: new unit("rock", 0, 3, ["silica", 1, "iron", 2], ["silica", 0.1]),
-	asteroid: new unit("asteroid", 0, 3, ["rock", 1000000], ["rock", 10]),
+	hydrogen: new unit("hydrogen", 0, 1, [], []),
+	carbon: new unit("carbon", 0, 1, [], []),
+	nitrogen: new unit("nitrogen", 0, 1, [], []),	
+	oxygen: new unit("oxygen", 0, 1, [], []),
+	silicon: new unit("silicon", 0, 1, [], []),
+	iron: new unit("iron", 0, 1, [], []),
+	water: new unit("water", 0, 3, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1], 0),
+/*	nucleotide: new unit("nucleotide", 0, 1, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], ["hydrogen", 0.2, "oxygen", 0.1], 0),
+	DNA: new unit("DNA", 0, 1, ["nucleotide", 6000000000], ["hydrogen", 0.2, "oxygen", 0.1], 0),
+	cell: new unit("cell", 0, 1, ["DNA", 1, "water", 5000000000], ["hydrogen", 0.2, "oxygen", 0.1], 0),	
+	silica: new unit("silica", 0, 3, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1], 0),
+	rock: new unit("rock", 0, 3, ["silica", 1, "iron", 2], ["silica", 0.1], 0),
+	asteroid: new unit("asteroid", 0, 3, ["rock", 1000000], ["rock", 10], 0),
 	asteroidBelt: new unit("asteroidBelt", 0, 3, ["asteroid", 1000, "water", 1000000], ["hydrogen", 0.2, "oxygen", 0.1]),	
 	planet: new unit("planet", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),	
 	nebula: new unit("nebula", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),			
@@ -41,7 +38,7 @@ var units = {
 	galaxyCluster: new unit("galaxyCluster", 0, 3, ["galaxy", 1000], ["hydrogen", 0.2, "oxygen", 0.1]),
 	galaxySuperCluster: new unit("galaxySuperCluster", 0, 3, ["galaxyCluster", 100], ["hydrogen", 0.2, "oxygen", 0.1]),	
 	supermassiveBlackhole: new unit("supermassiveBlackhole", 0, 3, ["blackhole", 1000], null),		
-	human: new unit("human", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
+	human: new unit("human", 0, 1, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),*/
 };
 var achievements = {
     timeOne: new achievement("timeOne", ["stats", "time", 900], false),
@@ -60,7 +57,7 @@ var unlocks = {
 	silicon: new unlock("siliconSection", ["unit", "oxygen", 10], false),
 	iron: new unlock("ironSection", ["unit", "silicon", 10], false),
     water: new unlock("waterSection", ["unit", "hydrogen", 10], false),
-    silica: new unlock("silicaSection", ["unit", "silicon", 10], false),	
+  /*  silica: new unlock("silicaSection", ["unit", "silicon", 10], false),	
     nucleotide: new unlock("nucleotideSection", ["unit", "carbon", 10000], false),
     DNA: new unlock("DNASection", ["unit", "nucleotide", 10000], false),
     cell: new unlock("cellSection", ["unit", "DNA", 1], false),	
@@ -75,7 +72,7 @@ var unlocks = {
 	galaxy: new unlock("galaxySection", ["unit", "blackhole", 10], false),
 	galaxyCluster: new unlock("galaxyClusterSection", ["unit", "galaxy", 10], false),
 	galaxySuperCluster: new unlock("galaxySuperClusterSection", ["unit", "galaxyCluster", 10], false),
-	life: new unlock("leftTab", ["unit", "carbon", 10000], false),
+	life: new unlock("leftTab", ["unit", "carbon", 10000], false),*/
 };
 
 Array.min = function( array ){
@@ -197,48 +194,50 @@ function checkUnlocks() {
 	}	
 }
 
-function createMatter(number) {	
-	randomEven = 0;
+function create(type) {
+	var prod = 1;	
 	for(unit in units) {
-		if(units[unit].production != null){
-			randomEven = Math.floor(Math.random() * (units[unit].production.length  / 2)) * 2;
-			units[units[unit].production[randomEven]].amount += number * units[unit].amount * units[unit].production[randomEven + 1];
-			
+		if(units[unit].production.length > 0){
+			for(i = 0; i < units[unit].production.length; i += 2){
+				if(units[unit].production[i] == type){
+					prod += units[unit].production[i + 1] * units[unit].amount;
+				}
+			}
 		}
 	}
-	var rand = Math.floor(Math.random() * 3);
-	if(rand == 1) units.electron.amount++;
-	else if(rand == 2) units.neutron.amount++;
-	else units.proton.amount++;
+	if(prod > determineMax(type)) prod = determineMax(type);
+	buyUnit(type, prod);
 	updateAllValues();
 }
 
 function buyUnit(type, number) {
-	var enough = false;
-	for(i = 0; i < units[type].cost.length; i += 2) {
-		if(units[units[type].cost[i]].amount >= number * units[type].cost[i + 1]) {
-			enough = true;
-		}
-		else {
-			enough = false;
-			break;
-		}
-	}
-	if(enough){
+	if(units[type].cost.length > 0 ){	
+		var enough = false;
 		for(i = 0; i < units[type].cost.length; i += 2) {
-			units[units[type].cost[i]].amount -= number * units[type].cost[i + 1];
+			if(units[units[type].cost[i]].amount >= number * units[type].cost[i + 1]) {
+				enough = true;
+			}
+			else {
+				enough = false;
+				break;
+			}
 		}
-		units[type].amount += number;
-		updateAllValues();
+		if(enough){		
+			for(i = 0; i < units[type].cost.length; i += 2) {
+				units[units[type].cost[i]].amount -= number * units[type].cost[i + 1];
+			}
+			units[type].amount += number;
+		}
 	}
+	else units[type].amount += number;
 }
 
-function buyMax(unit) {
+function determineMax(unit) {
 	var ratios = [];
 	for(i = 0; i < units[unit].cost.length; i += 2) {
 		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
 	}
-	buyUnit(unit, Math.floor(Array.min(ratios)));
+	return Math.floor(Array.min(ratios));
 }
 
 function openTab(evt, name) {
@@ -262,6 +261,20 @@ function openLeftTab(evt, name) {
         tabcontent[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablinksLeft");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(name).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+function openUnitTab(evt, name) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontentUnit");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinksUnit");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -321,10 +334,25 @@ function updateAllValues() {
 	stats.totalUnits = 0;
 	stats.totalAtoms = 0;
 	for(unit in units) {
-		document.getElementById(units[unit].type).innerHTML = units[unit].amount.toFixed(0);
+		document.getElementById(unit).innerHTML = units[unit].amount.toFixed(0);
 		stats.totalUnits += units[unit].amount;
 		stats.totalAtoms += units[unit].amount * units[unit].atoms;
 	}
+	for(var unitA in units) {
+		var number = 0;
+		for(var unitB in units) {
+			if(units[unitB].production != null){
+				for(i = 0; i < units[unitB].production.length; i++){
+					if(units[unitB].production[i] == units[unitA].type){
+						number += units[unitB].production[i + 1] * units[unitB].amount;
+					}
+				}
+			}
+		}
+		number += 1;
+		if(number > determineMax(unitA)) number = determineMax(unitA);
+		document.getElementById(unitA + "AmountCreated").innerHTML = number;
+	}	
     determineTimePlayed();
     a = stats.totalAtoms / atomsInUniverse;
     document.getElementById("totalAtoms").innerHTML = Math.floor(stats.totalAtoms);
@@ -336,10 +364,10 @@ function updateAllValues() {
 setInterval(function() {
     stats.time++;
     updateAllValues();
-	checkAchievements();
-	checkEvents();
+//	checkAchievements();
+//	checkEvents();
 	checkUnlocks();
-    loadAchievements();
+//	loadAchievements();
 	loadUnlocks();
 }, 1000);
 setInterval(function() {
@@ -347,6 +375,6 @@ setInterval(function() {
 }, 60000);
 window.onload = function() {
     load();
-    loadAchievements();
+//    loadAchievements();
     loadUnlocks();
 };
