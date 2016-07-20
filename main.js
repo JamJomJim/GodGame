@@ -2,7 +2,7 @@ var days, hours, minutes, seconds;
 var percentOfUniverse = 0;
 var atomsInUniverse = Math.pow(10, 80);
 var stats = {
-	time: 1000,
+	time: 0,
 	numAchievements: 0,
 	totalClicks: 0,
 	totalUnits: 0
@@ -53,6 +53,8 @@ var events = {
 };
 var unlocks = {
 	molecules: new unlock("moleculesLink", ["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
+	substance:  new unlock("substanceLink", ["unit", "silica", 100], false),
+	planetary:  new unlock("planetaryLink", ["unit", "nitrogen", 10], false),
 	space:  new unlock("spaceLink", ["unit", "nitrogen", 10], false),
 	carbon: new unlock("carbonSection", ["unit", "nitrogen", 10], false),
 	nitrogen: new unlock("nitrogenSection", ["unit", "iron", 10], false),

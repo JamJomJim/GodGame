@@ -28,9 +28,13 @@
                <li><a href="#" class="tablinksUnit" onclick="openUnitTab(event, 'atoms')">Atoms</a>
                </li>
                <li><a id="moleculesLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'molecules')" style="display: none;">Molecules</a>
-               </li>              
+               </li>  
+               <li><a id="substanceLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'substance')" style="display: none;">Substance</a>
+               </li> 
+			   <li><a id="planetaryLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'planetary')" style="display: none;">Planetary</a>
+               </li>	 			   
 			   <li><a id="spaceLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'space')" style="display: none;">Space</a>
-               </li>
+               </li>		   
             </ul>
             <div id="atoms" class="tabcontentUnit" style="display: none;">
                <p class="unit"> Hydrogen: <span id="hydrogen">0</span> 
@@ -87,7 +91,13 @@
 					  <br /> Effect: + 0.1 Silicon, or 0.1 Oxygen per Click			
 				   </p>
 				</div>
-            </div>			
+            </div>	
+			<div id="substance" class="tabcontentUnit" style="display: none;">
+
+            </div>	
+			<div id="planetary" class="tabcontentUnit" style="display: none;">
+
+            </div>				
 			<div id="space" class="tabcontentUnit" style="display: none;">
 				<div id="asteroidSection" style="display: none;">
 				   <p class="unit"> Asteroid: <span id="asteroid">0</span>
