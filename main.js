@@ -353,6 +353,7 @@ function updateAllValues() {
 		}
 		number += 1;
 		if(number > determineMax(unitA)) number = determineMax(unitA);
+		number = Math.floor(number * 10) / 10;
 		document.getElementById(unitA + "AmountCreated").innerHTML = number;
 	}	
     determineTimePlayed();
