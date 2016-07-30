@@ -104,6 +104,12 @@ function evt(divName, condition, state, message) {
 	this.message = message;
 }
 
+function unlock(divName, condition, state) {
+    this.condition = condition;
+    this.divName = divName;
+    this.state = state;
+}
+
 function newEvent(message) {
     info.currentEventFour =  info.currentEventThree;
     info.currentEventThree =  info.currentEventTwo;
@@ -113,12 +119,6 @@ function newEvent(message) {
     document.getElementById("eventTwo").innerHTML =  info.currentEventTwo;
     document.getElementById("eventThree").innerHTML =  info.currentEventThree;
     document.getElementById("eventFour").innerHTML =  info.currentEventFour;
-}
-
-function unlock(divName, condition, state) {
-    this.condition = condition;
-    this.divName = divName;
-    this.state = state;
 }
 
 function checkAchievements(){
@@ -343,7 +343,7 @@ function updateAllValues() {
 		stats.totalAtoms += units[unit].amount * units[unit].atoms;
 	}
 	for(var unitA in units) {
-		var number = 0;
+		var number = 1;
 		for(var unitB in units) {
 			if(units[unitB].production != null){
 				for(i = 0; i < units[unitB].production.length; i++){
@@ -353,7 +353,7 @@ function updateAllValues() {
 				}
 			}
 		}
-		number += 1;
+//		number += 1; //you could maybe just set number to 1 at line 346
 		if(number > determineMax(unitA)) number = determineMax(unitA);
 		number = Math.floor(number * 10) / 10;
 		document.getElementById(unitA + "AmountCreated").innerHTML = number;
