@@ -48,7 +48,7 @@ var achievements = {
     timeOne: new achievement("timeOne", ["stats", "time", 900], false),
     recordBreaker: new achievement("recordBreaker",["unit", "human", 1], false)
 };
-//Remove divname from object and use the property name instead. Theyre redundant
+	//Remove divname from object and use the property name instead. Theyre redundant
 var events = {
     newGame: new evt("newGame", ["stats", "time", 2], false, "You're a god now. But what's a god without a universe?"),
     firstClick: new evt("firstClick", ["stats", "totalClicks", 1], false, "Click the button to extract atoms from the ball."),
@@ -101,7 +101,7 @@ function achievement(divName, condition, state) {
     this.divName = divName;
     this.state = state;
 }
-//remove divname
+	//remove divname
 function evt(divName, condition, state, message) {
     this.condition = condition;
     this.divName = divName;
@@ -113,18 +113,7 @@ function unlock(condition, state) {
     this.condition = condition;
     this.state = state;
 }
-//Condition Checks
-function newEvent(message) {
-    info.currentEventFour =  info.currentEventThree;
-    info.currentEventThree =  info.currentEventTwo;
-    info.currentEventTwo =  info.currentEventOne;
-    info.currentEventOne = message;
-    document.getElementById("eventOne").innerHTML =  info.currentEventOne;
-    document.getElementById("eventTwo").innerHTML =  info.currentEventTwo;
-    document.getElementById("eventThree").innerHTML =  info.currentEventThree;
-    document.getElementById("eventFour").innerHTML =  info.currentEventFour;
-}
-
+//Gameplay Functions
 function checkAchievements(){
 	for(achievement in achievements) {
 		if(achievements[achievement].state !== true){
@@ -204,6 +193,50 @@ function checkUnlocks() {
 	}	
 }
 
+function updateAllValues() {
+	info.units = units;
+	stats.totalUnits = 0;
+	stats.totalAtoms = 0;
+	for(unit in units) {
+		document.getElementById(unit).innerHTML = units[unit].amount.toFixed(0);
+		stats.totalUnits += units[unit].amount;
+		stats.totalAtoms += units[unit].amount * units[unit].atoms;
+	}
+	for(var unitA in units) {
+		var number = 1;
+		for(var unitB in units) {
+			if(units[unitB].production != null){
+				for(i = 0; i < units[unitB].production.length; i++){
+					if(units[unitB].production[i] == units[unitA].type){
+						number += units[unitB].production[i + 1] * units[unitB].amount;
+					}
+				}
+			}
+		}
+		if(number > determineMax(unitA)) number = determineMax(unitA);
+		number = Math.floor(number * 10) / 10;
+		document.getElementById(unitA + "AmountCreated").innerHTML = number;
+		for(i = 1; i <= (units[unitA].production.length / 2); i++) document.getElementById(unitA + "Effect" + i.toString()).innerHTML = units[unitA].amount * units[unitA].production[1 + (i-1) * 2]; 
+	}	
+    determineTimePlayed();
+    a = stats.totalAtoms / atomsInUniverse;
+    document.getElementById("totalAtoms").innerHTML = Math.floor(stats.totalAtoms);
+    document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
+    document.getElementById("totalAchievements").innerHTML = Object.keys(achievements).length;
+    document.getElementById("completedAchievements").innerHTML = stats.numAchievements;
+}
+
+function newEvent(message) {
+    info.currentEventFour =  info.currentEventThree;
+    info.currentEventThree =  info.currentEventTwo;
+    info.currentEventTwo =  info.currentEventOne;
+    info.currentEventOne = message;
+    document.getElementById("eventOne").innerHTML =  info.currentEventOne;
+    document.getElementById("eventTwo").innerHTML =  info.currentEventTwo;
+    document.getElementById("eventThree").innerHTML =  info.currentEventThree;
+    document.getElementById("eventFour").innerHTML =  info.currentEventFour;
+}
+
 function create(type) {
 	var prod = 1;	
 	for(unit in units) {
@@ -242,56 +275,6 @@ function buyUnit(type, number) {
 	else units[type].amount += number;
 }
 
-function determineMax(unit) {
-	var ratios = [];
-	for(i = 0; i < units[unit].cost.length; i += 2) {
-		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
-	}
-	return Math.floor(Array.min(ratios));
-}
-
-function openTab(evt, name) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(name).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
-function openLeftTab(evt, name) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontentLeft");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinksLeft");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(name).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
-function openUnitTab(evt, name) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontentUnit");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinksUnit");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(name).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
 function save() {
     var save = {
 		units: units,
@@ -327,40 +310,6 @@ function loadUnlocks() {
 	}
 }
 
-function updateAllValues() {
-	info.units = units;
-	stats.totalUnits = 0;
-	stats.totalAtoms = 0;
-	for(unit in units) {
-		document.getElementById(unit).innerHTML = units[unit].amount.toFixed(0);
-		stats.totalUnits += units[unit].amount;
-		stats.totalAtoms += units[unit].amount * units[unit].atoms;
-	}
-	for(var unitA in units) {
-		var number = 1;
-		for(var unitB in units) {
-			if(units[unitB].production != null){
-				for(i = 0; i < units[unitB].production.length; i++){
-					if(units[unitB].production[i] == units[unitA].type){
-						number += units[unitB].production[i + 1] * units[unitB].amount;
-					}
-				}
-			}
-		}
-		if(number > determineMax(unitA)) number = determineMax(unitA);
-		number = Math.floor(number * 10) / 10;
-		document.getElementById(unitA + "AmountCreated").innerHTML = number;
-		for(i = 1; i <= (units[unitA].production.length / 2); i++) document.getElementById(unitA + "Effect" + i.toString()).innerHTML = units[unitA].amount * units[unitA].production[1 + (i-1) * 2]; 
-	}	
-    determineTimePlayed();
-    a = stats.totalAtoms / atomsInUniverse;
-    document.getElementById("totalAtoms").innerHTML = Math.floor(stats.totalAtoms);
-    document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
-    document.getElementById("totalAchievements").innerHTML = Object.keys(achievements).length;
-    document.getElementById("completedAchievements").innerHTML = stats.numAchievements;
-}
-
-// Helper Functions
 Array.min = function( array ){
     return Math.min.apply( Math, array );
 };
@@ -375,6 +324,28 @@ function determineTimePlayed() {
     document.getElementById("hours").innerHTML = hours;
     document.getElementById("minutes").innerHTML = minutes;
     document.getElementById("seconds").innerHTML = seconds;
+}
+
+function determineMax(unit) {
+	var ratios = [];
+	for(i = 0; i < units[unit].cost.length; i += 2) {
+		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
+	}
+	return Math.floor(Array.min(ratios));
+}
+
+function openTab(evt, name, type) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent " + type);
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks" + type);
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(name).style.display = "block";
+    evt.currentTarget.className += " active";
 }
 
 setInterval(function() {
