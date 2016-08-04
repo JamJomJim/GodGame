@@ -1,12 +1,10 @@
 //Initialisation of variables
-var days, hours, minutes, seconds;
-var percentOfUniverse = 0;
-var atomsInUniverse = Math.pow(10, 80);
 var stats = {
 	time: 0,
 	numAchievements: 0,
 	totalClicks: 0,
-	totalUnits: 0
+	totalUnits: 0,
+	totalAtoms: 0
 }
 var info = {
 	units: units,
@@ -45,16 +43,15 @@ var units = {
 	human: new unit("human", 0, 1, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
-    timeOne: new achievement("timeOne", ["stats", "time", 900], false),
-    recordBreaker: new achievement("recordBreaker",["unit", "human", 1], false)
+    timeOne: new achievement(["stats", "time", 900], false),
+    recordBreaker: new achievement(["unit", "human", 1], false)
 };
-	//Remove divname from object and use the property name instead. Theyre redundant
 var events = {
-    newGame: new evt("newGame", ["stats", "time", 2], false, "You're a god now. But what's a god without a universe?"),
-    firstClick: new evt("firstClick", ["stats", "totalClicks", 1], false, "Click the button to extract atoms from the ball."),
-    tenClicks: new evt("tenClicks", ["stats", "totalClicks", 25], false, "You find that when you put energy into your universe, particles pop into existence out of complete nothingness"),
-    tenUnits: new evt("tenUnits", ["stats", "totalUnits", 10], false, "It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter."),
-    createdWater: new evt("createdWater", ["units", "water", 1], false, "As you create water, you find that you can now produce atoms out of nothing too.")
+    newGame: new evt(["stats", "time", 2], false, "You're a god now. But what's a god without a universe?"),
+    firstClick: new evt(["stats", "totalClicks", 1], false, "Click the button to extract atoms from the ball."),
+    tenClicks: new evt(["stats", "totalClicks", 25], false, "You find that when you put energy into your universe, particles pop into existence out of complete nothingness"),
+    tenUnits: new evt(["stats", "totalUnits", 10], false, "It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter."),
+    createdWater: new evt(["units", "water", 1], false, "As you create water, you find that you can now produce atoms out of nothing too.")
 };
 var unlocks = {
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
@@ -96,15 +93,13 @@ function unit(type, amount, atoms, cost, production){
 	this.production = production;
 }
 
-function achievement(divName, condition, state) {
+function achievement(condition, state) {
     this.condition = condition;
-    this.divName = divName;
     this.state = state;
 }
-	//remove divname
-function evt(divName, condition, state, message) {
+
+function evt(condition, state, message) {
     this.condition = condition;
-    this.divName = divName;
     this.state = state;
 	this.message = message;
 }
@@ -219,7 +214,7 @@ function updateAllValues() {
 		for(i = 1; i <= (units[unitA].production.length / 2); i++) document.getElementById(unitA + "Effect" + i.toString()).innerHTML = units[unitA].amount * units[unitA].production[1 + (i-1) * 2]; 
 	}	
     determineTimePlayed();
-    a = stats.totalAtoms / atomsInUniverse;
+    a = stats.totalAtoms / Math.pow(10, 80);
     document.getElementById("totalAtoms").innerHTML = Math.floor(stats.totalAtoms);
     document.getElementById("percentOfUniverse").innerHTML = a.toFixed(20);
     document.getElementById("totalAchievements").innerHTML = Object.keys(achievements).length;
@@ -315,6 +310,7 @@ Array.min = function( array ){
 };
 
 function determineTimePlayed() {
+	var days, hours, minutes, seconds;	
 	time = stats.time;
     seconds = ((time % 86400) % 3600) % 60;
     minutes = (((time - seconds) % 86400) % 3600) / 60;
