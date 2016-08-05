@@ -19,27 +19,27 @@ var units = {
 	oxygen: new unit(0, 1, [], []),
 	silicon: new unit(0, 1, [], []),
 	iron: new unit(0, 1, [], []),
-	water: new unit(0, 3, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
-	carbonDioxide: new unit(0, 3, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
-	silica: new unit(0, 3, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
-	rock: new unit(0, 3, ["silica", 1, "iron", 2], ["silica", 0.1]),
-	waterDrop: new unit(0, 3, ["silica", 1, "iron", 2], []),	
-	river: new unit(0, 3, ["silica", 1, "iron", 2], []),	
-	asteroid: new unit(0, 3, ["hydrogen", 1000000], []),
-	asteroidBelt: new unit(0, 3, ["asteroid", 1000, "water", 1000000], []),	
-	planet: new unit(0, 1, ["hydrogen", 2, "oxygen", 1], []),	
-	nebula: new unit(0, 1, ["hydrogen", 2, "oxygen", 1], []),			
-	star: new unit(0, 1, ["hydrogen", 2, "oxygen", 1], []),
-	solarSystem: new unit(0, 3, ["star", 1, "planet", 8, "asteroidBelt", 1], []),
-	blackhole: new unit(0, 3, ["star", 1], []),
-	galaxy: new unit(0, 3, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], []),
-	galaxySuperCluster: new unit(0, 3, ["galaxy", 100], []),	
-	supermassiveBlackhole: new unit(0, 3, ["blackhole", 1000], []),		
-	nucleotide: new unit(0, 1, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], []),
-	DNA: new unit(0, 1, ["nucleotide", 6000000000], []),
-	cell: new unit(0, 1, ["DNA", 1, "water", 5000000000], []),
-	amoeba: new unit(0, 1,["cell", 1], []),
-	human: new unit(0, 1, ["hydrogen", 2, "oxygen", 1], []),
+	water: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
+	carbonDioxide: new unit(0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
+	silica: new unit(0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
+	rock: new unit(0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
+	waterDrop: new unit(0, 0, ["silica", 1, "iron", 2], []),	
+	river: new unit(0, 0, ["silica", 1, "iron", 2], []),	
+	asteroid: new unit(0, 0, ["hydrogen", 1000000], []),
+	asteroidBelt: new unit(0, 0, ["asteroid", 1000, "water", 1000000], []),	
+	planet: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),	
+	nebula: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),			
+	star: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),
+	solarSystem: new unit(0, 0, ["star", 1, "planet", 8, "asteroidBelt", 1], []),
+	blackhole: new unit(0, 0, ["star", 1], []),
+	galaxy: new unit(0, 0, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], []),
+	galaxySuperCluster: new unit(0, 0, ["galaxy", 100], []),	
+	supermassiveBlackhole: new unit(0, 0, ["blackhole", 1000], []),		
+	nucleotide: new unit(0, 0, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], []),
+	DNA: new unit(0, 0, ["nucleotide", 6000000000], []),
+	cell: new unit(0, 0, ["DNA", 1, "water", 5000000000], []),
+	amoeba: new unit(0, 0,["cell", 1], []),
+	human: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
     timeOne: new achievement(["stats", "time", 900], false),
@@ -107,6 +107,19 @@ function unlock(condition, state) {
     this.state = state;
 }
 //Gameplay Functions
+function calcUnitAtoms(unit){
+	var numAtoms = 0;	
+	for(i = 0; i < units[unit].cost.length; i += 2){
+		if(units[units[unit].cost[i]].atoms !== 0){
+			numAtoms += units[units[unit].cost[i]].atoms * units[unit].cost[i + 1];
+		}
+		else{
+			calcUnitAtoms(units[unit].cost[i]);
+		}
+	}	
+	units[unit].atoms = numAtoms;
+}
+
 function checkAchievements(){
 	for(achievement in achievements) {
 		if(achievements[achievement].state !== true){
@@ -277,18 +290,20 @@ function save() {
     localStorage.setItem("save", JSON.stringify(save));
 }
 
-function load() {	
-    var savegame = JSON.parse(localStorage.getItem("save"));
-    if (typeof savegame.units !== "undefined") units = savegame.units;
-    if (typeof savegame.stats !== "undefined") stats = savegame.stats;
-    if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
-    if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
-    if (typeof savegame.events !== "undefined") events = savegame.events;
-    if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
-	loadAchievements();
-	loadEvents();
-    loadUnlocks();
-	updateAllValues();
+function load() {
+	if(localStorage.getItem("save") !== null){
+		var savegame = JSON.parse(localStorage.getItem("save"));
+		if (typeof savegame.units !== "undefined") units = savegame.units;
+		if (typeof savegame.stats !== "undefined") stats = savegame.stats;
+		if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
+		if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
+		if (typeof savegame.events !== "undefined") events = savegame.events;
+		if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
+		loadAchievements();
+		loadEvents();
+		loadUnlocks();
+		updateAllValues();
+	}
 }
 
 function loadAchievements() {
@@ -365,5 +380,10 @@ setInterval(function() {
     save();
 }, 60000);
 window.onload = function() {
-   load();	
+	load();
+	for(unit in units) {
+		if(units[unit].atoms === 0){
+			calcUnitAtoms(unit);
+		}
+	}   
 };
