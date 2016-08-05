@@ -13,6 +13,7 @@ var currentEvents = {
 	currentEventFour: " "	
 }
 var units = {
+	//(amount, atoms, cost, production)
 	hydrogen: new unit(0, 1, [], []),
 	carbon: new unit(0, 1, [], []),
 	nitrogen: new unit(0, 1, [], []),	
@@ -42,10 +43,12 @@ var units = {
 	human: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
+	//(condition, state)
     timeOne: new achievement(["stats", "time", 900], false),
     recordBreaker: new achievement(["unit", "human", 1], false)
 };
 var events = {
+	//(condition, state, message)
     newGame: new evt(["stats", "time", 2], false, "You're a god now. But what's a god without a universe?"),
     firstClick: new evt(["stats", "totalClicks", 1], false, "Click the button to extract atoms from the ball."),
     tenClicks: new evt(["stats", "totalClicks", 25], false, "You find that when you put energy into your universe, particles pop into existence out of complete nothingness"),
@@ -53,6 +56,7 @@ var events = {
     createdWater: new evt(["units", "water", 1], false, "As you create water, you find that you can now produce atoms out of nothing too.")
 };
 var unlocks = {
+	//(condition, state)
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
 	substance:  new unlock(["unit", "silica", 100], false),
 	planetary:  new unlock(["unit", "rock", 10], false),
@@ -90,7 +94,7 @@ function unit(amount, atoms, cost, production){
 	this.cost = cost;
 	this.production = production;
 }
-
+	//achievement and unlock class are the same. Event is very similar.
 function achievement(condition, state) {
     this.condition = condition;
     this.state = state;
@@ -108,6 +112,7 @@ function unlock(condition, state) {
 }
 //Gameplay Functions
 function calcUnitAtoms(unit){
+	//determines how many atoms there are in a specific unit.
 	var numAtoms = 0;	
 	for(i = 0; i < units[unit].cost.length; i += 2){
 		if(units[units[unit].cost[i]].atoms !== 0){
@@ -224,6 +229,7 @@ function updateAllValues() {
 		document.getElementById(unitA + "AmountCreated").innerHTML = number.toFixed(1).replace(".0", "");
 		for(i = 1; i <= (units[unitA].production.length / 2); i++) document.getElementById(unitA + "Effect" + i.toString()).innerHTML = (units[unitA].amount * units[unitA].production[1 + (i-1) * 2]).toFixed(1).replace(".0", ""); 
 	}	
+	//updates various stats
     determineTimePlayed();
     a = stats.totalAtoms / Math.pow(10, 80);
     document.getElementById("totalAtoms").innerHTML = Math.floor(stats.totalAtoms);
@@ -241,6 +247,7 @@ function newEvent(message) {
 }
 
 function create(type) {
+	//determines the max amount of a unit that can be created per click and buys it.
 	var prod = 1;	
 	for(unit in units) {
 		if(units[unit].production.length > 0){
@@ -257,6 +264,7 @@ function create(type) {
 }
 
 function buyUnit(type, number) {
+	//processes the buying of units
 	if(units[type].cost.length > 0 ){	
 		var enough = false;
 		for(i = 0; i < units[type].cost.length; i += 2) {
@@ -329,6 +337,7 @@ function loadUnlocks() {
 }
 
 Array.min = function( array ){
+	//returns the smallest value in an array of numbers
     return Math.min.apply( Math, array );
 };
 
@@ -346,6 +355,7 @@ function determineTimePlayed() {
 }
 
 function determineMax(unit) {
+	//returns the bottleneck for purchasing a new unit
 	var ratios = [];
 	for(i = 0; i < units[unit].cost.length; i += 2) {
 		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
@@ -355,14 +365,17 @@ function determineMax(unit) {
 
 function openTab(evt, name, type) {
     var i, tabcontent, tablinks;
+	//closes all other tabs
     tabcontent = document.getElementsByClassName("tabcontent " + type);
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
+	//sets the color of all tab links back to normal
     tablinks = document.getElementsByClassName("tablinks" + type);
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
+	//Opens the tab and changes the color of the link
     document.getElementById(name).style.display = "block";
     evt.currentTarget.className += " active";
 }
@@ -381,6 +394,7 @@ setInterval(function() {
 }, 60000);
 window.onload = function() {
 	load();
+	//determines the number of atoms a unit has for all units
 	for(unit in units) {
 		if(units[unit].atoms === 0){
 			calcUnitAtoms(unit);
