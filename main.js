@@ -6,8 +6,7 @@ var stats = {
 	totalUnits: 0,
 	totalAtoms: 0
 }
-var info = {
-	units: units,
+var currentEvents = {
 	currentEventOne: " ",
 	currentEventTwo: " ",
 	currentEventThree: " ",
@@ -85,6 +84,7 @@ var unlocks = {
     human: new unlock(["unit", "DNA", 1], false),		
 };
 //Class Constructors
+//type is redundant. Can remove that and use the name of the unit
 function unit(type, amount, atoms, cost, production){
 	this.type = type;
 	this.amount = amount;
@@ -189,14 +189,15 @@ function checkUnlocks() {
 }
 
 function updateAllValues() {
-	info.units = units;
 	stats.totalUnits = 0;
 	stats.totalAtoms = 0;
+	//updates the current number of every unit
 	for(unit in units) {
 		document.getElementById(unit).innerHTML = units[unit].amount.toFixed(0);
 		stats.totalUnits += units[unit].amount;
 		stats.totalAtoms += units[unit].amount * units[unit].atoms;
 	}
+	//updates the amount of a unit you create per click
 	for(var unitA in units) {
 		var number = 1;
 		for(var unitB in units) {
@@ -209,8 +210,7 @@ function updateAllValues() {
 			}
 		}
 		if(number > determineMax(unitA)) number = determineMax(unitA);
-		number = Math.floor(number * 10) / 10;
-		document.getElementById(unitA + "AmountCreated").innerHTML = number;
+		document.getElementById(unitA + "AmountCreated").innerHTML = number.toFixed(1).replace(".0", "");
 		for(i = 1; i <= (units[unitA].production.length / 2); i++) document.getElementById(unitA + "Effect" + i.toString()).innerHTML = units[unitA].amount * units[unitA].production[1 + (i-1) * 2]; 
 	}	
     determineTimePlayed();
@@ -222,14 +222,11 @@ function updateAllValues() {
 }
 
 function newEvent(message) {
-    info.currentEventFour =  info.currentEventThree;
-    info.currentEventThree =  info.currentEventTwo;
-    info.currentEventTwo =  info.currentEventOne;
-    info.currentEventOne = message;
-    document.getElementById("eventOne").innerHTML =  info.currentEventOne;
-    document.getElementById("eventTwo").innerHTML =  info.currentEventTwo;
-    document.getElementById("eventThree").innerHTML =  info.currentEventThree;
-    document.getElementById("eventFour").innerHTML =  info.currentEventFour;
+    currentEvents.currentEventFour =  currentEvents.currentEventThree;
+    currentEvents.currentEventThree =  currentEvents.currentEventTwo;
+    currentEvents.currentEventTwo =  currentEvents.currentEventOne;
+    currentEvents.currentEventOne = message;
+	loadEvents();
 }
 
 function create(type) {
@@ -277,17 +274,23 @@ function save() {
 		achievements: achievements,
         events: events,
         unlocks: unlocks,
+		currentEvents: currentEvents
     };
     localStorage.setItem("save", JSON.stringify(save));
 }
 
-function load() {
+function load() {	
     var savegame = JSON.parse(localStorage.getItem("save"));
     if (typeof savegame.units !== "undefined") units = savegame.units;
     if (typeof savegame.stats !== "undefined") stats = savegame.stats;
     if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
     if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
     if (typeof savegame.events !== "undefined") events = savegame.events;
+    if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
+	loadAchievements();
+	loadEvents();
+    loadUnlocks();
+	updateAllValues();
 }
 
 function loadAchievements() {
@@ -297,6 +300,13 @@ function loadAchievements() {
 	if(stats.numAchievements >= 1){
 		document.getElementById("noAchievements").style.display = "none";
 	}
+}
+
+function loadEvents() {
+    document.getElementById("eventOne").innerHTML =  currentEvents.currentEventOne;
+    document.getElementById("eventTwo").innerHTML =  currentEvents.currentEventTwo;
+    document.getElementById("eventThree").innerHTML =  currentEvents.currentEventThree;
+    document.getElementById("eventFour").innerHTML =  currentEvents.currentEventFour;	
 }
 
 function loadUnlocks() {
@@ -357,7 +367,5 @@ setInterval(function() {
     save();
 }, 60000);
 window.onload = function() {
-    load();
-    loadAchievements();
-    loadUnlocks();
+   load();	
 };
