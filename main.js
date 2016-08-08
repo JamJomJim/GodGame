@@ -5,7 +5,7 @@ var stats = {
 	totalClicks: 0,
 	totalUnits: 0,
 	totalAtoms: 0
-}
+};
 var currentEvents = {
 	currentEventOne: " ",
 	currentEventTwo: " ",
@@ -24,7 +24,7 @@ var units = {
 	carbonDioxide: new unit(0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
 	silica: new unit(0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
 	rock: new unit(0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
-	waterDrop: new unit(0, 0, ["silica", 1, "iron", 2], []),	
+	waterML: new unit(0, 0, ["silica", 1, "iron", 2], []),	
 	river: new unit(0, 0, ["silica", 1, "iron", 2], []),	
 	asteroid: new unit(0, 0, ["hydrogen", 1000000], []),
 	asteroidBelt: new unit(0, 0, ["asteroid", 1000, "water", 1000000], []),	
@@ -69,7 +69,7 @@ var unlocks = {
     carbonDioxide: new unlock(["unit", "silica", 10], false),
     silica: new unlock(["unit", "silicon", 10], false),	
 	rock: new unlock(["unit", "silica", 1000], false),
-    waterDrop: new unlock(["unit", "DNA", 1], false),		
+    waterML: new unlock(["unit", "DNA", 1], false),		
     river: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
 	asteroidBelt: new unlock(["unit", "asteroid", 100], false),
@@ -378,6 +378,16 @@ function openTab(evt, name, type) {
 	//Opens the tab and changes the color of the link
     document.getElementById(name).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+function findSciExp(number){
+	var str = number.toString();
+	str = str.substring(str.indexOf("+") + 1);
+	number = parseInt(str);
+}
+
+function updateExponents() {
+	
 }
 
 setInterval(function() {
