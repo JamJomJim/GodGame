@@ -13,34 +13,34 @@ var currentEvents = {
 	currentEventFour: " "	
 }
 var units = {
-	//(amount, atoms, cost, production)
-	hydrogen: new unit(0, 1, [], []),
-	carbon: new unit(0, 1, [], []),
-	nitrogen: new unit(0, 1, [], []),	
-	oxygen: new unit(0, 1, [], []),
-	silicon: new unit(0, 1, [], []),
-	iron: new unit(0, 1, [], []),
-	water: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
-	carbonDioxide: new unit(0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
-	silica: new unit(0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
-	rock: new unit(0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
-	waterML: new unit(0, 0, ["silica", 1, "iron", 2], []),	
-	river: new unit(0, 0, ["silica", 1, "iron", 2], []),	
-	asteroid: new unit(0, 0, ["hydrogen", 1000000], []),
-	asteroidBelt: new unit(0, 0, ["asteroid", 1000, "water", 1000000], []),	
-	planet: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),	
-	nebula: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),			
-	star: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),
-	solarSystem: new unit(0, 0, ["star", 1, "planet", 8, "asteroidBelt", 1], []),
-	blackhole: new unit(0, 0, ["star", 1], []),
-	galaxy: new unit(0, 0, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], []),
-	galaxySuperCluster: new unit(0, 0, ["galaxy", 100], []),	
-	supermassiveBlackhole: new unit(0, 0, ["blackhole", 1000], []),		
-	nucleotide: new unit(0, 0, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], []),
-	DNA: new unit(0, 0, ["nucleotide", 6000000000], []),
-	cell: new unit(0, 0, ["DNA", 1, "water", 5000000000], []),
-	amoeba: new unit(0, 0,["cell", 1], []),
-	human: new unit(0, 0, ["hydrogen", 2, "oxygen", 1], []),
+	//(type, amount, atoms, cost, production)
+	hydrogen: new unit("atom", 0, 1, [], []),
+	carbon: new unit("atom", 0, 1, [], []),
+	nitrogen: new unit("atom", 0, 1, [], []),	
+	oxygen: new unit("atom", 0, 1, [], []),
+	silicon: new unit("atom", 0, 1, [], []),
+	iron: new unit("atom", 0, 1, [], []),
+	water: new unit("molecule", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
+	carbonDioxide: new unit("molecule", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
+	silica: new unit("molecule", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
+	rock: new unit("molecule", 0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
+	waterML: new unit("molecule", 0, 0, ["silica", 1, "iron", 2], []),	
+	river: new unit("molecule", 0, 0, ["silica", 1, "iron", 2], []),	
+	asteroid: new unit("molecule", 0, 0, ["hydrogen", 1000000], []),
+	asteroidBelt: new unit("molecule", 0, 0, ["asteroid", 1000, "water", 1000000], []),	
+	planet: new unit("molecule", 0, 0, ["hydrogen", 2, "oxygen", 1], []),	
+	nebula: new unit("molecule", 0, 0, ["hydrogen", 2, "oxygen", 1], []),			
+	star: new unit("molecule", 0, 0, ["hydrogen", 2, "oxygen", 1], []),
+	solarSystem: new unit("molecule", 0, 0, ["star", 1, "planet", 8, "asteroidBelt", 1], []),
+	blackhole: new unit("molecule", 0, 0, ["star", 1], []),
+	galaxy: new unit("molecule", 0, 0, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], []),
+	galaxySuperCluster: new unit("molecule", 0, 0, ["galaxy", 100], []),	
+	supermassiveBlackhole: new unit("molecule", 0, 0, ["blackhole", 1000], []),		
+	nucleotide: new unit("molecule", 0, 0, ["carbon", 5, "hydrogen", 6, "nitrogen", 2, "oxygen", 2], []),
+	DNA: new unit("molecule", 0, 0, ["nucleotide", 6000000000], []),
+	cell: new unit("molecule", 0, 0, ["DNA", 1, "water", 5000000000], []),
+	amoeba: new unit("molecule", 0, 0,["cell", 1], []),
+	human: new unit("molecule", 0, 0, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
 	//(condition, state)
@@ -88,7 +88,8 @@ var unlocks = {
     human: new unlock(["unit", "DNA", 1], false),		
 };
 //Class Constructors
-function unit(amount, atoms, cost, production){
+function unit(type, amount, atoms, cost, production){
+	this.type = type;
 	this.amount = amount;
 	this.atoms = atoms;
 	this.cost = cost;
@@ -111,6 +112,10 @@ function unlock(condition, state) {
     this.state = state;
 }
 //Gameplay Functions
+function newUnit(unit) {
+	
+}
+
 function calcUnitAtoms(unit){
 	//determines how many atoms there are in a specific unit.
 	var numAtoms = 0;	
@@ -379,17 +384,17 @@ function openTab(evt, name, type) {
     document.getElementById(name).style.display = "block";
     evt.currentTarget.className += " active";
 }
-
-function findSciExp(number){
+var test1;
+/*function findSciExp(number){
 	var str = number.toString();
 	str = str.substring(str.indexOf("+") + 1);
 	number = parseInt(str);
 }
 
-function updateExponents() {
+function updateExponents(number) {
 	
 }
-
+*/
 setInterval(function() {
     stats.time++;
     updateAllValues();
@@ -409,5 +414,32 @@ window.onload = function() {
 		if(units[unit].atoms === 0){
 			calcUnitAtoms(unit);
 		}
-	}   
+		test1 = 'oxygen';
+		switch(units[unit].type) {
+			case "atom":
+				var unitDiv = document.createElement("div");  
+				unitDiv.id = unit + "tSection";
+				var btn = document.createElement("input");
+				btn.type = "button";
+				btn.value = unit;
+				btn.onclick= function(arg) {
+					return function() {
+						create(arg);
+					}
+				}(unit);
+				unitDiv.appendChild(btn);	
+				document.getElementById("atoms").appendChild(unitDiv);
+				break;
+			case "molecule":
+				var test = document.createElement("div");  
+				test.id = unit + "tSection";
+				var number = 10;
+				test.innerHTML = "<p class='unit'>" + unit + ":<span id=" + unit + "tAmount" + "> test </span>" + "<button>Create (" + number + ")</button> <br /> Cost: <br /> Effect:</p>";		
+				document.getElementById("molecules").appendChild(test);
+				break;
+			default:
+				break;
+		}	
+	} 
+
 };
