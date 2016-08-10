@@ -38,201 +38,23 @@
                </li>		   
             </ul>
             <div id="atoms" class="tabcontent Unit" style="display: block;">
-               <p class="unit"> Hydrogen: <span id="hydrogen">0</span> 
-                  <button onclick="create('hydrogen')">Create (<span id="hydrogenAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.              
-			   </p>
-               <div id="carbonSection" style="display: none;">
-                  <p class="unit"> Carbon: <span id="carbon">0</span> 
-                     <button onclick="create('carbon')">Create (<span id="carbonAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.                     
-				  </p>
-               </div>
-               <div id="nitrogenSection" style="display: none;">
-                  <p class="unit"> Nitrogen: <span id="nitrogen">0</span> 
-                     <button onclick="create('nitrogen')">Create (<span id="nitrogenAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.   
-					 </p>
-               </div>
-               <p class="unit"> Oxygen: <span id="oxygen">0</span>
-                  <button onclick="create('oxygen')">Create (<span id="oxygenAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.                  
-			   </p>
-               <div id="siliconSection" style="display: none;">
-                  <p class="unit"> Silicon: <span id="silicon">0</span>
-                     <button onclick="create('silicon')">Create (<span id="siliconAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.                     
-				  </p>
-               </div>
-               <div id="ironSection" style="display: none;">
-                  <p class="unit"> Iron: <span id="iron">0</span>
-                     <button onclick="create('iron')">Create (<span id="ironAmountCreated">1</span>)</button>
-  					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.  
-				  </p> 
-			   </div>
+
             </div>            
 			<div id="molecules" class="tabcontent Unit">
-				<div id="waterSection" style="display: none;">
-				   <p class="unit"> H<sub>2</sub>O: <span id="water">0</span>
-					<button onclick="create('water')">Create (<span id="waterAmountCreated">1</span>)</button>
-					  <br /> Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
-					  <br /> Effect: + <span id="waterEffect1">0</span> Hydrogen, and <span id="waterEffect2">0</span> Oxygen per Click									
-				   </p>
-				</div>
-				<div id="silicaSection" style="display: none;">
-				   <p class="unit"> SO<sub>2</sub>: <span id="silica">0</span>
-					  <button onclick="create('silica')">Create (<span id="silicaAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Silicon, 2 Oxygen
-					  <br /> Effect: + <span id="silicaEffect1">0</span> Silicon, and <span id="silicaEffect2">0</span> Oxygen per Click			
-				   </p>
-				</div>
-				<div id="carbonDioxideSection" style="display: none;">
-				   <p class="unit"> CO<sub>2</sub>: <span id="carbonDioxide">0</span>
-					  <button onclick="create('carbonDioxide')">Create (<span id="carbonDioxideAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Carbon, 2 Oxygen
-					  <br /> Effect: + <span id="carbonDioxideEffect1">0</span> Carbon, and <span id="carbonDioxideEffect2">0</span> Oxygen per Click			
-				   </p>
-				</div>				
-            </div>	
-			<div id="substance" class="tabcontent Unit">
-				<div id="rockSection" style="display: none;">
-				   <p class="unit"> Rock: <span id="rock">0</span>
-					  <button onclick="create('rock')">Create (<span id="rockAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Silica, 2 Iron
-					  <br /> Effect: + <span id="rockEffect1">0</span> Silica			
-				   </p>
-				</div>
-				<div id="waterMLSection" style="display: none;">
-				   <p class="unit"> Water Droplet: <span id="waterML">0</span>
-					  <button onclick="create('waterML')">Create (<span id="waterMLAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
 				
             </div>	
+			<div id="substance" class="tabcontent Unit">
+
+            </div>	
 			<div id="planetary" class="tabcontent Unit">
-				<div id="riverSection" style="display: none;">
-				   <p class="unit"> River: <span id="river">0</span>
-					  <button onclick="create('river')">Create (<span id="riverAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
+
             </div>				
 			<div id="space" class="tabcontent Unit">
-				<div id="asteroidSection" style="display: none;">
-				   <p class="unit"> Asteroid: <span id="asteroid">0</span>
-					  <button onclick="create('asteroid')">Create (<span id="asteroidAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="asteroidBeltSection" style="display: none;">
-				   <p class="unit"> Asteroid Belt: <span id="asteroidBelt">0</span>
-					  <button onclick="create('asteroidBelt')">Create (<span id="asteroidBeltAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="planetSection" style="display: none;">
-				   <p class="unit"> Planet: <span id="planet">0</span>
-					  <button onclick="create('planet')">Create (<span id="planetAmountCreated">1</span>)</button>
-					  <br /> Cost:
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="starSection" style="display: none;">
-				   <p class="unit"> Nebula: <span id="nebula">0</span>
-					  <button onclick="create('nebula')">Create (<span id="nebulaAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				   <p class="unit"> Star: <span id="star">0</span>
-					  <button onclick="create('star')">Create (<span id="starAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="solarSystemSection" style="display: none;">
-				   <p class="unit"> Solar System: <span id="solarSystem">0</span>
-					  <button onclick="create('solarSystem')">Create (<span id="solarSystemAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="blackholeSection" style="display: none;">
-				   <p class="unit"> Blackhole: <span id="blackhole">0</span>
-					  <button onclick="create('blackhole')">Create (<span id="blackholeAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="supermassiveBlackholeSection" style="display: none;">
-				   <p class="unit"> Supermassive Blackhole: <span id="supermassiveBlackhole">0</span>
-					  <button onclick="create('supermassiveBlackhole')">Create (<span id="supermassiveBlackholeAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="galaxySection" style="display: none;">
-				   <p class="unit"> Galaxy: <span id="galaxy">0</span>
-					  <button onclick="create('galaxy')">Create (<span id="galaxyAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
-				<div id="galaxySuperClusterSection" style="display: none;">
-				   <p class="unit"> Galaxy Supercluster: <span id="galaxySuperCluster">0</span>
-					  <button onclick="create('galaxySuperCluster')">Create (<span id="galaxySuperClusterAmountCreated">1</span>)</button>
-					  <br /> Cost: 
-					  <br /> Effect:			
-				   </p>
-				</div>
+
             </div>
          </div>
          <div id="life" class="tabcontent Game">
-            <div id="nucleotideSection" style="display: none;">
-               <p class="unit"> Nucleotides: <span id="nucleotide">0</span>
-                  <button onclick="create('nucleotide')">Create (<span id="nucleotideAmountCreated">1</span>)</button>
-                  <br /> Cost: 
-				  <br /> Effect:			
-               </p>
-            </div>
-            <div id="DNASection" style="display: none;">
-               <p class="unit"> DNA: <span id="DNA">0</span>
-					<button onclick="create('DNA')">Create (<span id="DNAAmountCreated">1</span>)</button>
-                  <br /> Cost: 
-				  <br /> Effect:			
-               </p>
-            </div>
-            <div id="cellSection" style="display: none;">
-               <p class="unit"> Cells: <span id="cell">0</span>
-                  <button onclick="create('cell')">Create (<span id="cellAmountCreated">1</span>)</button>
-                  <br /> Cost: 
-				  <br /> Effect:			
-               </p>
-            </div>	
-            <div id="amoebaSection" style="display: none;">
-               <p class="unit"> Amoeba: <span id="amoeba">0</span>
-                  <button onclick="create('amoeba')">Create (<span id="amoebaAmountCreated">1</span>)</button>
-                  <br /> Cost: 
-				  <br /> Effect:			
-               </p>
-            </div>				
-            <div id="humanSection" style="display: none;">
-               <p class="unit"> Human: <span id="human">0</span>
-                  <button onclick="create('human')">Create (<span id="humanAmountCreated">1</span>)</button>
-                  <br /> Cost: 
-				  <br /> Effect:			
-               </p>
-            </div>
+
          </div>
       </div>
       <div id="right" ;>
