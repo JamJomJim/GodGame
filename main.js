@@ -21,7 +21,7 @@ var units = {
 	silicon: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
 	iron: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
 	water: new unit("test", "test", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
-	carbonDioxide: new unit("test", ["<span id='carbonDioxideEffect1'>1</span>", "<span id='carbonDioxideEffect2'>4</span>"], "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
+	carbonDioxide: new unit("test", ["<span id='carbonDioxideEffect1'>1</span> Carbon, and ", "<span id='carbonDioxideEffect2'>4</span> Oxygen per Click."], "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
 	silica: new unit("test", "test", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
 	rock: new unit("test", "test", "substance", 0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
 	waterML: new unit("test", "test", "substance", 0, 0, ["silica", 1, "iron", 2], []),	
