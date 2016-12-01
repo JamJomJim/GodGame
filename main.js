@@ -14,18 +14,22 @@ var currentEvents = {
 }
 var units = {
 	//(costString, effectString, type, amount, atoms, cost, production)
+	//Atoms
 	hydrogen: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
 	carbon: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
 	nitrogen: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),	
 	oxygen: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
 	silicon: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
 	iron: new unit("Cost: You can create this directly from the ball.", "Used to build more complex things.", "atoms", 0, 1, [], []),
-	water: new unit("test", "test", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
-	carbonDioxide: new unit("test", ["<span id='carbonDioxideEffect1'>1</span> Carbon, and ", "<span id='carbonDioxideEffect2'>4</span> Oxygen per Click."], "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
-	silica: new unit("test", "test", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
-	rock: new unit("test", "test", "substance", 0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
-	waterML: new unit("test", "test", "substance", 0, 0, ["silica", 1, "iron", 2], []),	
+	//Molecules
+	water: new unit("Cost: 2 Hydrogen, and 1 Oxygen", ["<span id='waterEffect1'></span> Hydrogen, and ", "<span id='waterEffect2'></span> Oxygen per Click"], "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
+	carbonDioxide: new unit("Cost: 1 Carbon, and 2 Oxygen", ["<span id='carbonDioxideEffect1'></span> Carbon, and ", "<span id='carbonDioxideEffect2'></span> Oxygen per Click"], "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
+	silica: new unit("Cost: 1 Silicon, and 2 Oxygen", "test", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
+	//Substance
+	rock: new unit("Cost 1 Silica, and 2 Iron", "test", "substance", 0, 0, ["silica", 1, "iron", 2], ["silica", 0.1]),
+	//Planetary
 	river: new unit("test", "test", "planetary", 0, 0, ["silica", 1, "iron", 2], []),	
+	//Space
 	asteroid: new unit("test", "test", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroidBelt: new unit("test", "test", "space", 0, 0, ["asteroid", 1000, "water", 1000000], []),	
 	planet: new unit("test", "test", "space", 0, 0, ["hydrogen", 2, "oxygen", 1], []),	
@@ -69,7 +73,6 @@ var unlocks = {
     carbonDioxide: new unlock(["unit", "silica", 10], false),
     silica: new unlock(["unit", "silicon", 10], false),	
 	rock: new unlock(["unit", "silica", 1000], false),
-    waterML: new unlock(["unit", "DNA", 1], false),		
     river: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
 	asteroidBelt: new unlock(["unit", "asteroid", 100], false),
@@ -232,6 +235,7 @@ function updateAllValues() {
 				}
 			}
 		}
+		//updates effect amounts
 		if(number > determineMax(unitA)) number = determineMax(unitA);
 		document.getElementById(unitA + "CreateAmount").innerHTML = number.toFixed(1).replace(".0", "");
 		if(typeof units[unitA].effectString == "object"){
@@ -403,7 +407,14 @@ function newUnit(unit) {
 		}
 	}(unit);				
 	btn.innerHTML = "Create (<span id='" + unit + "CreateAmount'>0</span>)";
-	unitP.innerHTML = unit.charAt(0).toUpperCase() + unit.slice(1) + ": <span id='" + unit + "Amount'>0</span> ";	
+	var unitTitle = unit.charAt(0).toUpperCase();
+	for(i = 1; i < unit.length; i++){
+		if(unit.charAt(i) == unit.charAt(i).toUpperCase()){
+			unitTitle += " " + unit.charAt(i);
+		}
+		else unitTitle += unit.charAt(i);
+	}
+	unitP.innerHTML = unitTitle + ": <span id='" + unit + "Amount'>0</span> ";	
 	unitP.appendChild(btn);	
 	unitP.appendChild(document.createElement("br"));	
 	var cost = document.createTextNode(units[unit].costString);
@@ -418,6 +429,7 @@ function newUnit(unit) {
 	unitDiv.appendChild(unitP);
 	document.getElementById(units[unit].type).appendChild(unitDiv);
 }
+
 /*function findSciExp(number){
 	var str = number.toString();
 	str = str.substring(str.indexOf("+") + 1);
@@ -428,6 +440,7 @@ function updateExponents(number) {
 	
 }
 */
+
 setInterval(function() {
     stats.time++;
     updateAllValues();
@@ -437,9 +450,11 @@ setInterval(function() {
 	loadAchievements();
 	loadUnlocks();
 }, 1000);
+
 setInterval(function() {
     save();
 }, 60000);
+
 window.onload = function() {
 	for(unit in units) {
 		if(units[unit].atoms === 0){
@@ -449,6 +464,4 @@ window.onload = function() {
 	} 	
 	load();
 	//determines the number of atoms a unit has for all units
-
-
 };
