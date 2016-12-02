@@ -1,217 +1,61 @@
 <html>
+<p id="Test"></p>
    <script type="text/javascript" src="main.js"></script>
    <head>
       <link rel="stylesheet" type="text/css" href="interface.css" />
    </head>
    <ul class="tab">
-      <li><a href="#" class="tablinks active" onclick="openTab(event, 'Game')">Game</a>
+      <li><a href="#" class="tablinksMain active" onclick="openTab(event, 'Game', 'Main')">Game</a>
       </li>
-      <li><a href="#" class="tablinks" onclick="openTab(event,'Achievements')">Achievements</a>
+      <li><a href="#" class="tablinksMain" onclick="openTab(event,'Achievements', 'Main')">Achievements</a>
       </li>
-      <li><a href="#" class="tablinks" onclick="openTab(event,'Options')">Options</a>
+      <li><a href="#" class="tablinksMain" onclick="openTab(event,'Options', 'Main')">Options</a>
       </li>
    </ul>
-   <div id="Game" class="tabcontent" style="display: block;">
+   <div id="Game" class="tabcontent Main" style="display: block;">
       <div id="atomInfo">Total Atoms: <span id="totalAtoms">0</span>
          </br> Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
       </div>
       <div id="left" ;>
          <ul class="tab">
-            <li><a href="#" class="tablinksLeft active" onclick="openLeftTab(event, 'units')">Creation</a>
+            <li><a href="#" class="tablinksGame active" onclick="openTab(event, 'units', 'Game')">Creation</a>
             </li>
-            <li><a href="#" class="tablinksLeft" onclick="openLeftTab(event, 'life')" style="display: none;">Life</a>
+            <li><a id="lifeSection" href="#" class="tablinksGame" onclick="openTab(event, 'life', 'Game')" style="display: none;">Life</a>
             </li>
          </ul>
-         <div id="units" class="tabcontentLeft" style="display: block;">
+         <div id="units" class="tabcontent Game" style="display: block;">
             </br >
             <ul class="tab">
-               <li><a href="#" class="tablinksUnit" onclick="openUnitTab(event, 'atoms')">Atoms</a>
+               <li><a href="#" class="tablinksUnit active" onclick="openTab(event, 'atoms', 'Unit')">Atoms</a>
                </li>
-               <li><a id="moleculesLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'molecules')" style="display: none;">Molecules</a>
+               <li><a id="moleculesSection" href="#" class="tablinksUnit" onclick="openTab(event, 'molecules', 'Unit')" style="display: none;">Molecules</a>
                </li>  
-               <li><a id="substanceLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'substance')" style="display: none;">Substance</a>
+               <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substance</a>
                </li> 
-			   <li><a id="planetaryLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'planetary')" style="display: none;">Planetary</a>
+			   <li><a id="planetarySection" href="#" class="tablinksUnit" onclick="openTab(event, 'planetary', 'Unit')" style="display: none;">Planetary</a>
                </li>	 			   
-			   <li><a id="spaceLink" href="#" class="tablinksUnit" onclick="openUnitTab(event, 'space')" style="display: none;">Space</a>
+			   <li><a id="spaceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'space', 'Unit')" style="display: none;">Space</a>
                </li>		   
             </ul>
-            <div id="atoms" class="tabcontentUnit" style="display: none;">
-               <p class="unit"> Hydrogen: <span id="hydrogen">0</span> 
-                  <button onclick="create('hydrogen')">Create (<span id="hydrogenAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.              
-			   </p>
-               <div id="carbonSection" style="display: none;">
-                  <p class="unit"> Carbon: <span id="carbon">0</span> 
-                     <button onclick="create('carbon')">Create (<span id="carbonAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.                     
-				  </p>
-               </div>
-               <div id="nitrogenSection" style="display: none;">
-                  <p class="unit"> Nitrogen: <span id="nitrogen">0</span> 
-                     <button onclick="create('nitrogen')">Create (<span id="nitrogenAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.   
-					 </p>
-               </div>
-               <p class="unit"> Oxygen: <span id="oxygen">0</span>
-                  <button onclick="create('oxygen')">Create (<span id="oxygenAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.                  
-			   </p>
-               <div id="siliconSection" style="display: none;">
-                  <p class="unit"> Silicon: <span id="silicon">0</span>
-                     <button onclick="create('silicon')">Create (<span id="siliconAmountCreated">1</span>)</button>
- 					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.                     
-				  </p>
-               </div>
-               <div id="ironSection" style="display: none;">
-                  <p class="unit"> Iron: <span id="iron">0</span>
-                     <button onclick="create('iron')">Create (<span id="ironAmountCreated">1</span>)</button>
-  					 <br /> Cost: You can create this directly from the ball.
-					 <br /> Effect: Used to build more complex things.  
-				  </p> 
-			   </div>
+            <div id="atoms" class="tabcontent Unit" style="display: block;">
+
             </div>            
-			<div id="molecules" class="tabcontentUnit" style="display: none;">
-				<div id="waterSection" style="display: none;">
-				   <p class="unit"> Water: <span id="water">0</span>
-					<button onclick="create('water')">Create (<span id="waterAmountCreated">1</span>)</button>
-					  <br /> Cost: 2 Hydrogen Atoms, 1 Oxygen Atom
-					  <br /> Effect(per Unit): + 0.2 Hydrogen, or 0.1 Oxygen per Click									
-				   </p>
-				</div>
-				<div id="silicaSection" style="display: none;">
-				   <p class="unit"> Silica: <span id="silica">0</span>
-					  <button onclick="create('silica')">Create (<span id="silicaAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Silicon, 2 Oxygen
-					  <br /> Effect: + 0.1 Silicon, or 0.1 Oxygen per Click			
-				   </p>
-				</div>
+			<div id="molecules" class="tabcontent Unit">
+				
             </div>	
-			<div id="substance" class="tabcontentUnit" style="display: none;">
+			<div id="substance" class="tabcontent Unit">
 
             </div>	
-			<div id="planetary" class="tabcontentUnit" style="display: none;">
+			<div id="planetary" class="tabcontent Unit">
 
             </div>				
-			<div id="space" class="tabcontentUnit" style="display: none;">
-				<div id="asteroidSection" style="display: none;">
-				   <p class="unit"> Asteroid: <span id="asteroid">0</span>
-					  <button onclick="create('asteroid')">Create (<span id="asteroidAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="asteroidBeltSection" style="display: none;">
-				   <p class="unit"> asteroidBelt: <span id="asteroidBelt">0</span>
-					  <button onclick="create('asteroidBelt')">Create (<span id="asteroidBeltAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="planetSection" style="display: none;">
-				   <p class="unit"> Create Planet
-					  <button onclick="create('planet')">Create (<span id="planetAmountCreated">1</span>)</button>
-					  <br /> Planets: <span id="planet">0</span>
-					  <br /> Cost: 10000 Iron Atoms
-				   </p>
-				</div>
-				<div id="starSection" style="display: none;">
-				   <p class="unit"> Create Nebula
-					  <button onclick="create('nebula')">Create (<span id="nebulaAmountCreated">1</span>)</button>
-					  <br /> Nebulae: <span id="nebula">0</span>
-					  <br /> Cost: 1000000 Hydrogen Atoms
-				   </p>
-				   <p class="unit"> Create Star
-					  <button onclick="create('star')">Create (<span id="starAmountCreated">1</span>)</button>
-					  <br /> Stars: <span id="star">0</span>
-					  <br /> Cost: .001 Nebulae
-				   </p>
-				</div>
-				<div id="solarSystemSection" style="display: none;">
-				   <p class="unit"> solarSystem: <span id="solarSystem">0</span>
-					  <button onclick="create('solarSystem')">Create (<span id="solarSystemAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="blackholeSection" style="display: none;">
-				   <p class="unit"> blackhole: <span id="blackhole">0</span>
-					  <button onclick="create('blackhole')">Create (<span id="blackholeAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="supermassiveBlackholeSection" style="display: none;">
-				   <p class="unit"> supermassiveBlackhole: <span id="supermassiveBlackhole">0</span>
-					  <button onclick="create('supermassiveBlackhole')">Create (<span id="supermassiveBlackholeAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="galaxySection" style="display: none;">
-				   <p class="unit"> galaxy: <span id="galaxy">0</span>
-					  <button onclick="create('galaxy')">Create (<span id="galaxyAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="galaxyClusterSection" style="display: none;">
-				   <p class="unit"> galaxyCluster: <span id="galaxyCluster">0</span>
-					  <button onclick="create('galaxyCluster')">Create (<span id="galaxyClusterAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
-				<div id="galaxySuperClusterSection" style="display: none;">
-				   <p class="unit"> galaxySuperCluster: <span id="galaxySuperCluster">0</span>
-					  <button onclick="create('galaxySuperCluster')">Create (<span id="galaxySuperClusterAmountCreated">1</span>)</button>
-					  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-					  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-				   </p>
-				</div>
+			<div id="space" class="tabcontent Unit">
+
             </div>
+         </div>
+         <div id="life" class="tabcontent Game">
 
          </div>
-         <div id="life" class="tabcontentLeft">
-            <div id="nucleotideSection" style="display: none;">
-               <p class="unit"> Nucleotides: <span id="nucleotide">0</span>
-                  <button onclick="create('nucleotide')">Create (<span id="nucleotideAmountCreated">1</span>)</button>
-                  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-                  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-               </p>
-            </div>
-            <div id="DNASection" style="display: none;">
-               <p class="unit"> DNA: <span id="DNA">0</span>
-					<button onclick="create('DNA')">Create (<span id="DNAAmountCreated">1</span>)</button>
-                  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-                  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-               </p>
-            </div>
-            <div id="cellSection" style="display: none;">
-               <p class="unit"> Cells: <span id="cell">0</span>
-                  <br />
-<button onclick="create('cell')">Create (<span id="cellAmountCreated">1</span>)</button>
-                  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-                  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-               </p>
-            </div>			
-            <div id="humanSection" style="display: none;">
-               <p class="unit"> Human: <span id="human">0</span>
-                  <br />
-<button onclick="create('human')">Create (<span id="humanAmountCreated">1</span>)</button>
-                  <br /> Cost: 1 Proton, 1 Neutron, 1 Electron
-                  <br /> Effect per unit: + 0.1 Protons, 0.1 Neutrons, or 0.1 Electrons per Click			
-               </p>
-            </div>
-         </div>
-      </div>
-      <div id="center" ;>
-         <br /><br /><br /><br />
       </div>
       <div id="right" ;>
          <table id="events";>
@@ -231,7 +75,7 @@
       </div>
       <br clear="all" />
    </div>
-   <div id="Achievements" class="tabcontent">
+   <div id="Achievements" class="tabcontent Main">
       <div>
          <h3>Completed: <span id="completedAchievements">0</span>/<span id="totalAchievements">0</span></h3>
       </div>
@@ -245,7 +89,7 @@
          <p class="achievement">You created humanity in less than 7 days!</p>
       </div>
    </div>
-   <div id="Options" class="tabcontent">
+   <div id="Options" class="tabcontent Main">
       <body>
          <p>Time Played: <span id="days">0</span> Days <span id="hours">0</span> Hours <span id="minutes">0</span> Minutes <span id="seconds">0</span> Seconds</p>
          <p>

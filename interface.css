@@ -4,6 +4,9 @@ body{
 h3{
 	margin-top: 0;
 }
+th, td {
+    padding: 15px;
+}
 #atomInfo{
 	font-size: 24px;
     text-align: center;
@@ -11,36 +14,15 @@ h3{
 }
 #left{
 	float:left;
-	width:50%;
+	width:75%;
 }
-#center, #right{
+#right{
+	padding: 5px 15px;	
 	float:left;
-	width:25%;	
+	width:20%;
+
 }
-#events{
-	
-}
-#create {
-	display: inline-block;
-	padding: 15px 25px;
-	font-size: 24px;
-    margin: 0px -80px; 
-	cursor: pointer;
-	outline: none;
-	background-color: #e7e7e7;
-	color: black;
-	border: none;
-	border-radius: 15px;
-	box-shadow: 0 9px #999;
-    position:relative;
-    top:50%; 
-    left:50%;
-}
-#create:active {
-  background-color: #e7e7e7;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+
 p.unit {
 	padding: 6px 3px;
 	width: 50%;
