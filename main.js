@@ -11,7 +11,7 @@ var currentEvents = {
 	currentEventTwo: " ",
 	currentEventThree: " ",
 	currentEventFour: " "	
-}
+};
 var units = {
 	//(plural, type, amount, atoms, cost, production)
 	//Atoms
@@ -59,11 +59,12 @@ var achievements = {
 };
 var events = {
 	//(condition, state, message)
-    newGame: new evt(["stats", "time", 2], false, "You're a god now. But what's a god without a universe?"),
-    firstClick: new evt(["stats", "totalClicks", 1], false, "Click the button to extract atoms from the ball."),
-    tenClicks: new evt(["stats", "totalClicks", 25], false, "You find that when you put energy into your universe, particles pop into existence out of complete nothingness"),
-    tenUnits: new evt(["stats", "totalUnits", 10], false, "It looks like you have a very small universe... but dont worry as your universe grows so does your ability to make what matters: matter."),
-    createdWater: new evt(["units", "water", 1], false, "As you create water, you find that you can now produce atoms out of nothing too.")
+    newGame1: new evt(["stats", "time", 0], false, "You're a god now. But what's a god without a universe?"),
+    newGame2: new evt(["stats", "time", 1], false, "You dont have a universe... but you do have a ball. Nice."),
+    firstClick: new evt(["stats", "totalUnits", 1], false, "There's something strange with this ball..."),
+    tenClicks: new evt(["stats", "totalUnits", 25], false, "I guess there's nothing else to do, might as well play with your ball a bit more."),
+    tenUnits: new evt(["stats", "totalUnits", 100], false, "It looks like you have a very small universe now... carry on making what matters: matter."),
+    createdWater: new evt(["unit", "water", 1], false, "This is a little bit more complex. Your universe didn't get any bigger though.")
 };
 var unlocks = {
 	//(condition, state)
@@ -80,8 +81,8 @@ var unlocks = {
     carbonDioxide: new unlock(["unit", "silica", 10], false),
     silica: new unlock(["unit", "silicon", 10], false),	
     glucose: new unlock(["unit", "carbon", 10], false),	
-	sand: new unlock(["unit", "silica", 1000], false),	
-	rock: new unlock(["unit", "silica", 1000], false),
+	sand: new unlock(["unit", "silica", 100], false),	
+	rock: new unlock(["unit", "silica", 100], false),
 	ironOre: new unlock(["unit", "rock", 10], false),	
     river: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
@@ -204,13 +205,19 @@ function checkUnlocks() {
 					if(units[unlocks[unlock].condition[i + 1]].amount >= unlocks[unlock].condition[i + 2]){
 						tempBool = true;
 					}
-					else tempBool = false;
+					else{
+						tempBool = false;
+						break;
+					}
 				}
 				if(unlocks[unlock].condition[i] == "stats") {
 					if(stats[unlocks[unlock].condition[i + 1]] >= unlocks[unlock].condition[i + 2]){
 						tempBool = true;
 						}
-					else tempBool = false;				
+					else{
+						tempBool = false;	
+						break;
+					}						
 				}		
 			}
 			if(tempBool === true) {
@@ -470,6 +477,7 @@ function createDisplayString(oldString) {
 	}
 	return newString;
 }
+
 /*function findSciExp(number){
 	var str = number.toString();
 	str = str.substring(str.indexOf("+") + 1);
