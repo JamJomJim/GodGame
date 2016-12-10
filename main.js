@@ -1,5 +1,6 @@
 //Initialisation of variables
 var stats = {
+	version: 1,
 	time: 0,
 	numAchievements: 0,
 	totalClicks: 0,
@@ -53,18 +54,20 @@ var units = {
 	human: new unit("humans", "life", 0, 0, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
-	//(condition, state)
-    timeOne: new achievement(["stats", "time", 900], false),
-    recordBreaker: new achievement(["unit", "human", 1], false)
+	//(condition, state, name, para)
+    timeOne: new achievement(["stats", "time", 900], false, "Noob", "You've played for 15 minutes. Well done?"),
+    recordBreaker: new achievement(["unit", "human", 1], false, "Record Breaker", "You created humanity in less than 7 days!")
 };
 var events = {
 	//(condition, state, message)
     newGame1: new evt(["stats", "time", 0], false, "You're a god now. But what's a god without a universe?"),
-    newGame2: new evt(["stats", "time", 1], false, "You dont have a universe... but you do have a ball. Nice."),
-    firstClick: new evt(["stats", "totalUnits", 1], false, "There's something strange with this ball..."),
-    tenClicks: new evt(["stats", "totalUnits", 25], false, "I guess there's nothing else to do, might as well play with your ball a bit more."),
-    tenUnits: new evt(["stats", "totalUnits", 100], false, "It looks like you have a very small universe now... carry on making what matters: matter."),
-    createdWater: new evt(["unit", "water", 1], false, "This is a little bit more complex. Your universe didn't get any bigger though.")
+    newGame2: new evt(["stats", "time", 10], false, "You dont have a universe... but you do have a ball. Nice."),
+    newGame3: new evt(["stats", "time", 15], false, "New things pop into existence as you examine the ball."),
+    unit1: new evt(["stats", "totalUnits", 1], false, "There's something strange about this ball..."),
+    unit2: new evt(["stats", "totalUnits", 25], false, "I guess there's nothing else to do, might as well play with your ball a bit more."),
+    unit3: new evt(["stats", "totalUnits", 100], false, "It looks like you have a very small universe now... carry on making what matters: matter."),
+    createdWater: new evt(["unit", "water", 1], false, "This is a little bit more complex. Your universe didn't get any bigger though."),
+    createdGlucose: new evt(["unit", "glucose", 1], false, "Sweet! This one is pretty complex.")
 };
 var unlocks = {
 	//(condition, state)
@@ -113,9 +116,11 @@ function unit(plural, type, amount, atoms, cost, production){
 	this.production = production;
 }
 	//achievement and unlock class are the same. Event is very similar.
-function achievement(condition, state) {
+function achievement(condition, state, name, para) {
     this.condition = condition;
     this.state = state;
+    this.name = name;
+    this.para = para;
 }
 
 function evt(condition, state, message) {
@@ -165,6 +170,7 @@ function checkAchievements(){
 			if(tempBool === true) {
 				achievements[achievement].state = true;
 				stats.numAchievements += 1;
+				document.getElementById("completedAchievements").innerHTML = stats.numAchievements;
 			}
 		}
 	}
@@ -331,16 +337,18 @@ function save() {
 function load() {
 	if(localStorage.getItem("save") !== null){
 		var savegame = JSON.parse(localStorage.getItem("save"));
-		if (typeof savegame.units !== "undefined") units = savegame.units;
-		if (typeof savegame.stats !== "undefined") stats = savegame.stats;
-		if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
-		if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
-		if (typeof savegame.events !== "undefined") events = savegame.events;
-		if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
-		loadAchievements();
-		loadEvents();
-		loadUnlocks();
-		updateAllValues();
+		if(savegame.stats.version == stats.version) {
+			if (typeof savegame.units !== "undefined") units = savegame.units;
+			if (typeof savegame.stats !== "undefined") stats = savegame.stats;
+			if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
+			if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
+			if (typeof savegame.events !== "undefined") events = savegame.events;
+			if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
+			loadAchievements();
+			loadEvents();
+			loadUnlocks();
+			updateAllValues();
+		}
 	}
 }
 
@@ -410,6 +418,20 @@ function openTab(evt, name, type) {
     evt.currentTarget.className += " active";
 }
 
+function newAchievement(ach) {
+	var achDiv = document.createElement("div");
+	achDiv.id = ach;
+	achDiv.style.display = "none";	
+	achDiv.className = "achievement";
+	var achHead = document.createElement("h3");
+	achHead.innerHTML = achievements[ach].name;
+	achDiv.appendChild(achHead);
+	var	achPar = document.createElement("p");
+	achPar.innerHTML = achievements[ach].para;
+	achDiv.appendChild(achPar);
+	document.getElementById("Achievements").appendChild(achDiv);	
+}
+
 function newUnit(unit) {
 	var unitDiv = document.createElement("div"); 
 	unitDiv.id = unit + "Section";	
@@ -450,7 +472,7 @@ function newUnit(unit) {
 		}
 		tempEffect += " per click";
 	}
-	else tempEffect = "Effect: Used to build more complex things."
+	else tempEffect = "Effect: Used to build more complex things.";
 	//Appends all new divs to a unit div, and then appends that div to the units type section.
 	effectDiv.innerHTML = tempEffect;
 	unitP.appendChild(cost);		
@@ -510,7 +532,10 @@ window.onload = function() {
 			calcUnitAtoms(unit);
 		}
 		newUnit(unit);
-	} 	
+	} 
+	for(achievement in achievements) {
+		newAchievement(achievement);		
+	}
 	document.getElementById("hydrogenSection").style.display = "block";
 	document.getElementById("oxygenSection").style.display = "block";
 	load();
