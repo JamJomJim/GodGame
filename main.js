@@ -14,6 +14,7 @@ var currentEvents = {
 	currentEventFour: " "	
 };
 var units = {
+	//Could combine unlocks with units. Would need to keep the unlock class for the unit type divs though.
 	//(plural, type, amount, atoms, cost, production)
 		//Atoms
 	hydrogen: new unit("", "atoms", 0, 1, [], []),
@@ -25,6 +26,7 @@ var units = {
 	chlorine: new unit("", "atoms", 0, 1, [], []),
 	sulfur: new unit("", "atoms", 0, 1, [], []),
 	iron: new unit("", "atoms", 0, 1, [], []),
+	copper: new unit("", "atoms", 0, 1, [], []),
 		//Molecules
 	water: new unit("", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	carbonDioxide: new unit("", "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
@@ -37,9 +39,11 @@ var units = {
 	rock: new unit("rocks", "substance", 0, 0, ["silica", 100, "iron", 200], ["sand", 0.1]),
 	dirt: new unit("", "substance", 0, 0, ["silica", 10, "rock", .1], ["nitrogen", 1]),
 	ironOre: new unit("", "substance", 0, 0, ["rock", 1, "iron", 1], ["iron", 0.5]),
+	copperOre: new unit("", "substance", 0, 0, ["rock", 1, "copper", 1], ["iron", 0.5]),
 		//Planetary
 	river: new unit("rivers", "planetary", 0, 0, ["silica", 1, "iron", 2], []),	
 		//Space
+	spaceDust: new unit("", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroid: new unit("asteroids", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroidBelt: new unit("asteroid belts", "space", 0, 0, ["asteroid", 1000, "water", 1000000], []),	
 	planet: new unit("planets", "space", 0, 0, ["hydrogen", 2, "oxygen", 1], []),	
@@ -85,17 +89,23 @@ var events = {
 };
 var unlocks = {
 	//(condition, state)
+		//Type Divs
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
 	substance:  new unlock(["unit", "silica", 100], false),
 	planetary:  new unlock(["unit", "planet", 1], false),
 	space:  new unlock(["unit", "rock", 10], false),
-	carbon: new unlock(["unit", "nitrogen", 10], false),
-	nitrogen: new unlock(["unit", "iron", 10], false),
-	sodium: new unlock(["unit", "sulfur", 10], false),
-	silicon: new unlock(["unit", "oxygen", 10], false),
-	chlorine: new unlock(["unit", "sodium", 10], false),
-	sulfur: new unlock(["unit", "oxygen", 10], false),	
-	iron: new unlock(["unit", "silicon", 10], false),
+	life: new unlock(["unit", "carbon", 10000], false),	
+		//Atoms
+	carbon: new unlock(["unit", "hydrogen", 10], false),
+	oxygen: new unlock(["unit", "carbon", 10], false),
+	nitrogen: new unlock(["unit", "oxygen", 10], false),
+	sodium: new unlock(["unit", "nitrogen", 10], false),
+	silicon: new unlock(["unit", "sodium", 10], false),
+	chlorine: new unlock(["unit", "silicon", 10], false),
+	sulfur: new unlock(["unit", "chlorine", 10], false),	
+	iron: new unlock(["unit", "sulfur", 10], false),
+	copper: new unlock(["unit", "iron", 10], false),
+		//Molecules
     water: new unlock(["unit", "hydrogen", 10], false),
     carbonDioxide: new unlock(["unit", "silica", 10], false),
     sodiumChloride: new unlock(["unit", "silica", 20], false),
@@ -103,10 +113,15 @@ var unlocks = {
     glucose: new unlock(["unit", "carbon", 10], false),	
     dust: new unlock(["unit", "sand", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
+		//Substance
 	rock: new unlock(["unit", "silica", 100], false),
 	dirt: new unlock(["unit", "silica", 100], false),	
 	ironOre: new unlock(["unit", "rock", 10], false),	
-    river: new unlock(["unit", "DNA", 1], false),		
+	copperOre: new unlock(["unit", "rock", 10], false),	
+		//Planetary
+    river: new unlock(["unit", "DNA", 1], false),	
+		//Space
+	spaceDust: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
 	asteroidBelt: new unlock(["unit", "asteroid", 100], false),
     planet: new unlock(["unit", "silica", 10000000000], false),
@@ -116,7 +131,7 @@ var unlocks = {
 	supermassiveBlackhole: new unlock(["unit", "blackhole", 1000], false),
 	galaxy: new unlock(["unit", "blackhole", 10], false),
 	galaxySuperCluster: new unlock(["unit", "galaxy", 10], false),
-	life: new unlock(["unit", "carbon", 10000], false),
+		//Life
 	nucleotide: new unlock(["unit", "carbon", 10000], false),
 	lipid: new unlock(["unit", "carbon", 10000], false),
 	aminoAcid: new unlock(["unit", "carbon", 10000], false),
@@ -555,6 +570,5 @@ window.onload = function() {
 		newAchievement(achievement);		
 	}
 	document.getElementById("hydrogenSection").style.display = "block";
-	document.getElementById("oxygenSection").style.display = "block";
 	load();
 };
