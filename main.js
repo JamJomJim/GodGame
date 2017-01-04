@@ -31,7 +31,7 @@ var units = {
 	water: new unit("", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	carbonDioxide: new unit("", "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
 	sodiumChloride: new unit("", "molecules", 0, 0, ["sodium", 1, "chlorine", 1], ["sodium", 0.1, "chlorine", 0.1]),
-	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1, "rock", .1]),
+	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
 	glucose: new unit("", "molecules", 0, 0, ["carbon", 6, "hydrogen", 12, "oxygen", 6], ["carbonDioxide", 0.1, "water", 0.1]),
 		//Substance
 	dust: new unit("", "substance", 0, 0, ["silica", 10, "rock", .01, "iron", .1], ["silica", 1]),
@@ -97,9 +97,9 @@ var unlocks = {
 	life: new unlock(["unit", "carbon", 10000], false),	
 		//Atoms
 	carbon: new unlock(["unit", "hydrogen", 10], false),
-	oxygen: new unlock(["unit", "carbon", 10], false),
-	nitrogen: new unlock(["unit", "oxygen", 10], false),
-	sodium: new unlock(["unit", "nitrogen", 10], false),
+	nitrogen: new unlock(["unit", "carbon", 10], false),
+	oxygen: new unlock(["unit", "nitrogen", 10], false),
+	sodium: new unlock(["unit", "oxygen", 10], false),
 	silicon: new unlock(["unit", "sodium", 10], false),
 	chlorine: new unlock(["unit", "silicon", 10], false),
 	sulfur: new unlock(["unit", "chlorine", 10], false),	
@@ -107,10 +107,10 @@ var unlocks = {
 	copper: new unlock(["unit", "iron", 10], false),
 		//Molecules
     water: new unlock(["unit", "hydrogen", 10], false),
-    carbonDioxide: new unlock(["unit", "silica", 10], false),
+    carbonDioxide: new unlock(["unit", "carbon", 25], false),
     sodiumChloride: new unlock(["unit", "silica", 20], false),
     silica: new unlock(["unit", "silicon", 10], false),	
-    glucose: new unlock(["unit", "carbon", 10], false),	
+    glucose: new unlock(["unit", "carbon", 100], false),	
     dust: new unlock(["unit", "sand", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
 		//Substance
