@@ -15,26 +15,30 @@ var currentEvents = {
 };
 var units = {
 	//(plural, type, amount, atoms, cost, production)
-	//Atoms
+		//Atoms
 	hydrogen: new unit("", "atoms", 0, 1, [], []),
 	carbon: new unit("", "atoms", 0, 1, [], []),
 	nitrogen: new unit("", "atoms", 0, 1, [], []),	
 	oxygen: new unit("", "atoms", 0, 1, [], []),
+	sodium: new unit("", "atoms", 0, 1, [], []),	
 	silicon: new unit("", "atoms", 0, 1, [], []),
+	chlorine: new unit("", "atoms", 0, 1, [], []),
 	sulfur: new unit("", "atoms", 0, 1, [], []),
 	iron: new unit("", "atoms", 0, 1, [], []),
-	//Molecules
+		//Molecules
 	water: new unit("", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	carbonDioxide: new unit("", "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
+	sodiumChloride: new unit("", "molecules", 0, 0, ["sodium", 1, "chlorine", 1], ["sodium", 0.1, "chlorine", 0.1]),
 	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1, "rock", .1]),
 	glucose: new unit("", "molecules", 0, 0, ["carbon", 6, "hydrogen", 12, "oxygen", 6], ["carbonDioxide", 0.1, "water", 0.1]),
-	//Substance
+		//Substance
 	sand: new unit("", "substance", 0, 0, ["silica", 100], ["silica", 1]),
 	rock: new unit("rocks", "substance", 0, 0, ["silica", 100, "iron", 200], ["sand", 0.1]),
+	dirt: new unit("", "substance", 0, 0, ["silica", 10, "rock", .1], ["nitrogen", 1]),
 	ironOre: new unit("", "substance", 0, 0, ["rock", 1, "iron", 1], ["iron", 0.5]),
-	//Planetary
+		//Planetary
 	river: new unit("rivers", "planetary", 0, 0, ["silica", 1, "iron", 2], []),	
-	//Space
+		//Space
 	asteroid: new unit("asteroids", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroidBelt: new unit("asteroid belts", "space", 0, 0, ["asteroid", 1000, "water", 1000000], []),	
 	planet: new unit("planets", "space", 0, 0, ["hydrogen", 2, "oxygen", 1], []),	
@@ -44,7 +48,8 @@ var units = {
 	blackhole: new unit("blackholes", "space", 0, 0, ["star", 1], []),
 	galaxy: new unit("galaxies", "space", 0, 0, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], []),
 	galaxySuperCluster: new unit("galaxy super clusters", "space", 0, 0, ["galaxy", 100], []),	
-	supermassiveBlackhole: new unit("supermassive blackholes", "space", 0, 0, ["blackhole", 1000], []),		
+	supermassiveBlackhole: new unit("supermassive blackholes", "space", 0, 0, ["blackhole", 1000], []),	
+		//life
 	nucleotide: new unit("nucleotides", "life", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], []),
 	lipid: new unit("lipids", "life", 0, 0, ["carbon", 45, "hydrogen", 98, "oxygen", 6], []),
 	aminoAcid: new unit("amino acids", "life", 0, 0, ["carbon", 5, "hydrogen", 11, "nitrogen", 1, "oxygen", 2, "sulfur", 1], []),
@@ -55,7 +60,15 @@ var units = {
 };
 var achievements = {
 	//(condition, state, name, para)
-    timeOne: new achievement(["stats", "time", 900], false, "Noob", "You've played for 15 minutes. Well done?"),
+    time1: new achievement(["stats", "time", 900], false, "Noob", "You've played for 15 minutes. Well done?"),
+    time2: new achievement(["stats", "time", 3600], false, "Rookie", "I see you're getting the hang of it."),
+    time3: new achievement(["stats", "time", 36000], false, "Amateur", "You should understand the basics by now."),
+    atoms1: new achievement(["stats", "totalAtoms", 100], false, "Tiny", "You can't even see anything."),
+    atoms2: new achievement(["stats", "totalAtoms", 1000], false, "Still Tiny", "Is there anything even there?"),
+    atoms3: new achievement(["stats", "totalAtoms", 10000], false, "Tiny Part 3", "You'll get there eventually"),
+    achievements1: new achievement(["stats", "numAchievements", 5], false, "Freebie", "Wow. You get an achievement for having other achievements"),
+    achievements2: new achievement(["stats", "numAchievements", 10], false, "You're Special", "It's the effort that counts."),
+    achievements3: new achievement(["stats", "numAchievements", 15], false, "Tryhard", "This is like getting a medal for being 6th place."),
     recordBreaker: new achievement(["unit", "human", 1], false, "Record Breaker", "You created humanity in less than 7 days!")
 };
 var events = {
@@ -73,19 +86,23 @@ var unlocks = {
 	//(condition, state)
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
 	substance:  new unlock(["unit", "silica", 100], false),
-	planetary:  new unlock(["unit", "rock", 10], false),
+	planetary:  new unlock(["unit", "planet", 1], false),
 	space:  new unlock(["unit", "rock", 10], false),
 	carbon: new unlock(["unit", "nitrogen", 10], false),
 	nitrogen: new unlock(["unit", "iron", 10], false),
+	sodium: new unlock(["unit", "sulfur", 10], false),
 	silicon: new unlock(["unit", "oxygen", 10], false),
+	chlorine: new unlock(["unit", "sodium", 10], false),
 	sulfur: new unlock(["unit", "oxygen", 10], false),	
 	iron: new unlock(["unit", "silicon", 10], false),
     water: new unlock(["unit", "hydrogen", 10], false),
     carbonDioxide: new unlock(["unit", "silica", 10], false),
+    sodiumChloride: new unlock(["unit", "silica", 20], false),
     silica: new unlock(["unit", "silicon", 10], false),	
     glucose: new unlock(["unit", "carbon", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
 	rock: new unlock(["unit", "silica", 100], false),
+	dirt: new unlock(["unit", "silica", 100], false),	
 	ironOre: new unlock(["unit", "rock", 10], false),	
     river: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
@@ -134,7 +151,6 @@ function unlock(condition, state) {
     this.state = state;
 }
 //Gameplay Functions
-
 function calcUnitAtoms(unit){
 	//determines how many atoms there are in a specific unit.
 	var numAtoms = 0;	
@@ -230,7 +246,7 @@ function checkUnlocks() {
 				unlocks[unlock].state = true;
 			}
 			// Temporarily unlock everything to help with formatting
-			//unlocks[unlock].state = true;	
+			unlocks[unlock].state = true;	
 		}
 	}	
 }
@@ -526,7 +542,6 @@ setInterval(function() {
 }, 60000);
 
 window.onload = function() {
-	//determines the number of atoms a unit has for all units	
 	for(unit in units) {
 		if(units[unit].atoms === 0){
 			calcUnitAtoms(unit);
