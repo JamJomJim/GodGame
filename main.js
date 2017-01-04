@@ -32,6 +32,7 @@ var units = {
 	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1, "rock", .1]),
 	glucose: new unit("", "molecules", 0, 0, ["carbon", 6, "hydrogen", 12, "oxygen", 6], ["carbonDioxide", 0.1, "water", 0.1]),
 		//Substance
+	dust: new unit("", "substance", 0, 0, ["silica", 10, "rock", .01, "iron", .1], ["silica", 1]),
 	sand: new unit("", "substance", 0, 0, ["silica", 100], ["silica", 1]),
 	rock: new unit("rocks", "substance", 0, 0, ["silica", 100, "iron", 200], ["sand", 0.1]),
 	dirt: new unit("", "substance", 0, 0, ["silica", 10, "rock", .1], ["nitrogen", 1]),
@@ -100,6 +101,7 @@ var unlocks = {
     sodiumChloride: new unlock(["unit", "silica", 20], false),
     silica: new unlock(["unit", "silicon", 10], false),	
     glucose: new unlock(["unit", "carbon", 10], false),	
+    dust: new unlock(["unit", "sand", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
 	rock: new unlock(["unit", "silica", 100], false),
 	dirt: new unlock(["unit", "silica", 100], false),	
@@ -121,7 +123,8 @@ var unlocks = {
     DNA: new unlock(["unit", "nucleotide", 10000], false),
     cell: new unlock(["unit", "DNA", 1], false),	
     amoeba: new unlock(["unit", "DNA", 1], false),	
-    human: new unlock(["unit", "DNA", 1], false),		
+    human: new unlock(["unit", "DNA", 1], false),	
+	faith: new unlock(["unit", "carbon", 10000], false),		
 };
 //Class Constructors
 function unit(plural, type, amount, atoms, cost, production){
@@ -246,7 +249,7 @@ function checkUnlocks() {
 				unlocks[unlock].state = true;
 			}
 			// Temporarily unlock everything to help with formatting
-			unlocks[unlock].state = true;	
+			//unlocks[unlock].state = true;	
 		}
 	}	
 }
