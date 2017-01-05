@@ -1,5 +1,4 @@
 <html>
-<p id="Test"></p>
    <script type="text/javascript" src="main.js"></script>
    <head>
       <link rel="stylesheet" type="text/css" href="interface.css" />
@@ -31,8 +30,10 @@
                <li><a href="#" class="tablinksUnit active" onclick="openTab(event, 'atoms', 'Unit')">Atoms</a>
                </li>
                <li><a id="moleculesSection" href="#" class="tablinksUnit" onclick="openTab(event, 'molecules', 'Unit')" style="display: none;">Molecules</a>
+               </li>                
+			   <li><a id="macromoleculeSection" href="#" class="tablinksUnit" onclick="openTab(event, 'macromolecule', 'Unit')" style="display: none;">Macromolecules</a>
                </li>  
-               <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substance</a>
+               <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substances</a>
                </li> 
 			   <li><a id="planetarySection" href="#" class="tablinksUnit" onclick="openTab(event, 'planetary', 'Unit')" style="display: none;">Planetary</a>
                </li>	 			   
@@ -43,6 +44,9 @@
 
             </div>            
 			<div id="molecules" class="tabcontent Unit">
+				
+            </div>	
+			<div id="macromolecule" class="tabcontent Unit">
 				
             </div>	
 			<div id="substance" class="tabcontent Unit">

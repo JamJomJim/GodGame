@@ -27,23 +27,31 @@ var units = {
 	sulfur: new unit("", "atoms", 0, 1, [], []),
 	iron: new unit("", "atoms", 0, 1, [], []),
 	copper: new unit("", "atoms", 0, 1, [], []),
+	gold: new unit("", "atoms", 0, 1, [], []),
 		//Molecules
 	water: new unit("", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	carbonDioxide: new unit("", "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
 	sodiumChloride: new unit("", "molecules", 0, 0, ["sodium", 1, "chlorine", 1], ["sodium", 0.1, "chlorine", 0.1]),
 	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
 	glucose: new unit("", "molecules", 0, 0, ["carbon", 6, "hydrogen", 12, "oxygen", 6], ["carbonDioxide", 0.1, "water", 0.1]),
+		//Macromolecule
+	nucleotide: new unit("nucleotides", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], []),
+	lipid: new unit("lipids", "macromolecule", 0, 0, ["carbon", 45, "hydrogen", 98, "oxygen", 6], ["aminoAcid", 0.1]),
+	aminoAcid: new unit("amino acids", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 11, "nitrogen", 1, "oxygen", 2, "sulfur", 1], ["lipid", 0.1, "nucleotide", 0.1]),
+	DNA: new unit("", "macromolecule", 0, 0, ["nucleotide", 3000000000], []),		
+	starch: new unit("", "macromolecule", 0, 0, ["glucose", 60, "water", -60], ["glucose", 1, "nucleotide", 1]),	
 		//Substance
 	dust: new unit("", "substance", 0, 0, ["silica", 10, "rock", .01, "iron", .1], ["silica", 1]),
 	sand: new unit("", "substance", 0, 0, ["silica", 100], ["silica", 1]),
 	rock: new unit("rocks", "substance", 0, 0, ["silica", 100, "iron", 200], ["sand", 0.1]),
 	dirt: new unit("", "substance", 0, 0, ["silica", 10, "rock", .1], ["nitrogen", 1]),
 	ironOre: new unit("", "substance", 0, 0, ["rock", 1, "iron", 1], ["iron", 0.5]),
-	copperOre: new unit("", "substance", 0, 0, ["rock", 1, "copper", 1], ["iron", 0.5]),
+	copperOre: new unit("", "substance", 0, 0, ["rock", 1, "copper", 1], ["copper", 0.5]),
 		//Planetary
 	river: new unit("rivers", "planetary", 0, 0, ["silica", 1, "iron", 2], []),	
 		//Space
 	spaceDust: new unit("", "space", 0, 0, ["hydrogen", 1000000], []),
+	meteoroid: new unit("meteoroids", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroid: new unit("asteroids", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroidBelt: new unit("asteroid belts", "space", 0, 0, ["asteroid", 1000, "water", 1000000], []),	
 	planet: new unit("planets", "space", 0, 0, ["hydrogen", 2, "oxygen", 1], []),	
@@ -55,12 +63,9 @@ var units = {
 	galaxySuperCluster: new unit("galaxy super clusters", "space", 0, 0, ["galaxy", 100], []),	
 	supermassiveBlackhole: new unit("supermassive blackholes", "space", 0, 0, ["blackhole", 1000], []),	
 		//life
-	nucleotide: new unit("nucleotides", "life", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], []),
-	lipid: new unit("lipids", "life", 0, 0, ["carbon", 45, "hydrogen", 98, "oxygen", 6], []),
-	aminoAcid: new unit("amino acids", "life", 0, 0, ["carbon", 5, "hydrogen", 11, "nitrogen", 1, "oxygen", 2, "sulfur", 1], []),
-	DNA: new unit("", "life", 0, 0, ["nucleotide", 3000000000], []),
 	cell: new unit("cells", "life", 0, 0, ["DNA", 1, "lipid", 10000, "aminoAcid", 1000000, "water", 10000000], []),
 	amoeba: new unit("amoebas", "life", 0, 0,["cell", 1], []),
+	chlorella: new unit("chlorellas", "life", 0, 0,["cell", 1], []),
 	human: new unit("humans", "life", 0, 0, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
@@ -91,10 +96,12 @@ var unlocks = {
 	//(condition, state)
 		//Type Divs
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
-	substance:  new unlock(["unit", "silica", 100], false),
-	planetary:  new unlock(["unit", "planet", 1], false),
-	space:  new unlock(["unit", "rock", 10], false),
-	life: new unlock(["unit", "carbon", 10000], false),	
+	macromolecule: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
+	substance: new unlock(["unit", "silica", 100], false),
+	planetary: new unlock(["unit", "planet", 1], false),
+	space: new unlock(["unit", "rock", 10], false),
+	life: new unlock(["unit", "DNA", 1], false),	
+	faith: new unlock(["unit", "human", 1], false),			
 		//Atoms
 	carbon: new unlock(["unit", "hydrogen", 10], false),
 	nitrogen: new unlock(["unit", "carbon", 10], false),
@@ -105,23 +112,26 @@ var unlocks = {
 	sulfur: new unlock(["unit", "chlorine", 10], false),	
 	iron: new unlock(["unit", "sulfur", 10], false),
 	copper: new unlock(["unit", "iron", 10], false),
+	gold: new unlock(["unit", "gold", 1], false),
 		//Molecules
     water: new unlock(["unit", "hydrogen", 10], false),
     carbonDioxide: new unlock(["unit", "carbon", 25], false),
     sodiumChloride: new unlock(["unit", "silica", 20], false),
     silica: new unlock(["unit", "silicon", 10], false),	
-    glucose: new unlock(["unit", "carbon", 100], false),	
+    glucose: new unlock(["unit", "carbon", 100], false),
+		//Substance	
     dust: new unlock(["unit", "sand", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
-		//Substance
 	rock: new unlock(["unit", "silica", 100], false),
 	dirt: new unlock(["unit", "silica", 100], false),	
 	ironOre: new unlock(["unit", "rock", 10], false),	
-	copperOre: new unlock(["unit", "rock", 10], false),	
+	copperOre: new unlock(["unit", "rock", 10], false),
+	starch: new unlock(["unit", "rock", 10], false),
 		//Planetary
     river: new unlock(["unit", "DNA", 1], false),	
 		//Space
 	spaceDust: new unlock(["unit", "DNA", 1], false),		
+	meteoroid: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
 	asteroidBelt: new unlock(["unit", "asteroid", 100], false),
     planet: new unlock(["unit", "silica", 10000000000], false),
@@ -138,8 +148,14 @@ var unlocks = {
     DNA: new unlock(["unit", "nucleotide", 10000], false),
     cell: new unlock(["unit", "DNA", 1], false),	
     amoeba: new unlock(["unit", "DNA", 1], false),	
+	chlorella: new unlock(["unit", "DNA", 1], false),
     human: new unlock(["unit", "DNA", 1], false),	
-	faith: new unlock(["unit", "carbon", 10000], false),		
+};
+var idleEffects = {
+	//Have negative effects first
+	river: new idle(["rock", -.1, "sand", .1, "iron", 20]),
+	chlorella: new idle(["carbonDioxide", -6, "water", -6, "glucose", 1, "oxygen", 12])
+	amoeba: new idle(["glucose", -1, "oxygen", -12, "carbonDioxide", 6, "water", 6])
 };
 //Class Constructors
 function unit(plural, type, amount, atoms, cost, production){
@@ -168,6 +184,11 @@ function unlock(condition, state) {
     this.condition = condition;
     this.state = state;
 }
+
+function idle(effect) {
+	this.effect = effect;
+}
+
 //Gameplay Functions
 function calcUnitAtoms(unit){
 	//determines how many atoms there are in a specific unit.
@@ -264,7 +285,7 @@ function checkUnlocks() {
 				unlocks[unlock].state = true;
 			}
 			// Temporarily unlock everything to help with formatting
-			//unlocks[unlock].state = true;	
+			unlocks[unlock].state = true;	
 		}
 	}	
 }
@@ -429,8 +450,12 @@ function determineTimePlayed() {
 function determineMax(unit) {
 	//returns the bottleneck for purchasing a new unit
 	var ratios = [];
+	var ratio = 0;
 	for(i = 0; i < units[unit].cost.length; i += 2) {
-		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
+		if(units[units[unit].cost[i]].amount / units[unit].cost[i+1] >= 0){
+			ratio = units[units[unit].cost[i]].amount / units[unit].cost[i+1]
+			ratios.push(ratio);
+		}
 	}
 	return Math.floor(Array.min(ratios));
 }
@@ -553,6 +578,14 @@ setInterval(function() {
 	checkUnlocks();
 	loadAchievements();
 	loadUnlocks();
+	for(idle in idleEffects){
+		for(i = 0; i < idleEffects[idle].effect.length; i += 2){
+			if(units[idleEffects[idle].effect[i]].amount + idleEffects[idle].effect[i+1] * units[idle].amount >= 0){
+				units[idleEffects[idle].effect[i]].amount += idleEffects[idle].effect[i+1] * units[idle].amount;
+			}
+			else break;
+		}
+	}
 }, 1000);
 
 setInterval(function() {
