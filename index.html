@@ -1,104 +1,111 @@
 <html>
-   <script type="text/javascript" src="main.js"></script>
-   <head>
-      <link rel="stylesheet" type="text/css" href="interface.css" />
-   </head>
-   <ul class="tab">
-      <li><a href="#" class="tablinksMain active" onclick="openTab(event, 'Game', 'Main')">Game</a>
-      </li>
-      <li><a href="#" class="tablinksMain" onclick="openTab(event,'Achievements', 'Main')">Achievements</a>
-      </li>
-      <li><a href="#" class="tablinksMain" onclick="openTab(event,'Options', 'Main')">Options</a>
-      </li>
-   </ul>
-   <div id="Game" class="tabcontent Main" style="display: block;">
-      <div id="atomInfo">Total Atoms: <span id="totalAtoms">0</span>
-         </br> Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
-      </div>
-      <div id="left" ;>
-         <ul class="tab">
+<script type="text/javascript" src="main.js"></script>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="interface.css" />
+</head>
+<ul class="tab">
+    <li><a href="#" class="tablinksMain active" onclick="openTab(event, 'Game', 'Main')">Game</a>
+    </li>
+    <li><a href="#" class="tablinksMain" onclick="openTab(event,'Achievements', 'Main')">Achievements</a>
+    </li>
+    <li><a href="#" class="tablinksMain" onclick="openTab(event,'Options', 'Main')">Options</a>
+    </li>
+</ul>
+<div id="Game" class="tabcontent Main" style="display: block;">
+    <div id="atomInfo">Total Atoms: <span id="totalAtoms">0</span>
+        </br> Percent Complete: <span id="percentOfUniverse">0.00000000000000000000</span>%
+    </div>
+    <div id="left" ;>
+        <ul class="tab">
             <li><a href="#" class="tablinksGame active" onclick="openTab(event, 'units', 'Game')">Creation</a>
             </li>
             <li><a id="lifeSection" href="#" class="tablinksGame" onclick="openTab(event, 'life', 'Game')" style="display: none;">Life</a>
-            </li>          
-			<li><a id="faithSection" href="#" class="tablinksGame" onclick="openTab(event, 'faith', 'Game')" style="display: none;">Faith</a>
             </li>
-         </ul>
-         <div id="units" class="tabcontent Game" style="display: block;">
-            </br >
+            <li><a id="faithSection" href="#" class="tablinksGame" onclick="openTab(event, 'faith', 'Game')" style="display: none;">Faith</a>
+            </li>
+        </ul>
+        <div id="units" class="tabcontent Game" style="display: block;">
+            </br>
             <ul class="tab">
-               <li><a href="#" class="tablinksUnit active" onclick="openTab(event, 'atoms', 'Unit')">Atoms</a>
-               </li>
-               <li><a id="moleculesSection" href="#" class="tablinksUnit" onclick="openTab(event, 'molecules', 'Unit')" style="display: none;">Molecules</a>
-               </li>                
-			   <li><a id="macromoleculeSection" href="#" class="tablinksUnit" onclick="openTab(event, 'macromolecule', 'Unit')" style="display: none;">Macromolecules</a>
-               </li>  
-               <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substances</a>
-               </li> 
-			   <li><a id="planetarySection" href="#" class="tablinksUnit" onclick="openTab(event, 'planetary', 'Unit')" style="display: none;">Planetary</a>
-               </li>	 			   
-			   <li><a id="spaceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'space', 'Unit')" style="display: none;">Space</a>
-               </li>		   
+                <li><a href="#" class="tablinksUnit active" onclick="openTab(event, 'atoms', 'Unit')">Atoms</a>
+                </li>
+                <li><a id="moleculesSection" href="#" class="tablinksUnit" onclick="openTab(event, 'molecules', 'Unit')" style="display: none;">Molecules</a>
+                </li>
+                <li><a id="macromoleculeSection" href="#" class="tablinksUnit" onclick="openTab(event, 'macromolecule', 'Unit')" style="display: none;">Macromolecules</a>
+                </li>
+                <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substances</a>
+                </li>
+                <li><a id="planetarySection" href="#" class="tablinksUnit" onclick="openTab(event, 'planetary', 'Unit')" style="display: none;">Planetary</a>
+                </li>
+                <li><a id="spaceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'space', 'Unit')" style="display: none;">Space</a>
+                </li>
             </ul>
             <div id="atoms" class="tabcontent Unit" style="display: block;">
 
-            </div>            
-			<div id="molecules" class="tabcontent Unit">
-				
-            </div>	
-			<div id="macromolecule" class="tabcontent Unit">
-				
-            </div>	
-			<div id="substance" class="tabcontent Unit">
-
-            </div>	
-			<div id="planetary" class="tabcontent Unit">
-
-            </div>				
-			<div id="space" class="tabcontent Unit">
+            </div>
+            <div id="molecules" class="tabcontent Unit">
 
             </div>
-         </div>
-         <div id="life" class="tabcontent Game">
+            <div id="macromolecule" class="tabcontent Unit">
 
-         </div>
-         <div id="faith" class="tabcontent Game">
+            </div>
+            <div id="substance" class="tabcontent Unit">
 
-         </div>		 
-      </div>
-      <div id="right" ;>
-         <table id="events";>
+            </div>
+            <div id="planetary" class="tabcontent Unit">
+
+            </div>
+            <div id="space" class="tabcontent Unit">
+
+            </div>
+        </div>
+        <div id="life" class="tabcontent Game">
+
+        </div>
+        <div id="faith" class="tabcontent Game">
+
+        </div>
+    </div>
+    <div id="right" ;>
+        <table id="events" ;>
             <tr>
-               <td id="eventOne";></td>
+                <td id="eventOne" ;></td>
             </tr>
             <tr>
-               <td id="eventTwo";></td>
+                <td id="eventTwo" ;></td>
             </tr>
             <tr>
-               <td id="eventThree";></td>
+                <td id="eventThree" ;></td>
             </tr>
             <tr>
-               <td id="eventFour";></td>
+                <td id="eventFour" ;></td>
             </tr>
-         </table>
-      </div>
-      <br clear="all" />
-   </div>
-   <div id="Achievements" class="tabcontent Main">
-      <div>
-         <h3>Completed: <span id="completedAchievements">0</span>/<span id="totalAchievements">0</span></h3>
-      </div>
-      <div id="noAchievements">You have done absolutely nothing of note.</div>
-   </div>
-   <div id="Options" class="tabcontent Main">
-      <body>
-         <p>Time Played: <span id="days">0</span> Days <span id="hours">0</span> Hours <span id="minutes">0</span> Minutes <span id="seconds">0</span> Seconds</p>
-         <p>
+        </table>
+    </div>
+    <br clear="all" />
+</div>
+<div id="Achievements" class="tabcontent Main">
+    <div>
+        <h3>Completed: <span id="completedAchievements">0</span>/<span id="totalAchievements">0</span></h3>
+    </div>
+    <div id="noAchievements">You have done absolutely nothing of note.</div>
+</div>
+<div id="Options" class="tabcontent Main">
+
+    <body>
+        <p>Time Played: <span id="days">0</span> Days <span id="hours">0</span> Hours <span id="minutes">0</span> Minutes <span id="seconds">0</span> Seconds</p>
+        <p>
             <button onclick="save()">Save Game</button>
-         </p>
-         <p>
+        </p>
+        <p>
             <button onclick="localStorage.removeItem('save')">Delete Save</button>
-         </p>
-      </body>
-   </div>
+        </p>        
+		<p>
+            <button onclick="unlockAllUnits()">Unlock All</button>
+			<button onclick="lockAllUnits()">Lock All</button>
+        </p>
+    </body>
+</div>
+
 </html>
