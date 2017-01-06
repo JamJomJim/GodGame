@@ -427,6 +427,7 @@ function loadEvents() {
 function loadUnlocks() {
 	for (unlock in unlocks) {
 		if (unlocks[unlock].state === true) document.getElementById(unlock + "Section").style.display = "block";
+		else document.getElementById(unlock + "Section").style.display = "none";
 	}
 }
 
@@ -570,7 +571,18 @@ function updateExponents(number) {
 	
 }
 */
+//Testing Functions
+function lockAllUnits(){
+	for(unlock in unlocks) {
+		unlocks[unlock].state = false;
+	}
+}
 
+function unlockAllUnits(){
+	for(unlock in unlocks) {
+		unlocks[unlock].state = true;
+	}
+}
 setInterval(function() {
     stats.time++;
     updateAllValues();
