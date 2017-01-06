@@ -1,5 +1,6 @@
 //Initialisation of variables
 var stats = {
+	version: 1,
 	time: 0,
 	numAchievements: 0,
 	totalClicks: 0,
@@ -13,27 +14,44 @@ var currentEvents = {
 	currentEventFour: " "	
 };
 var units = {
+	//Could combine unlocks with units. Would need to keep the unlock class for the unit type divs though.
 	//(plural, type, amount, atoms, cost, production)
-	//Atoms
+		//Atoms
 	hydrogen: new unit("", "atoms", 0, 1, [], []),
 	carbon: new unit("", "atoms", 0, 1, [], []),
 	nitrogen: new unit("", "atoms", 0, 1, [], []),	
 	oxygen: new unit("", "atoms", 0, 1, [], []),
+	sodium: new unit("", "atoms", 0, 1, [], []),	
 	silicon: new unit("", "atoms", 0, 1, [], []),
+	chlorine: new unit("", "atoms", 0, 1, [], []),
 	sulfur: new unit("", "atoms", 0, 1, [], []),
 	iron: new unit("", "atoms", 0, 1, [], []),
-	//Molecules
+	copper: new unit("", "atoms", 0, 1, [], []),
+	gold: new unit("", "atoms", 0, 1, [], []),
+		//Molecules
 	water: new unit("", "molecules", 0, 0, ["hydrogen", 2, "oxygen", 1], ["hydrogen", 0.2, "oxygen", 0.1]),
 	carbonDioxide: new unit("", "molecules", 0, 0, ["carbon", 1, "oxygen", 2], ["carbon", 0.1, "oxygen", 0.2]),
-	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1, "rock", .1]),
+	sodiumChloride: new unit("", "molecules", 0, 0, ["sodium", 1, "chlorine", 1], ["sodium", 0.1, "chlorine", 0.1]),
+	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
 	glucose: new unit("", "molecules", 0, 0, ["carbon", 6, "hydrogen", 12, "oxygen", 6], ["carbonDioxide", 0.1, "water", 0.1]),
-	//Substance
+		//Macromolecule
+	nucleotide: new unit("nucleotides", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], ["nitrogen", 1]),
+	lipid: new unit("lipids", "macromolecule", 0, 0, ["carbon", 45, "hydrogen", 98, "oxygen", 6], ["aminoAcid", 0.1]),
+	aminoAcid: new unit("amino acids", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 11, "nitrogen", 1, "oxygen", 2, "sulfur", 1], ["lipid", 0.1, "nucleotide", 0.1]),
+	DNA: new unit("", "macromolecule", 0, 0, ["nucleotide", 3000000000], []),		
+	starch: new unit("", "macromolecule", 0, 0, ["glucose", 60, "water", -60], ["glucose", 1, "nucleotide", 1]),	
+		//Substance
+	dust: new unit("", "substance", 0, 0, ["silica", 10, "rock", .01, "iron", .1], ["silica", 1]),
 	sand: new unit("", "substance", 0, 0, ["silica", 100], ["silica", 1]),
 	rock: new unit("rocks", "substance", 0, 0, ["silica", 100, "iron", 200], ["sand", 0.1]),
+	dirt: new unit("", "substance", 0, 0, ["silica", 10, "rock", .1], ["nitrogen", 1]),
 	ironOre: new unit("", "substance", 0, 0, ["rock", 1, "iron", 1], ["iron", 0.5]),
-	//Planetary
+	copperOre: new unit("", "substance", 0, 0, ["rock", 1, "copper", 1], ["copper", 0.5]),
+		//Planetary
 	river: new unit("rivers", "planetary", 0, 0, ["silica", 1, "iron", 2], []),	
-	//Space
+		//Space
+	spaceDust: new unit("", "space", 0, 0, ["hydrogen", 1000000], []),
+	meteoroid: new unit("meteoroids", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroid: new unit("asteroids", "space", 0, 0, ["hydrogen", 1000000], []),
 	asteroidBelt: new unit("asteroid belts", "space", 0, 0, ["asteroid", 1000, "water", 1000000], []),	
 	planet: new unit("planets", "space", 0, 0, ["hydrogen", 2, "oxygen", 1], []),	
@@ -43,48 +61,82 @@ var units = {
 	blackhole: new unit("blackholes", "space", 0, 0, ["star", 1], []),
 	galaxy: new unit("galaxies", "space", 0, 0, ["supermassiveBlackhole", 2, "solarSystem", 1000000000], []),
 	galaxySuperCluster: new unit("galaxy super clusters", "space", 0, 0, ["galaxy", 100], []),	
-	supermassiveBlackhole: new unit("supermassive blackholes", "space", 0, 0, ["blackhole", 1000], []),		
-	nucleotide: new unit("nucleotides", "life", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], []),
-	lipid: new unit("lipids", "life", 0, 0, ["carbon", 45, "hydrogen", 98, "oxygen", 6], []),
-	aminoAcid: new unit("amino acids", "life", 0, 0, ["carbon", 5, "hydrogen", 11, "nitrogen", 1, "oxygen", 2, "sulfur", 1], []),
-	DNA: new unit("", "life", 0, 0, ["nucleotide", 3000000000], []),
+	supermassiveBlackhole: new unit("supermassive blackholes", "space", 0, 0, ["blackhole", 1000], []),	
+		//life
 	cell: new unit("cells", "life", 0, 0, ["DNA", 1, "lipid", 10000, "aminoAcid", 1000000, "water", 10000000], []),
 	amoeba: new unit("amoebas", "life", 0, 0,["cell", 1], []),
+	chlorella: new unit("chlorellas", "life", 0, 0,["cell", 1], []),
 	human: new unit("humans", "life", 0, 0, ["hydrogen", 2, "oxygen", 1], []),
 };
 var achievements = {
-	//(condition, state)
-    timeOne: new achievement(["stats", "time", 900], false),
-    recordBreaker: new achievement(["unit", "human", 1], false)
+	//(condition, state, name, para)
+    time1: new achievement(["stats", "time", 900], false, "Noob", "You've played for 15 minutes. Well done?"),
+    time2: new achievement(["stats", "time", 3600], false, "Rookie", "I see you're getting the hang of it."),
+    time3: new achievement(["stats", "time", 36000], false, "Amateur", "You should understand the basics by now."),
+    atoms1: new achievement(["stats", "totalAtoms", 100], false, "Tiny", "You can't even see anything."),
+    atoms2: new achievement(["stats", "totalAtoms", 1000], false, "Still Tiny", "Is there anything even there?"),
+    atoms3: new achievement(["stats", "totalAtoms", 10000], false, "Tiny Part 3", "You'll get there eventually"),
+    achievements1: new achievement(["stats", "numAchievements", 5], false, "Freebie", "Wow. You get an achievement for having other achievements"),
+    achievements2: new achievement(["stats", "numAchievements", 10], false, "You're Special", "It's the effort that counts."),
+    achievements3: new achievement(["stats", "numAchievements", 15], false, "Tryhard", "This is like getting a medal for being 6th place."),
+    recordBreaker: new achievement(["unit", "human", 1], false, "Record Breaker", "You created humanity in less than 7 days!")
 };
 var events = {
 	//(condition, state, message)
     newGame1: new evt(["stats", "time", 0], false, "You're a god now. But what's a god without a universe?"),
-    newGame2: new evt(["stats", "time", 1], false, "You dont have a universe... but you do have a ball. Nice."),
-    firstClick: new evt(["stats", "totalUnits", 1], false, "There's something strange with this ball..."),
-    tenClicks: new evt(["stats", "totalUnits", 25], false, "I guess there's nothing else to do, might as well play with your ball a bit more."),
-    tenUnits: new evt(["stats", "totalUnits", 100], false, "It looks like you have a very small universe now... carry on making what matters: matter."),
-    createdWater: new evt(["unit", "water", 1], false, "This is a little bit more complex. Your universe didn't get any bigger though.")
+    newGame2: new evt(["stats", "time", 10], false, "You dont have a universe... but you do have a ball. Nice."),
+    newGame3: new evt(["stats", "time", 15], false, "New things pop into existence as you examine the ball."),
+    unit1: new evt(["stats", "totalUnits", 1], false, "There's something strange about this ball..."),
+    unit2: new evt(["stats", "totalUnits", 25], false, "I guess there's nothing else to do, might as well play with your ball a bit more."),
+    unit3: new evt(["stats", "totalUnits", 100], false, "It looks like you have a very small universe now... carry on making what matters: matter."),
+    createdWater: new evt(["unit", "water", 1], false, "This is a little bit more complex. Your universe didn't get any bigger though."),
+    createdGlucose: new evt(["unit", "glucose", 1], false, "Sweet! This one is pretty complex.")
 };
 var unlocks = {
 	//(condition, state)
+		//Type Divs
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
-	substance:  new unlock(["unit", "silica", 100], false),
-	planetary:  new unlock(["unit", "rock", 10], false),
-	space:  new unlock(["unit", "rock", 10], false),
-	carbon: new unlock(["unit", "nitrogen", 10], false),
-	nitrogen: new unlock(["unit", "iron", 10], false),
-	silicon: new unlock(["unit", "oxygen", 10], false),
-	sulfur: new unlock(["unit", "oxygen", 10], false),	
-	iron: new unlock(["unit", "silicon", 10], false),
+	macromolecule: new unlock(["unit", "glucose", 100], false),
+	substance: new unlock(["unit", "silica", 100], false),
+	planetary: new unlock(["unit", "planet", 1], false),
+	space: new unlock(["unit", "rock", 10], false),
+	life: new unlock(["unit", "DNA", 1], false),	
+	faith: new unlock(["unit", "human", 1], false),			
+		//Atoms
+	carbon: new unlock(["unit", "hydrogen", 10], false),
+	nitrogen: new unlock(["unit", "carbon", 10], false),
+	oxygen: new unlock(["unit", "nitrogen", 10], false),
+	sodium: new unlock(["unit", "oxygen", 10], false),
+	silicon: new unlock(["unit", "sodium", 10], false),
+	chlorine: new unlock(["unit", "silicon", 10], false),
+	sulfur: new unlock(["unit", "chlorine", 10], false),	
+	iron: new unlock(["unit", "sulfur", 10], false),
+	copper: new unlock(["unit", "iron", 10], false),
+	gold: new unlock(["unit", "gold", 1], false),
+		//Molecules
     water: new unlock(["unit", "hydrogen", 10], false),
-    carbonDioxide: new unlock(["unit", "silica", 10], false),
+    carbonDioxide: new unlock(["unit", "carbon", 25], false),
+    sodiumChloride: new unlock(["unit", "silica", 20], false),
     silica: new unlock(["unit", "silicon", 10], false),	
-    glucose: new unlock(["unit", "carbon", 10], false),	
+    glucose: new unlock(["unit", "carbon", 100], false),
+		//Macromolecules
+	nucleotide: new unlock(["unit", "carbon", 10000], false),
+	lipid: new unlock(["unit", "carbon", 10000], false),
+	aminoAcid: new unlock(["unit", "carbon", 10000], false),
+    DNA: new unlock(["unit", "nucleotide", 10000], false),
+	starch: new unlock(["unit", "glucose", 100], false),	
+		//Substance	
+    dust: new unlock(["unit", "sand", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
 	rock: new unlock(["unit", "silica", 100], false),
+	dirt: new unlock(["unit", "silica", 100], false),	
 	ironOre: new unlock(["unit", "rock", 10], false),	
-    river: new unlock(["unit", "DNA", 1], false),		
+	copperOre: new unlock(["unit", "rock", 10], false),
+		//Planetary
+    river: new unlock(["unit", "DNA", 1], false),	
+		//Space
+	spaceDust: new unlock(["unit", "DNA", 1], false),		
+	meteoroid: new unlock(["unit", "DNA", 1], false),		
 	asteroid: new unlock(["unit", "silica", 100000], false),
 	asteroidBelt: new unlock(["unit", "asteroid", 100], false),
     planet: new unlock(["unit", "silica", 10000000000], false),
@@ -94,14 +146,17 @@ var unlocks = {
 	supermassiveBlackhole: new unlock(["unit", "blackhole", 1000], false),
 	galaxy: new unlock(["unit", "blackhole", 10], false),
 	galaxySuperCluster: new unlock(["unit", "galaxy", 10], false),
-	life: new unlock(["unit", "carbon", 10000], false),
-	nucleotide: new unlock(["unit", "carbon", 10000], false),
-	lipid: new unlock(["unit", "carbon", 10000], false),
-	aminoAcid: new unlock(["unit", "carbon", 10000], false),
-    DNA: new unlock(["unit", "nucleotide", 10000], false),
+		//Life
     cell: new unlock(["unit", "DNA", 1], false),	
     amoeba: new unlock(["unit", "DNA", 1], false),	
-    human: new unlock(["unit", "DNA", 1], false),		
+	chlorella: new unlock(["unit", "DNA", 1], false),
+    human: new unlock(["unit", "DNA", 1], false),	
+};
+var idleEffects = {
+	//Have negative effects first
+	river: new idle(["rock", -.1, "sand", .1, "iron", 20]),
+	chlorella: new idle(["carbonDioxide", -6, "water", -6, "glucose", 1, "oxygen", 12]),
+	amoeba: new idle(["glucose", -1, "oxygen", -12, "carbonDioxide", 6, "water", 6])
 };
 //Class Constructors
 function unit(plural, type, amount, atoms, cost, production){
@@ -113,9 +168,11 @@ function unit(plural, type, amount, atoms, cost, production){
 	this.production = production;
 }
 	//achievement and unlock class are the same. Event is very similar.
-function achievement(condition, state) {
+function achievement(condition, state, name, para) {
     this.condition = condition;
     this.state = state;
+    this.name = name;
+    this.para = para;
 }
 
 function evt(condition, state, message) {
@@ -128,8 +185,12 @@ function unlock(condition, state) {
     this.condition = condition;
     this.state = state;
 }
-//Gameplay Functions
 
+function idle(effect) {
+	this.effect = effect;
+}
+
+//Gameplay Functions
 function calcUnitAtoms(unit){
 	//determines how many atoms there are in a specific unit.
 	var numAtoms = 0;	
@@ -165,6 +226,7 @@ function checkAchievements(){
 			if(tempBool === true) {
 				achievements[achievement].state = true;
 				stats.numAchievements += 1;
+				document.getElementById("completedAchievements").innerHTML = stats.numAchievements;
 			}
 		}
 	}
@@ -331,16 +393,18 @@ function save() {
 function load() {
 	if(localStorage.getItem("save") !== null){
 		var savegame = JSON.parse(localStorage.getItem("save"));
-		if (typeof savegame.units !== "undefined") units = savegame.units;
-		if (typeof savegame.stats !== "undefined") stats = savegame.stats;
-		if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
-		if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
-		if (typeof savegame.events !== "undefined") events = savegame.events;
-		if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
-		loadAchievements();
-		loadEvents();
-		loadUnlocks();
-		updateAllValues();
+		if(savegame.stats.version == stats.version) {
+			if (typeof savegame.units !== "undefined") units = savegame.units;
+			if (typeof savegame.stats !== "undefined") stats = savegame.stats;
+			if (typeof savegame.achievements !== "undefined") achievements = savegame.achievements;
+			if (typeof savegame.unlocks !== "undefined") unlocks = savegame.unlocks;
+			if (typeof savegame.events !== "undefined") events = savegame.events;
+			if (typeof savegame.currentEvents !== "undefined") currentEvents = savegame.currentEvents;
+			loadAchievements();
+			loadEvents();
+			loadUnlocks();
+			updateAllValues();
+		}
 	}
 }
 
@@ -387,8 +451,12 @@ function determineTimePlayed() {
 function determineMax(unit) {
 	//returns the bottleneck for purchasing a new unit
 	var ratios = [];
+	var ratio = 0;
 	for(i = 0; i < units[unit].cost.length; i += 2) {
-		ratios.push(units[units[unit].cost[i]].amount / units[unit].cost[i+1]);
+		if(units[units[unit].cost[i]].amount / units[unit].cost[i+1] >= 0){
+			ratio = units[units[unit].cost[i]].amount / units[unit].cost[i+1];
+			ratios.push(ratio);
+		}
 	}
 	return Math.floor(Array.min(ratios));
 }
@@ -410,6 +478,20 @@ function openTab(evt, name, type) {
     evt.currentTarget.className += " active";
 }
 
+function newAchievement(ach) {
+	var achDiv = document.createElement("div");
+	achDiv.id = ach;
+	achDiv.style.display = "none";	
+	achDiv.className = "achievement";
+	var achHead = document.createElement("h3");
+	achHead.innerHTML = achievements[ach].name;
+	achDiv.appendChild(achHead);
+	var	achPar = document.createElement("p");
+	achPar.innerHTML = achievements[ach].para;
+	achDiv.appendChild(achPar);
+	document.getElementById("Achievements").appendChild(achDiv);	
+}
+
 function newUnit(unit) {
 	var unitDiv = document.createElement("div"); 
 	unitDiv.id = unit + "Section";	
@@ -420,7 +502,7 @@ function newUnit(unit) {
 	btn.onclick= function(arg) {
 		return function() {
 			create(arg);
-		}
+		};
 	}(unit);				
 	btn.innerHTML = "Create (<span id='" + unit + "CreateAmount'>0</span>)";
 	var unitTitle = createDisplayString(unit);
@@ -450,7 +532,7 @@ function newUnit(unit) {
 		}
 		tempEffect += " per click";
 	}
-	else tempEffect = "Effect: Used to build more complex things."
+	else tempEffect = "Effect: Used to build more complex things.";
 	//Appends all new divs to a unit div, and then appends that div to the units type section.
 	effectDiv.innerHTML = tempEffect;
 	unitP.appendChild(cost);		
@@ -497,6 +579,14 @@ setInterval(function() {
 	checkUnlocks();
 	loadAchievements();
 	loadUnlocks();
+	for(idle in idleEffects){
+		for(i = 0; i < idleEffects[idle].effect.length; i += 2){
+			if(units[idleEffects[idle].effect[i]].amount + idleEffects[idle].effect[i+1] * units[idle].amount >= 0){
+				units[idleEffects[idle].effect[i]].amount += idleEffects[idle].effect[i+1] * units[idle].amount;
+			}
+			else break;
+		}
+	}
 }, 1000);
 
 setInterval(function() {
@@ -504,14 +594,15 @@ setInterval(function() {
 }, 60000);
 
 window.onload = function() {
-	//determines the number of atoms a unit has for all units	
 	for(unit in units) {
 		if(units[unit].atoms === 0){
 			calcUnitAtoms(unit);
 		}
 		newUnit(unit);
-	} 	
+	} 
+	for(achievement in achievements) {
+		newAchievement(achievement);		
+	}
 	document.getElementById("hydrogenSection").style.display = "block";
-	document.getElementById("oxygenSection").style.display = "block";
 	load();
 };

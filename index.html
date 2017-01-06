@@ -1,5 +1,4 @@
 <html>
-<p id="Test"></p>
    <script type="text/javascript" src="main.js"></script>
    <head>
       <link rel="stylesheet" type="text/css" href="interface.css" />
@@ -21,6 +20,8 @@
             <li><a href="#" class="tablinksGame active" onclick="openTab(event, 'units', 'Game')">Creation</a>
             </li>
             <li><a id="lifeSection" href="#" class="tablinksGame" onclick="openTab(event, 'life', 'Game')" style="display: none;">Life</a>
+            </li>          
+			<li><a id="faithSection" href="#" class="tablinksGame" onclick="openTab(event, 'faith', 'Game')" style="display: none;">Faith</a>
             </li>
          </ul>
          <div id="units" class="tabcontent Game" style="display: block;">
@@ -29,8 +30,10 @@
                <li><a href="#" class="tablinksUnit active" onclick="openTab(event, 'atoms', 'Unit')">Atoms</a>
                </li>
                <li><a id="moleculesSection" href="#" class="tablinksUnit" onclick="openTab(event, 'molecules', 'Unit')" style="display: none;">Molecules</a>
+               </li>                
+			   <li><a id="macromoleculeSection" href="#" class="tablinksUnit" onclick="openTab(event, 'macromolecule', 'Unit')" style="display: none;">Macromolecules</a>
                </li>  
-               <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substance</a>
+               <li><a id="substanceSection" href="#" class="tablinksUnit" onclick="openTab(event, 'substance', 'Unit')" style="display: none;">Substances</a>
                </li> 
 			   <li><a id="planetarySection" href="#" class="tablinksUnit" onclick="openTab(event, 'planetary', 'Unit')" style="display: none;">Planetary</a>
                </li>	 			   
@@ -41,6 +44,9 @@
 
             </div>            
 			<div id="molecules" class="tabcontent Unit">
+				
+            </div>	
+			<div id="macromolecule" class="tabcontent Unit">
 				
             </div>	
 			<div id="substance" class="tabcontent Unit">
@@ -56,6 +62,9 @@
          <div id="life" class="tabcontent Game">
 
          </div>
+         <div id="faith" class="tabcontent Game">
+
+         </div>		 
       </div>
       <div id="right" ;>
          <table id="events";>
@@ -80,14 +89,6 @@
          <h3>Completed: <span id="completedAchievements">0</span>/<span id="totalAchievements">0</span></h3>
       </div>
       <div id="noAchievements">You have done absolutely nothing of note.</div>
-      <div id="timeOne" class="achievement" style="display: none;">
-         <h3>Noob</h3>
-         <p class="achievement">You've played for 15 minutes. Well done?</p>
-      </div>
-      <div id="recordBreaker" class="achievement" style="display: none;">
-         <h3>Record Breaker</h3>
-         <p class="achievement">You created humanity in less than 7 days!</p>
-      </div>
    </div>
    <div id="Options" class="tabcontent Main">
       <body>
