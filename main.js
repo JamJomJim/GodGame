@@ -35,7 +35,7 @@ var units = {
 	silica: new unit("", "molecules", 0, 0, ["silicon", 1, "oxygen", 2], ["silicon", 0.1, "oxygen", 0.1]),
 	glucose: new unit("", "molecules", 0, 0, ["carbon", 6, "hydrogen", 12, "oxygen", 6], ["carbonDioxide", 0.1, "water", 0.1]),
 		//Macromolecule
-	nucleotide: new unit("nucleotides", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], []),
+	nucleotide: new unit("nucleotides", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 5, "nitrogen", 2, "oxygen", 2], ["nitrogen", 1]),
 	lipid: new unit("lipids", "macromolecule", 0, 0, ["carbon", 45, "hydrogen", 98, "oxygen", 6], ["aminoAcid", 0.1]),
 	aminoAcid: new unit("amino acids", "macromolecule", 0, 0, ["carbon", 5, "hydrogen", 11, "nitrogen", 1, "oxygen", 2, "sulfur", 1], ["lipid", 0.1, "nucleotide", 0.1]),
 	DNA: new unit("", "macromolecule", 0, 0, ["nucleotide", 3000000000], []),		
@@ -96,7 +96,7 @@ var unlocks = {
 	//(condition, state)
 		//Type Divs
 	molecules: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
-	macromolecule: new unlock(["unit", "hydrogen", 10, "unit", "oxygen", 10], false),
+	macromolecule: new unlock(["unit", "glucose", 100], false),
 	substance: new unlock(["unit", "silica", 100], false),
 	planetary: new unlock(["unit", "planet", 1], false),
 	space: new unlock(["unit", "rock", 10], false),
@@ -119,6 +119,12 @@ var unlocks = {
     sodiumChloride: new unlock(["unit", "silica", 20], false),
     silica: new unlock(["unit", "silicon", 10], false),	
     glucose: new unlock(["unit", "carbon", 100], false),
+		//Macromolecules
+	nucleotide: new unlock(["unit", "carbon", 10000], false),
+	lipid: new unlock(["unit", "carbon", 10000], false),
+	aminoAcid: new unlock(["unit", "carbon", 10000], false),
+    DNA: new unlock(["unit", "nucleotide", 10000], false),
+	starch: new unlock(["unit", "glucose", 100], false),	
 		//Substance	
     dust: new unlock(["unit", "sand", 10], false),	
 	sand: new unlock(["unit", "silica", 100], false),	
@@ -126,7 +132,6 @@ var unlocks = {
 	dirt: new unlock(["unit", "silica", 100], false),	
 	ironOre: new unlock(["unit", "rock", 10], false),	
 	copperOre: new unlock(["unit", "rock", 10], false),
-	starch: new unlock(["unit", "rock", 10], false),
 		//Planetary
     river: new unlock(["unit", "DNA", 1], false),	
 		//Space
@@ -142,10 +147,6 @@ var unlocks = {
 	galaxy: new unlock(["unit", "blackhole", 10], false),
 	galaxySuperCluster: new unlock(["unit", "galaxy", 10], false),
 		//Life
-	nucleotide: new unlock(["unit", "carbon", 10000], false),
-	lipid: new unlock(["unit", "carbon", 10000], false),
-	aminoAcid: new unlock(["unit", "carbon", 10000], false),
-    DNA: new unlock(["unit", "nucleotide", 10000], false),
     cell: new unlock(["unit", "DNA", 1], false),	
     amoeba: new unlock(["unit", "DNA", 1], false),	
 	chlorella: new unlock(["unit", "DNA", 1], false),
@@ -154,7 +155,7 @@ var unlocks = {
 var idleEffects = {
 	//Have negative effects first
 	river: new idle(["rock", -.1, "sand", .1, "iron", 20]),
-	chlorella: new idle(["carbonDioxide", -6, "water", -6, "glucose", 1, "oxygen", 12])
+	chlorella: new idle(["carbonDioxide", -6, "water", -6, "glucose", 1, "oxygen", 12]),
 	amoeba: new idle(["glucose", -1, "oxygen", -12, "carbonDioxide", 6, "water", 6])
 };
 //Class Constructors
@@ -285,7 +286,7 @@ function checkUnlocks() {
 				unlocks[unlock].state = true;
 			}
 			// Temporarily unlock everything to help with formatting
-			unlocks[unlock].state = true;	
+			//unlocks[unlock].state = true;	
 		}
 	}	
 }
@@ -453,7 +454,7 @@ function determineMax(unit) {
 	var ratio = 0;
 	for(i = 0; i < units[unit].cost.length; i += 2) {
 		if(units[units[unit].cost[i]].amount / units[unit].cost[i+1] >= 0){
-			ratio = units[units[unit].cost[i]].amount / units[unit].cost[i+1]
+			ratio = units[units[unit].cost[i]].amount / units[unit].cost[i+1];
 			ratios.push(ratio);
 		}
 	}
@@ -501,7 +502,7 @@ function newUnit(unit) {
 	btn.onclick= function(arg) {
 		return function() {
 			create(arg);
-		}
+		};
 	}(unit);				
 	btn.innerHTML = "Create (<span id='" + unit + "CreateAmount'>0</span>)";
 	var unitTitle = createDisplayString(unit);
